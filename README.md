@@ -79,7 +79,7 @@ python3 -m venv .venv
 
 
 ```
-.venv/bin/pip install --upgrade pip setuptools
+pip install --upgrade pip setuptools
 ```
 
 4.使用包含测试依赖项的方式，以可编辑模式安装项目。
