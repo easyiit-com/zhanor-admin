@@ -1,9 +1,10 @@
 # user.py
 from datetime import datetime, date, time
 from decimal import Decimal
+import bcrypt
 from sqlalchemy.sql.expression import ClauseElement
 from .meta import Base
-from app.core.db import db
+from app.core.db import db, get_db
 
  
 class User(Base):
@@ -34,6 +35,24 @@ class User(Base):
     verification = db.Column(db.String(255),comment='Verification') 
     token = db.Column(db.String(50),comment='Token') 
     status = db.Column(db.Enum('normal', 'hidden'),server_default='normal',comment='Status') 
+    
+    def set_password(self, pw):
+        db_session = get_db()
+        pwhash = bcrypt.hashpw(pw.encode("utf8"), bcrypt.gensalt())
+        self.password = pwhash.decode("utf8")
+        db_session.commit()
+
+    def check_password(self, pw):
+        if not pw:
+            return False
+        if self.password is not None:
+            try:
+                expected_hash = self.password.encode("utf8")
+                return bcrypt.checkpw(pw.encode("utf8"), expected_hash)
+            except ValueError:
+                return False
+        else:
+            return False
 
 
 

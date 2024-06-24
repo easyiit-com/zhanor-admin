@@ -3,8 +3,6 @@ from sqlalchemy import engine_from_config, pool
 from alembic import context
 from app.core.db import db  # 调整导入路径到实际位置
 
-
-from app.models.addon import Addon
 from app.models.user_group import UserGroup
 from app.models.user import User
 from app.models.user_balance_log import UserBalanceLog
