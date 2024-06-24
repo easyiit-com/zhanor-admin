@@ -87,7 +87,7 @@ python3 -m venv .venv
 安装项目及测试依赖：
 
 ```
-.venv/bin/pip install -e ".[testing]"
+pip install -e ".[testing]"
 ```
 
 
