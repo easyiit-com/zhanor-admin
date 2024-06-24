@@ -1,0 +1,92 @@
+<div class="collapse navbar-collapse" id="navbar-menu">
+    <ul class="primary-nav navbar-nav max-lg:py-4 max-lg:px-3">
+         
+        <li>
+            <div class="nav-link-label transition-all">
+                <span
+                    class="inline-block text-[10px] font-medium uppercase tracking-widest px-[0.5em] py-[0.35em] rounded-[3px]">
+                    Admin Sidebar 
+                </span>
+            </div>
+        </li>
+        {% for rule in admin_rules %}
+        <li
+            class="nav-item {% if rule.child | length != 0 %}dropdown{% endif %}">
+             
+            <a
+                class="nav-link {% if rule.child | length != 0 %}dropdown-toggle{% endif %} {% if current_route == rule.url_path or current_parent_path == rule.url_path %}active{% else %}{% endif %} {% if current_route in rule.url_paths %}show{% else %}{% endif %}"
+                {% if rule.child | length !=0 %}href="#"
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="false" role="button" aria-expanded="{% if (current_route in rule.url_paths or current_parent_path in rule.url_paths) %}true{% else %}false{% endif %}"
+                {% else %}href="{{rule.url_path}}" {% endif %} data-description="{{rule.description}}">
+                <i class="m-1 fs-3 {{rule.icon}}"></i>
+                <span
+                    class="flex items-center transition-[opacity,transform] nav-link-title grow">
+                    {{ _(rule.title) }}
+                </span>
+            </a>
+            {% if rule.child | length != 0 %}
+            <div
+                class="dropdown-menu {% if (current_route in rule.url_paths  or current_parent_path in rule.url_paths) %}show{% else %}{% endif %}">
+                {% for child in rule.child %}
+                <a
+                    class="dropdown-item nav-link {% if (current_route == child.url_path or current_parent_path == child.url_path) %}active{% endif %}"
+                    href="{{child.url_path}}" data-description="{{rule.description}}">
+                    {{ _(child.title) }}
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+
+
+
+
+
+
+        <li
+            class="nav-item h-[auto] transition-all group-[.navbar-shrinked]/body:opacity-0 group-[.navbar-shrinked]/body:translate-x-3 group-[.navbar-shrinked]/body:h-0 group-[.navbar-shrinked]/body:overflow-hidden">
+            <hr>
+            <div class="nav-link-label mb-2 transition-all">
+                <span
+                    class="inline-block text-[10px] font-medium uppercase tracking-widest px-[0.5em] py-[0.35em] rounded-[3px]">
+                    {{ _('Attachment') }}
+                </span>
+            </div>
+            <div class="px-[1.428rem]">
+                <div class="flex flex-col mb-2">
+                    <div class="d-flex align-items-center">
+                        <span
+                            class="legend !me-2 rounded-full bg-primary"></span>
+                        <span>{{_('Files')}}</span>
+                        <span class="ms-2">
+                            0
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span
+                            class="legend !me-2 rounded-full bg-[#9E9EFF]"></span>
+                        <span>{{_('Image')}}</span>
+                        <span class="ms-2">
+                            0
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-2 progress progress-separated">
+                    <div
+                        class="progress-bar grow-0 shrink-0 basis-auto bg-primary"
+                        role="progressbar"
+                        style="width: 49.921953312206%" aria-label="Text"></div>
+                    <div
+                        class="progress-bar grow-0 shrink-0 basis-auto bg-[#9E9EFF]"
+                        role="progressbar"
+                        style="width: 50.078046687794%" aria-label="Images">
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+    </ul>
+
+</div>

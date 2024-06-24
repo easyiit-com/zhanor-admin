@@ -1,0 +1,13 @@
+
+<svg width="216px" height="216px" viewBox="0 0 216 216" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="5.71800164%" y1="28.6297862%" x2="91.7011934%" y2="76.3470468%" id="linearGradient-sollyme3p0-1">
+            <stop stop-color="#63B9AF" offset="0%"></stop>
+            <stop stop-color="#5494DF" offset="60.7586627%"></stop>
+            <stop stop-color="#866AE8" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="椭圆形" fill="url(#linearGradient-sollyme3p0-1)" style="mix-blend-mode: lighten;" cx="108" cy="108" r="108"></circle>
+    </g>
+</svg>

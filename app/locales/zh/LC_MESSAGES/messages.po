@@ -1,0 +1,996 @@
+# Chinese translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-04-16 11:02+0800\n"
+"PO-Revision-Date: 2024-04-15 16:01+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh\n"
+"Language-Team: zh <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.14.0\n"
+
+msgid "Back To Dashboard"
+msgstr "返回仪表盘"
+
+msgid "Dashboard"
+msgstr "仪表盘"
+
+msgid "Please wait"
+msgstr "请稍候"
+
+msgid "Member ID"
+msgstr "会员ID"
+
+msgid "Administrator ID"
+msgstr "管理员ID"
+
+msgid "Category ID (Single Select)"
+msgstr "分类ID（单选）"
+
+msgid "Category IDs (Multiple Select)"
+msgstr "分类IDs（多选）"
+
+msgid "Tags"
+msgstr "标签"
+
+msgid "Weekday (Single Select)"
+msgstr "周几（单选）"
+
+msgid "Monday"
+msgstr "周一"
+
+msgid "Tuesday"
+msgstr "周二"
+
+msgid "Wednesday"
+msgstr "周三"
+
+msgid "Flags (Multiple Select)"
+msgstr "标志（多选）"
+
+msgid "Hot"
+msgstr "热门"
+
+msgid "Index"
+msgstr "索引"
+
+msgid "Recommend"
+msgstr "推荐"
+
+msgid "Gender (Single Select)"
+msgstr "性别（单选）"
+
+msgid "Male"
+msgstr "男"
+
+msgid "Female"
+msgstr "女"
+
+msgid "Hobbies (Multiple Select)"
+msgstr "爱好（多选）"
+
+msgid "Music"
+msgstr "音乐"
+
+msgid "Reading"
+msgstr "阅读"
+
+msgid "Swimming"
+msgstr "游泳"
+
+msgid "Title"
+msgstr "标题"
+
+msgid "Content"
+msgstr "内容"
+
+msgid "Image"
+msgstr "图片"
+
+msgid "Image Group"
+msgstr "图片组"
+
+msgid "Attachment"
+msgstr "附件"
+
+msgid "Keywords"
+msgstr "关键词"
+
+msgid "Description"
+msgstr "描述"
+
+msgid "City/Province"
+msgstr "城市/省份"
+
+msgid "Configuration (key=value pairs)"
+msgstr "配置（键=值对）"
+
+msgid "Two-Dimensional Array"
+msgstr "二维数组"
+
+msgid "Price"
+msgstr "价格"
+
+msgid "Views"
+msgstr "浏览量"
+
+msgid "Time Range"
+msgstr "时间范围"
+
+msgid "Start Date"
+msgstr "开始日期"
+
+msgid "Activity Time"
+msgstr "活动时间"
+
+msgid "Year"
+msgstr "年份"
+
+msgid "Time"
+msgstr "时间"
+
+msgid "Refresh Time"
+msgstr "刷新时间"
+
+msgid "Deletion Time"
+msgstr "删除时间"
+
+msgid "Weight"
+msgstr "权重"
+
+msgid "Switch"
+msgstr "开关"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Normal"
+msgstr "正常"
+
+msgid "Hidden"
+msgstr "隐藏"
+
+msgid "State Value"
+msgstr "状态值"
+
+msgid "Submit"
+msgstr "提交"
+
+msgid "Submit & Return"
+msgstr "提交并返回"
+
+msgid "Submit & New Entry"
+msgstr "提交并新建"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Creation Time"
+msgstr "创建时间"
+
+msgid "Update Time"
+msgstr "更新时间"
+
+msgid "Add"
+msgstr "添加"
+
+msgid "Batch Deletion"
+msgstr "批量删除"
+
+msgid "Actions"
+msgstr "操作"
+
+msgid "Prev"
+msgstr "上一页"
+
+msgid "next"
+msgstr "下一页"
+
+msgid "Details"
+msgstr "详情"
+
+msgid "Close"
+msgstr "关闭"
+
+msgid "Selecte Table"
+msgstr "选择表"
+
+msgid "Table fields show in list"
+msgstr "列表中显示的表格字段"
+
+msgid "Model Code"
+msgstr "模型代码"
+
+msgid "Template Index Code"
+msgstr "模板索引代码"
+
+msgid "Template Add Code"
+msgstr "模板添加代码"
+
+msgid "Template Edit Code"
+msgstr "模板编辑代码"
+
+msgid "View Code"
+msgstr "视图代码"
+
+msgid "JavaScript Code"
+msgstr "JavaScript代码"
+
+msgid "Route Code"
+msgstr "路由代码"
+
+msgid "Category"
+msgstr "分类"
+
+msgid "Tag"
+msgstr "标签"
+
+msgid "Username"
+msgstr "用户名"
+
+msgid "Wechat"
+msgstr "微信"
+
+msgid "Alipay"
+msgstr "支付宝"
+
+msgid "Trade No"
+msgstr "交易号"
+
+msgid "User ID"
+msgstr "用户ID"
+
+msgid "amount"
+msgstr "金额"
+
+msgid "Pay Amount"
+msgstr "支付金额"
+
+msgid "Transaction_Id"
+msgstr "交易ID"
+
+msgid "Payment Method"
+msgstr "支付方式"
+
+msgid "Pay Time"
+msgstr "支付时间"
+
+msgid "IP"
+msgstr "IP地址"
+
+msgid "Creation Time "
+msgstr "创建时间"
+
+msgid "UserAgent"
+msgstr "用户代理"
+
+msgid "Memo"
+msgstr "备注"
+
+msgid "Balance"
+msgstr "余额"
+
+msgid "Recharge Amount"
+msgstr "充值金额"
+
+msgid "Other"
+msgstr "其他"
+
+msgid "Recharge"
+msgstr "充值"
+
+msgid "Pay by scanning the QR code"
+msgstr "扫描二维码支付"
+
+msgid "Pay Successfull"
+msgstr "支付成功"
+
+msgid "User Center"
+msgstr "用户中心"
+
+msgid "Overview"
+msgstr "概览"
+
+msgid "View"
+msgstr "查看"
+
+msgid "Today's registration count"
+msgstr "今日注册数"
+
+msgid "Online user count"
+msgstr "在线用户数"
+
+msgid "Files"
+msgstr "文件"
+
+msgid "Total"
+msgstr "总计"
+
+msgid "Admin Logs"
+msgstr "管理员日志"
+
+msgid "Favorite Menu"
+msgstr "收藏菜单"
+
+msgid "Submit Successfully"
+msgstr "提交成功"
+
+msgid "Please enter the same password as above"
+msgstr "请输入与上述相同的密码"
+
+msgid "Please enter a valid email address"
+msgstr "请输入有效的电子邮箱地址"
+
+msgid "Please Accept This Plain Text"
+msgstr "请接受"
+
+msgid "Back to Home"
+msgstr "返回首页"
+
+msgid "Sign In"
+msgstr "登录"
+
+msgid "Email Address"
+msgstr "电子邮箱地址"
+
+msgid "Please Input Your Email"
+msgstr "请输入您的电子邮箱"
+
+msgid "Password"
+msgstr "密码"
+
+msgid "Please Input Your Your password"
+msgstr "请输入您的密码"
+
+msgid "Show Password"
+msgstr "显示密码"
+
+msgid "Remember me"
+msgstr "记住我"
+
+msgid "Network Addon"
+msgstr "网络插件"
+
+msgid "Local Addon"
+msgstr "本地插件"
+
+msgid "UUID"
+msgstr "UUID"
+
+msgid "Author"
+msgstr "作者"
+
+msgid "Version"
+msgstr "版本"
+
+msgid "Downloads Count"
+msgstr "下载次数"
+
+msgid "Paid"
+msgstr "已付费"
+
+msgid "Enabled"
+msgstr "已启用"
+
+msgid "Created"
+msgstr "创建于"
+
+msgid "Updated"
+msgstr "更新于"
+
+msgid "Free"
+msgstr "免费"
+
+msgid "Unbought"
+msgstr "未购买"
+
+msgid "No Install"
+msgstr "未安装"
+
+msgid "Install"
+msgstr "安装"
+
+msgid "Setting"
+msgstr "设置"
+
+msgid "Uninstall"
+msgstr "卸载"
+
+msgid "MD5"
+msgstr "MD5"
+
+msgid "Parent Group"
+msgstr "父级分组"
+
+msgid "Group Name"
+msgstr "分组名称"
+
+msgid "Rule IDs"
+msgstr "规则IDs"
+
+msgid "Administrator Name"
+msgstr "管理员名称"
+
+msgid "Operated Page"
+msgstr "操作页面"
+
+msgid "Log Title"
+msgstr "日志标题"
+
+msgid "IP Address"
+msgstr "IP地址"
+
+msgid "User Agent"
+msgstr "用户代理"
+
+msgid "Operation Time"
+msgstr "操作时间"
+
+msgid "Type"
+msgstr "类型"
+
+msgid "Menu"
+msgstr "菜单"
+
+msgid "Action"
+msgstr "动作"
+
+msgid "PARENT ID"
+msgstr "父级ID"
+
+msgid "From Addon"
+msgstr "来自插件"
+
+msgid "Route Name"
+msgstr "路由名称"
+
+msgid "Url_Path"
+msgstr "URL路径"
+
+msgid "Icon"
+msgstr "图标"
+
+msgid "Menutype"
+msgstr "菜单类型"
+
+msgid "Addtabs"
+msgstr "添加标签页"
+
+msgid "Blank"
+msgstr "空白页"
+
+msgid "Dialog"
+msgstr "对话框"
+
+msgid "Ajax"
+msgstr "Ajax"
+
+msgid "Extend"
+msgstr "扩展"
+
+msgid "Weigh"
+msgstr "权重"
+
+msgid "Createtime"
+msgstr "创建时间"
+
+msgid "Updatetime"
+msgstr "更新时间"
+
+msgid "Group Id"
+msgstr "分组ID"
+
+msgid "Nickname"
+msgstr "昵称"
+
+msgid "Avatar"
+msgstr "头像"
+
+msgid "Email"
+msgstr "电子邮箱"
+
+msgid "Mobile Number"
+msgstr "手机号码"
+
+msgid "Login Failure Count"
+msgstr "登录失败次数"
+
+msgid "Login Time"
+msgstr "登录时间"
+
+msgid "Login IP"
+msgstr "登录IP"
+
+msgid "Session Token"
+msgstr "会话令牌"
+
+msgid "Physical Path"
+msgstr "物理路径"
+
+msgid "File Name"
+msgstr "文件名"
+
+msgid "File Size"
+msgstr "文件大小"
+
+msgid "MIME Type"
+msgstr "MIME类型"
+
+msgid "Passthrough Data"
+msgstr "透传数据"
+
+msgid "Storage Location"
+msgstr "存储位置"
+
+msgid "SHA1 Hash of the File"
+msgstr "文件SHA1哈希值"
+
+msgid "General Attachmentcol"
+msgstr "通用附件列"
+
+msgid "Image Width"
+msgstr "图像宽度"
+
+msgid "Image Height"
+msgstr "图像高度"
+
+msgid "Image Type"
+msgstr "图像类型"
+
+msgid "Leave blank for no modification"
+msgstr "留空表示不作修改"
+
+msgid "Parent ID"
+msgstr "父级ID"
+
+msgid "Category Type"
+msgstr "分类类型"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Config Group"
+msgstr "配置组"
+
+msgid "Variable Name"
+msgstr "变量名"
+
+msgid "Variable Title"
+msgstr "变量标题"
+
+msgid "Variable Description"
+msgstr "变量描述"
+
+msgid "Visibility Condition"
+msgstr "可见性条件"
+
+msgid "Variable Value"
+msgstr "变量值"
+
+msgid "Related Table"
+msgstr "相关表"
+
+msgid "Select a Related Table"
+msgstr "选择相关表"
+
+msgid "Array Options"
+msgstr "数组选项"
+
+msgid "Data"
+msgstr "数据"
+
+msgid "Validation Rule"
+msgstr "验证规则"
+
+msgid "Select Rule"
+msgstr "选择规则"
+
+msgid "active"
+msgstr "激活状态"
+
+msgid "Required"
+msgstr "必填项"
+
+msgid "required"
+msgstr "必需"
+
+msgid "Digits"
+msgstr "数字"
+
+msgid "digits"
+msgstr "数字"
+
+msgid "Letters"
+msgstr "字母"
+
+msgid "letters"
+msgstr "字母"
+
+msgid "Date"
+msgstr "日期"
+
+msgid "date"
+msgstr "日期"
+
+msgid "time"
+msgstr "时间"
+
+msgid "email"
+msgstr "电子邮件"
+
+msgid "Website"
+msgstr "网址"
+
+msgid "url"
+msgstr "网址"
+
+msgid "QQ Number"
+msgstr "QQ号码"
+
+msgid "qq"
+msgstr "QQ"
+
+msgid "ID Card"
+msgstr "身份证"
+
+msgid "IDcard"
+msgstr "身份证"
+
+msgid "Landline Phone"
+msgstr "座机电话"
+
+msgid "tel"
+msgstr "电话"
+
+msgid "Mobile Phone"
+msgstr "手机"
+
+msgid "mobile"
+msgstr "移动电话"
+
+msgid "Postal Code"
+msgstr "邮政编码"
+
+msgid "zipcode"
+msgstr "邮政编码"
+
+msgid "Chinese Characters"
+msgstr "汉字"
+
+msgid "chinese"
+msgstr "中文"
+
+msgid "username"
+msgstr "用户名"
+
+msgid "password"
+msgstr "密码"
+
+msgid "Extended Attributes"
+msgstr "扩展属性"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid "Copy Variate"
+msgstr "复制变种"
+
+msgid "Delete Variate"
+msgstr "删除变种"
+
+msgid "Logout Successfully"
+msgstr "成功登出"
+
+msgid "Delete Successfully"
+msgstr "删除成功"
+
+msgid "Delete Faile"
+msgstr "删除失败"
+
+msgid "Please first select the items you want to delete"
+msgstr "请先选择您要删除的项目"
+
+msgid "Upload Successfully"
+msgstr "上传成功"
+
+msgid "Failed to upload files."
+msgstr "文件上传失败。"
+
+msgid "Copy Successfully"
+msgstr "复制成功"
+
+msgid "Copy Failed"
+msgstr "复制失败"
+
+msgid "Clear All Caches"
+msgstr "清除所有缓存"
+
+msgid "Profile"
+msgstr "个人资料"
+
+msgid "Logout"
+msgstr "登出"
+
+msgid "Search for documents..."
+msgstr "搜索文档…"
+
+msgid "Search results"
+msgstr "搜索结果"
+
+msgid "Generals"
+msgstr "常规"
+
+msgid "Config"
+msgstr "配置"
+
+msgid "Attachment Image"
+msgstr "附件图片"
+
+msgid "Attachment File"
+msgstr "附件文件"
+
+msgid "Addon"
+msgstr "插件"
+
+msgid "Auth"
+msgstr "认证"
+
+msgid "Admin Manage"
+msgstr "管理员管理"
+
+msgid "Admin Group"
+msgstr "管理员分组"
+
+msgid "Admin Rule"
+msgstr "管理员规则"
+
+msgid "Admin Log"
+msgstr "管理员日志"
+
+msgid "User Manage"
+msgstr "用户管理"
+
+msgid "User Group"
+msgstr "用户分组"
+
+msgid "User Rule"
+msgstr "用户规则"
+
+msgid "User Balance Log"
+msgstr "用户余额日志"
+
+msgid "User Score Log"
+msgstr "用户积分日志"
+
+msgid "Demo"
+msgstr "演示"
+
+msgid "Genarator"
+msgstr "生成器"
+
+msgid "User Recharge Order"
+msgstr "用户充值订单"
+
+msgid "Change in Balance"
+msgstr "余额变动"
+
+msgid "Balance Before Change"
+msgstr "变动前余额"
+
+msgid "Balance After Change"
+msgstr "变动后余额"
+
+msgid "Memo/Note"
+msgstr "备忘/注释"
+
+msgid "Permission Nodes"
+msgstr "权限节点"
+
+msgid "None"
+msgstr "无"
+
+msgid "Url Path"
+msgstr "URL路径"
+
+msgid "Selcet Icon"
+msgstr "选择图标"
+
+msgid "Select Icon"
+msgstr "选择图标"
+
+msgid "Input keyword To Search"
+msgstr "输入关键词搜索"
+
+msgid "Change in Scores"
+msgstr "积分变动"
+
+msgid "Points Before Change"
+msgstr "变动前积分"
+
+msgid "Points After Change"
+msgstr "变动后积分"
+
+msgid "Group ID"
+msgstr "组ID"
+
+msgid "Mobile Phone Number"
+msgstr "手机号码"
+
+msgid "Level"
+msgstr "等级"
+
+msgid "Gender"
+msgstr "性别"
+
+msgid "Date of Birth"
+msgstr "出生日期"
+
+msgid "Motto"
+msgstr "格言"
+
+msgid "Points"
+msgstr "积分"
+
+msgid "Consecutive Login Days"
+msgstr "连续登录天数"
+
+msgid "Maximum Consecutive Login Days"
+msgstr "最大连续登录天数"
+
+msgid "Previous Login Time"
+msgstr "上次登录时间"
+
+msgid "Login IP Address"
+msgstr "登录IP地址"
+
+msgid "Failed Login Attempts"
+msgstr "登录失败次数"
+
+msgid "Joining IP Address"
+msgstr "注册IP地址"
+
+msgid "Joining Time"
+msgstr "注册时间"
+
+msgid "Verification"
+msgstr "验证"
+
+msgid "Token"
+msgstr "令牌"
+
+msgid "Score"
+msgstr "得分"
+
+msgid "Credits"
+msgstr "信用"
+
+msgid "Your Files And Images"
+msgstr "您的文件和图片"
+
+msgid "Balance Logs"
+msgstr "余额记录"
+
+msgid "Credits Log"
+msgstr "信用记录"
+
+msgid "Please enter your email address"
+msgstr "请输入您的电子邮箱地址"
+
+msgid "User Forgot Password"
+msgstr "用户忘记密码"
+
+msgid "Send Code"
+msgstr "发送验证码"
+
+msgid "Verification Code From You Email"
+msgstr "来自您邮箱的验证码"
+
+msgid "Please Input Verification Code"
+msgstr "请输入验证码"
+
+msgid "New Password"
+msgstr "新密码"
+
+msgid "Please Input Your New Password"
+msgstr "请输入您的新密码"
+
+msgid "Please Input Your password"
+msgstr "请输入您的密码"
+
+msgid "Forgot Password?"
+msgstr "忘记密码？"
+
+msgid "By proceeding, you acknowledge and accept our"
+msgstr "继续操作即表示您已阅读并接受我们的"
+
+msgid "Terms and Conditions"
+msgstr "条款与条件"
+
+msgid "and"
+msgstr "和"
+
+msgid "Privacy Policy"
+msgstr "隐私政策"
+
+msgid "Don't have account yet?"
+msgstr "还没有账号吗？"
+
+msgid "Sign up"
+msgstr "注册"
+
+msgid "Sign Up"
+msgstr "注册"
+
+msgid "Have account yet?"
+msgstr "已有账号？"
+
+msgid "Now Sign In"
+msgstr "现在登录"
+
+#, fuzzy
+msgid "User Dashboard"
+msgstr "仪表盘"
+
+#, fuzzy
+msgid "Balance Log"
+msgstr "余额记录"
+
+#, fuzzy
+msgid "Score Log"
+msgstr "用户积分日志"
+
+#, fuzzy
+msgid "User Recharge"
+msgstr "用户充值订单"
+
+msgid "Files And Images"
+msgstr "文件和图片"
+
+msgid "Error,Need User ID"
+msgstr "错误，需要用户ID"
+
+msgid "Login Success"
+msgstr "登录成功"
+
+msgid "Login failed, Some Error"
+msgstr "登录失败，发生了一些错误"
+
+msgid "User Register"
+msgstr "用户注册"
+
+msgid "The email or name or mobile you entered is already registered"
+msgstr "您输入的邮箱、姓名或手机号已被注册"
+
+msgid "Success"
+msgstr "成功"
+
+msgid "The verification code has expired."
+msgstr "验证码已过期。"
+
+msgid "Max attempts exceeded. Account temporarily locked. Retry in 30 minutes."
+msgstr "尝试次数过多，账户暂时锁定，请30分钟后重试。"
+
+msgid "Verification code is incorrect."
+msgstr "验证码不正确。"
+
+msgid "Some Error"
+msgstr "发生了一些错误"
+
+msgid "Send Verification Code Failed"
+msgstr "发送验证码失败"
+
+msgid "Send Verification Code Failed, This email address is not valid"
+msgstr "发送验证码失败，该邮箱地址无效"
+
+msgid "Logout successful"
+msgstr "登出成功"
+

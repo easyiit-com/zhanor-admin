@@ -1,0 +1,127 @@
+<!-- index.jinja2 -->
+{% extends "admin/layout/default.jinja2" %}
+{% block javascript %}
+<script src="/static/assets/js/backend/general_config.js"></script>
+{% endblock javascript %} 
+{% block content %}
+<div class="page-body pt-6">
+    <div class="container-fluid px-4">
+        <div class="mb-2">
+            <a href="/admin/general/config/add" class="btn btn-success">
+                <i class="ti ti-plus"></i>
+                {{_('Add')}}
+            </a>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
+                    {% for group in config_groups %}
+                    <li class="nav-item">
+                        <a href="#tabs-{{group}}" class="nav-link {% if loop.index0 == 0 %}active{% endif %}"
+                            data-bs-toggle="tab">{{_(group|title)}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-body">
+                
+                <form id="general_config_form" method="post" onsubmit="return GeneralConfigSave();" action>
+                    <div class="tab-content">
+                        {% for group in config_groups
+                        %}
+                        <div class="tab-pane {% if loop.index0 == 0 %}active show{% endif %}" id="tabs-{{group}}">
+                            <div class="row">
+                                <div class="col-md-5 mx-auto">
+
+                                    {% for config in general_configs_list[group] %}
+                                    <div class="mb-[20px]" id="general_config-{{ config.id }}">
+                                        <label class="form-label"
+                                            for="name">{{_(config.title)}}(configs.{{config.group}}.{{config.name}})
+                                                <i class="btn btn-icon m-1 fs-3 ti ti-copy link-secondary copy"
+                                                data-clipboard-text="configs.{{config.group}}.{{config.name}}"
+                                                data-bs-toggle="tooltip" aria-label="{{_('Copy Variate')}}"
+                                                data-bs-original-title="{{_('Copy Variate')}}"></i>
+                                                 <i class="btn btn-icon m-1 fs-3 ti ti-x text-danger" onclick="GeneralConfigDelete('{{ config.id }}')" aria-label="{{_('Delete Variate')}}"
+                                                data-bs-original-title="{{_('Delete Variate')}}"></i> 
+                                        </label>
+                                        <div class="p-2">
+                                            {% if config.type == 'text' %}
+                                            <div class="input-group input-group-flat">
+                                                <textarea class="form-control" type="text" id="{{config.name}}"
+                                                    name="row[{{config.name}}]" placeholder="{{config.tip}}"
+                                                    {{config.required}}>{{config.value}}</textarea>
+                                                
+                                            </div>
+                                            {% elif config.type == 'select' %}
+                                            <div class="input-group input-group-flat">
+                                                <select id="{{config.name}}" type="text" class="form-select"
+                                                    name="row[{{config.name}}]">
+                                                    {% for key, value in config.content %}
+                                                    <option value="{{key}}">{{value}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            {% elif config.type == 'array' %}
+                                            
+                                            {% for index,(key,value) in
+                                            config.value %}
+                                                <div class="row g-2 p-2" id="row-{{config.group}}-{{config.name}}-{{index}}">
+                                                    <div class="col-4">
+                                                        <input class="form-control" type="text" id="{{config.name}}"
+                                                            name="row[{{config.name}}][{{index}}][key]" value="{{key}}"
+                                                            {{config.required}} />
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <input class="form-control" type="text" id="{{config.name}}"
+                                                            name="row[{{config.name}}][{{index}}][value]" value="{{value}}"
+                                                            placeholder="{{config.tip}}" {{config.required}} />
+                                                    </div>
+                                                    <div class="col-4 d-inline-block align-middle p-2 align-items-center">
+                                                        <a href="javascript:;" class="btn btn-danger btn-icon delete"
+                                                            aria-label="Delete" data-row="row-{{config.group}}-{{config.name}}-{{index}}">
+                                                            <i class="ti ti-x"></i> 
+                                                        </a> 
+
+                                                        <a href="javascript:;" class="btn btn-icon" aria-label="Move">
+                                                            <i class="ti ti-arrows-move"></i> 
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                             
+                                             
+                                            <a href="javascript:;" class="btn btn-success btn-index-add" data-name='{{config.name}}' data-key='{{config.value|length}}' aria-label="{{_('Add')}}">
+                                                    {{_('Add')}}
+                                                <i class="ti ti-plus"></i> 
+                                            </a>
+                                             
+                                            {% else %}
+                                            <div class="input-group input-group-flat">
+                                                <input class="form-control" type="text" id="{{config.name}}"
+                                                    name="row[{{config.name}}]" value='{{config.value}}'
+                                                    placeholder="{{config.tip}}" {{config.required}} />
+                                                    
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-5 mx-auto text-centetr">
+                        <button form="general_config_form" id="general_config_button"
+                            class="btn btn-primary !py-3 w-100">
+                            {{_('Submit')}}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

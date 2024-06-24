@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="{{request.locale_name}}">
+
+<head>
+   {# @if(isset($setting->google_analytics_code))
+   <!-- Google tag (gtag.js) -->
+   <!-- <script async src="https://www.googletagmanager.com/gtag/js?id={{$setting->google_analytics_code}}"></script>
+   <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', '{{$setting->google_analytics_code}}');
+   </script> -->
+   @endif #}
+
+   <meta name="csrf-token" content="{{csrf_token() }}">
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+   <meta name="stream-url" content="streamUrl">
+   <link rel="icon" href="/assets/favicon.ico">
+   <title>{{_(title)}} | {{configs.basic.name}}</title>
+   <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@500;600;700&display=swap" rel="stylesheet"> -->
+   <link href="/static/assets/libs/tabler/tabler.min.css?v={{configs.basic.version}}" rel="stylesheet" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css"
+      integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
+      integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link rel="stylesheet" href="/static/assets/webfont/tabler-icons.min.css" />
+   <link href="/static/assets/css/zhanor-admin.css?v={{configs.basic.version}}" rel="stylesheet" />
+   <link href="/static/assets/css/app.css?v={{configs.basic.version}}" rel="stylesheet" />
+</head>
+
+<body class="group/body">
+   <script src="/static/assets/libs/tabler/tabler-theme.min.js?v={{configs.basic.version}}"></script>
+   <script src="/static/assets/libs/navbar-shrink.js?v={{configs.basic.version}}"></script>
+   <div id="app-loading-indicator" class="fixed top-0 left-0 right-0 z-[99] opacity-0 transition-opacity">
+      <div class="progress [--tblr-progress-height:3px]">
+         <div
+            class="progress-bar progress-bar-indeterminate bg-[--tblr-primary] before:[animation-timing-function:ease-in-out] dark:bg-white">
+         </div>
+      </div>
+   </div>
+   {% block content %}
+   <p>No content</p>
+   {% endblock content %}
+   <!-- Tabler Core -->
+   <script src="/static/assets/libs/tabler/tabler.min.js?v={{configs.basic.version}}" defer></script>
+   <script src="/static/assets/libs/opai.min.js?v={{configs.basic.version}}" defer></script>
+   <!-- Clipboard -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"
+      integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+   <!-- AJAX CALLS -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"
+      integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script src="/static/assets/js/frontend/frontend.js"></script>
+   <script>
+      function _(text) {
+        const translations = {
+          "Logout Successfully": '{{_("Logout Successfully")}}',
+          "Please wait": '{{_("Please wait")}}',
+          "Delete Successfully": '{{_("Delete Successfully")}}',
+          "Delete Faile": '{{_("Delete Faile")}}',
+          "Please first select the items you want to delete": '{{_("Please first select the items you want to delete")}}',
+          "Submit Successfully": '{{_("Submit Successfully")}}',
+          "Upload Successfully": '{{_("Upload Successfully")}}',
+          "Failed to upload files.": '{{_("Failed to upload files.")}}',
+          "Copy Successfully": '{{_("Copy Successfully")}}',
+          "Copy Failed": '{{_("Copy Failed")}}'
+        };
+        return translations[text] || text; // 如果没有找到对应的翻译，则返回原文本
+      }
+    </script>
+   {% block javascript %}
+   {% endblock javascript %}
+   <script src="/static/assets/js/frontend/user.js"></script>
+   
+</body>
+
+</html>

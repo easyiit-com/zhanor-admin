@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+
+  <meta name="csrf-token" content="{{csrf_token() }}">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="stream-url" content="/user/openai/stream">
+  <link rel="icon" href="/static/assets/favicon.ico">
+  <title>{{_(title)}} | {{configs.basic.name}}</title>
+  <!--
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@500;600;700&display=swap" rel="stylesheet"> 
+-->
+  <link href="/static/assets/libs/tabler/tabler.min.css?v={{configs.basic.version}}" rel="stylesheet" />
+  <link href="/static/assets/libs/tabler/tabler-payments.css?v={{configs.basic.version}}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css"
+    integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
+    integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="/static/assets/webfont/tabler-icons.min.css" />
+
+  <link href="/static/assets/css/zhanor-admin.css?v={{configs.basic.version}}" rel="stylesheet" />
+
+  <link href="/static/assets/css/app.css?v={{configs.basic.version}}" rel="stylesheet" />
+
+  {% block css %}
+  {% endblock css %}
+</head>
+
+<body class="group/body">
+  <script src="/static/assets/libs/tabler/tabler-theme.min.js?v={{configs.basic.version}}"></script>
+  <script src="/static/assets/libs/navbar-shrink.js?v={{configs.basic.version}}"></script>
+  <div id="app-loading-indicator" class="fixed top-0 left-0 right-0 z-[99] opacity-0 transition-opacity">
+    <div class="progress [--tblr-progress-height:3px]">
+      <div
+        class="progress-bar progress-bar-indeterminate bg-[--tblr-primary] before:[animation-timing-function:ease-in-out] dark:bg-white">
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- Navbar -->
+    <span
+      class="navbar-expander inline-flex items-center justify-center w-6 h-6 fixed top-[calc(var(--lqd-header-height)/2)] !start-[--navbar-width] p-0 border-0 bg-[--lqd-header-search-bg] rounded-2xl z-50 transition-all cursor-pointer -translate-x-1/2 -translate-y-1/2 max-lg:hidden hover:bg-[--lqd-faded-out] group-[.navbar-shrinked]/body:!start-[80px]">
+      <svg
+        class="transition-transform translate-x-0 translate-y-0 group-[.navbar-shrinked]/body:-scale-x-100 group-hover:-translate-x-[2px] group-[.navbar-shrinked]/body:group-hover:translate-x-[2px] rtl:-scale-x-100 rtl:group-[.navbar-shrinked]/body:scale-x-100"
+        xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5"
+        stroke="var(--lqd-heading-color)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 6l-6 6l6 6"></path>
+      </svg>
+    </span>
+    <aside
+      class="navbar navbar-vertical navbar-expand-lg navbar-transparent !overflow-hidden max-lg:absolute max-lg:top-[65px] max-lg:left-0 max-lg:w-full max-lg:z-50 max-lg:!bg-white max-lg:!shadow-xl max-lg:min-h-0 max-lg:p-0 max-lg:max-h-[calc(85vh-2rem)] max-lg:overflow-y-auto max-lg:dark:!bg-[--tblr-body-bg] max-lg:rounded-b-[20px] group-[.navbar-shrinked]/body:!overflow-visible">
+      <div class="navbar-inner h-full overflow-x-hidden overflow-y-auto max-h-[inherit] max-lg:w-full">
+        <div class="p-0 container-fluid max-lg:w-full">
+          <h1
+            class="flex items-center ps-[1.25rem] pe-9 min-h-[--lqd-header-height] max-w-full relative max-lg:hidden group-[.navbar-shrinked]/body:w-full group-[.navbar-shrinked]/body:px-0 group-[.navbar-shrinked]/body:text-center group-[.navbar-shrinked]/body:justify-center">
+            <a class="block px-0" href="/dashboard">
+
+              <img src="/static/assets/img/user/logo.svg" alt="{{configs.basic.name}}"
+                class="w-full h-auto group-[.navbar-shrinked]/body:hidden dark:hidden">
+              <img src="/static/assets/img/user/logo-dark.svg" alt="{{configs.basic.name}}"
+                class="w-full h-auto hidden group-[.navbar-shrinked]/body:hidden dark:block">
+
+              <!-- collapsed -->
+              <img src="/static/assets/img/user/logo-Collapsed.png" alt="{{configs.basic.name}}"
+                class="w-full h-auto hidden max-w-[40px] mx-auto group-[.navbar-shrinked]/body:block dark:!hidden">
+              <img src="/static/assets/img/user/logo-collapsed-dark.svg" alt="{{configs.basic.name}}"
+                class="w-full h-auto hidden max-w-[40px] mx-auto group-[.theme-dark.navbar-shrinked]/body:block">
+
+            </a>
+          </h1>
+          {% include 'sidebar.jinja2' %}
+        </div>
+      </div>
+    </aside>
+    <!-- Navbar -->
+    <header class="relative navbar navbar-expand-md navbar-light flex max-lg:h-[65px]">
+      <div class="container-fluid px-4 flex-nowrap !items-stretch">
+        <div class="hidden items-center max-lg:flex max-lg:gap-3">
+          <button class="navbar-toggler collapsed max-lg:!block" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="hidden max-lg:flex items-center justify-center shrink-0 lg:px-2 max-md:max-w-[120px]"
+            href="/dashboard">
+            <img src="/static/assets/img/user/logo.svg" alt="{{configs.basic.name}}" class>
+          </a>
+        </div>
+        <div class="navbar-nav flex-row justify-end max-lg:basis-[65%]">
+          <div class="flex gap-[18px] max-lg:gap-2">
+
+            <div class="flex items-center">
+              <a href="?theme=dark"
+                class="nav-link items-center justify-center px-0 hide-theme-dark hover:!bg-transparent max-lg:w-10 max-lg:h-10 max-lg:p-0 max-lg:border max-lg:border-solid max-lg:border-[--tblr-border-color] max-lg:!rounded-full max-lg:dark:bg-white max-lg:dark:bg-opacity-[0.03]"
+                title="Enable dark mode">
+                <i class="mx-1 ti fs-1 ti-moon"></i>
+              </a>
+              <a href="?theme=light"
+                class="nav-link items-center justify-center px-0 hide-theme-light hover:!bg-transparent max-lg:w-10 max-lg:h-10 max-lg:p-0 max-lg:border max-lg:border-solid max-lg:border-[--tblr-border-color] max-lg:!rounded-full max-lg:dark:bg-white max-lg:dark:bg-opacity-[0.03]"
+                title="Enable light mode">
+                <i class="mx-1 ti fs-1 ti-sun"></i>
+              </a>
+            </div>
+            <div class="nav-item dropdown">
+              <a href="#"
+                class="nav-link px-0 hover:!bg-transparent max-lg:w-10 max-lg:h-10 max-lg:p-0 max-lg:border max-lg:border-solid max-lg:border-[--tblr-border-color] max-lg:!rounded-full max-lg:dark:bg-white max-lg:dark:bg-opacity-[0.03]"
+                data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
+                <i class="mx-1 ti fs-1 ti-world"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <div class="flex flex-col">
+                  {% for key, language in all_languages.items() %}
+                  {% if key in languages%}
+                  <a rel="alternate" hreflang="language" href="/da/dashboardusers"
+                    class="flex items-center px-3 py-2 border-solid border-[--tblr-border-color] border-t-0 border-r-0 border-l-0 last:border-b-0 text-heading transition-colors hover:no-underline hover:bg-[--tblr-border-color]">
+                    <span class="text-[21px] !me-2">{{
+                      country2flag(language['regional'][language['regional'].rfind('_')
+                      + 1:]) }}
+                    </span>{{language.native}}
+                  </a>
+                  {%endif%}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="hidden items-center max-lg:flex">
+              <a href="/dashboard/user/payment"
+                class="inline-flex items-center justify-center text-current w-10 h-10 p-0 border border-solid !border-[--tblr-border-color] !rounded-full dark:bg-white dark:bg-opacity-[0.03]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"></path>
+                </svg>
+              </a>
+            </div>
+            <div class="nav-item dropdown">
+              <a href="#" class="p-0 nav-link d-flex lh-1 text-reset" data-bs-toggle="dropdown"
+                aria-label="Open user menu">
+                <span class="avatar avatar-sm max-lg:w-10 max-lg:h-10"
+                  style="background-image: url(/static/assets/img/auth/default-avatar.png)"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <div class="dropdown-item disabled">
+                  <div>
+                    <div>{{user.nickname}}(ID:{{user.id}})</div>
+                    <div class="mt-1 small text-muted">{{user.email}}</div>
+                  </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item " href="/user/profile">
+                  {{_('Profile')}}
+                </a>
+                <a href="javascript:;" class="dropdown-item logout">{{_('Logout')}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex items-center lg:-order-1 max-lg:w-full max-lg:fixed max-lg:bottom-16 max-lg:left-0 max-lg:z-50">
+          <form
+            class="navbar-search group !me-2 max-lg:hidden max-lg:[&.show]:flex max-lg:[&.collapsing]:flex max-lg:m-0 max-lg:w-full max-lg:!me-0"
+            id="navbar-search" autocomplete="off" novalidate>
+            <div class="w-full input-icon max-lg:p-3 max-lg:bg-[#fff] max-lg:dark:bg-zinc-800">
+              <span class="input-icon-addon">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                  <path d="M21 21l-6 -6" />
+                </svg>
+              </span>
+              <input type="search" class="form-control navbar-search-input peer max-lg:!rounded-md dark:!bg-zinc-900"
+                id="top_search_word" onkeydown="return event.key != 'Enter';"
+                placeholder="{{_('Search for documents...')}}" aria-label="Search in website') }}">
+              <kbd
+                class="inline-block absolute top-1/2 !end-[12px] -translate-y-1/2 bg-[var(--tblr-bg-surface)] transition-all pointer-events-none peer-focus:opacity-0 peer-focus:invisible peer-focus:scale-70 group-[.is-searching]:opacity-0 group-[.is-searching]:invisible max-lg:hidden opacity-0"><span
+                  id="search-shortcut-key"></span> + K</kbd>
+              <span class="absolute top-1/2 -translate-y-1/2 !end-[20px]">
+                <span class="spinner-border spinner-border-sm text-muted hidden group-[.is-searching]:block"
+                  role="status"></span>
+              </span>
+              <span
+                class="absolute !end-3 top-1/2 -translate-y-1/2 -translate-x-2 transition-all opacity-0 pointer-events-none peer-focus:!opacity-100 peer-focus:translate-x-0  group-[.is-searching]:hidden group-[.done-searching]:hidden rtl:-scale-x-100">
+                <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 96 960 960" width="25"
+                  fill="currentColor">
+                  <path d="m375 816-43-43 198-198-198-198 43-43 241 241-241 241Z" />
+                </svg>
+              </span>
+              <div
+                class="navbar-search-results absolute top-[calc(100%+17px)] !start-0 bg-[#fff] shadow-[0_10px_70px_rgba(0,0,0,0.1)] rounded-md w-[100%] max-h-[380px] overflow-y-auto hidden group-[.done-searching]:block dark:!bg-[--tblr-bg-surface] max-lg:top-auto max-lg:bottom-full max-lg:start-0 max-lg:end-0 max-lg:w-auto"
+                id="search_results" style="z-index: 999;">
+                <!-- Search results here -->
+                <h3
+                  class="m-0 py-[0.75rem] px-3 border-solid border-b border-t-0 border-r-0 border-l-0 border-[--tblr-border-color] text-[1rem] font-medium">
+                  {{_('Search results')}}</h3>
+                <div class="search-results-container"></div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-wrapper overflow-hidden">
+      <!-- Updater -->
+      <div class="page-header">
+        <div class="container-fluid px-4">
+          <div class="row g-2 items-center">
+            <div class="col">
+              <div class="hstack gap-1">
+                {{breadcrumbs | safe}}
+              </div>
+              <h2 class="page-title mb-2">
+                {{_(title)}}
+              </h2>
+              {% if description%}
+              <div class="mt-3 page-pretitle mb-[22px]">
+                {{_(description)}}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Page body -->
+
+      {% block content %}
+      <p>No content</p>
+      {% endblock content %}
+      <footer class="footer footer-transparent max-lg:pb-24">
+        <div class="container-fluid px-4">
+          <div class="row text-center items-center flex-row-reverse">
+            <div class="col-lg-auto lg:ms-auto">
+              <p>Version: {{configs.basic.version}}</p>
+            </div>
+            <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+              <p>{{configs.basic.user_footer|safe}}</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Tabler Core -->
+  <script src="/static/assets/libs/tabler/tabler.min.js?v={{configs.basic.version}}" defer></script>
+  <script src="/static/assets/libs/opai.min.js?v={{configs.basic.version}}" defer></script>
+  <!-- Clipboard -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"
+    integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- AJAX CALLS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"
+    integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/static/assets/js/frontend/frontend.js"></script>
+  <script>
+    function _(text) {
+      const translations = {
+        "Logout Successfully": '{{_("Logout Successfully")}}',
+        "Please wait": '{{_("Please wait")}}',
+        "Delete Successfully": '{{_("Delete Successfully")}}',
+        "Delete Faile": '{{_("Delete Faile")}}',
+        "Please first select the items you want to delete": '{{_("Please first select the items you want to delete")}}',
+        "Submit Successfully": '{{_("Submit Successfully")}}',
+        "Upload Successfully": '{{_("Upload Successfully")}}',
+        "Failed to upload files.": '{{_("Failed to upload files.")}}',
+        "Copy Successfully": '{{_("Copy Successfully")}}',
+        "Copy Failed": '{{_("Copy Failed")}}'
+      };
+      return translations[text] || text; // 如果没有找到对应的翻译，则返回原文本
+    }
+  </script>
+  {% block javascript %}
+  {% endblock javascript %}
+  <script src="/static/assets/js/frontend/user.js"></script>
+  
+</body>
+
+</html>

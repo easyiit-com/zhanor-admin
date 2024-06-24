@@ -1,0 +1,216 @@
+<!-- add.jinja2 or edit.jinja2 -->
+{% extends "admin/layout/default.jinja2" %}
+
+{% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js?v={{configs.basic.version}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js?v={{configs.basic.version}}"></script>
+<script src="/static/assets/js/backend/user_recharge_order.js"></script>
+<script src="/static/assets/js/backend/upload.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.0.0/tinymce.min.js"
+    integrity="sha512-xEHlM+pBhSw2P/G+5x3BR8723QPEf2bPr4BLV8p8pvtaCHmWVuSzzKy9M0oqWaXDZrB3r2Ntwmc9iJcNV/nfBQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"
+    integrity="sha512-K/oyQtMXpxI4+K0W7H25UopjM8pzq0yrVdFdG21Fh5dBe91I40pDd9A4lzNlHPHBIP2cwZuoxaUSX0GJSObvGA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/ar-dz.min.js"
+    integrity="sha512-qpDG6agspDXhnOZkCoWtFNJ13B6Fq6pwIuZoLw0b05J8TDd1qohuTaemmrpsN3ZVtB7AI7ZnqH5CVVIj01SV5g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+                    <script>   
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const input = document.getElementById("pay_time");
+                            let initialDate;
+                            const existingValue = input.value.trim();
+                            if (existingValue !== "") {
+                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+                            } else {
+                                initialDate = new Date();
+                            }
+                            flatpickr("#pay_time", {
+                                enableTime: true,
+                                dateFormat: "Y-m-d H:i:s",
+                                defaultDate: initialDate
+                            });
+                        }); 
+                    </script>
+                    
+                    <script>   
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const input = document.getElementById("createtime");
+                            let initialDate;
+                            const existingValue = input.value.trim();
+                            if (existingValue !== "") {
+                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+                            } else {
+                                initialDate = new Date();
+                            }
+                            flatpickr("#createtime", {
+                                enableTime: true,
+                                dateFormat: "Y-m-d H:i:s",
+                                defaultDate: initialDate
+                            });
+                        }); 
+                    </script>
+                    
+                    <script>   
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const input = document.getElementById("updatetime");
+                            let initialDate;
+                            const existingValue = input.value.trim();
+                            if (existingValue !== "") {
+                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+                            } else {
+                                initialDate = new Date();
+                            }
+                            flatpickr("#updatetime", {
+                                enableTime: true,
+                                dateFormat: "Y-m-d H:i:s",
+                                defaultDate: initialDate
+                            });
+                        }); 
+                    </script>
+                    
+
+<script>
+    var currentButton = undefined;
+    $(".btn-submit").on('click', function (event) {
+        currentButton = $(this)
+    });
+    $("#user_recharge_order_form").validate({
+        submitHandler: function (form) {
+            var buttonText = currentButton.text();
+            currentButton.prop("disabled", true).html("{{_('Please wait')}}");
+            var formData = $('#user_recharge_order_form').serializeArray(); 
+            var jsonData = {}; 
+            formData.forEach(function(item) {jsonData[item.name] = item.value;}); 
+            var type = currentButton.data('type');
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/user/recharge_order/save",
+                data: JSON.stringify(jsonData),
+                contentType: 'application/json;charset=utf-8', 
+                processData: false,
+                success: function (data) {
+                    toastr.options.timeOut = 200;
+                    toastr.options.onHidden = function () {
+                        currentButton.prop("disabled", false).html(buttonText);
+                        if (type == 'submit-return') {
+                            window.location.href = '/admin/user/recharge_order';
+                        } else if (type == 'submit-new-entry') {
+                            window.location.href = '/admin/user/recharge_order/add';
+                        } else {
+                            window.location.reload();
+                        }
+                    };
+                    toastr.success("{{_('Submit Successfully')}}");
+                },
+                error: function (xhr, status, error) {
+                    let msg = xhr.responseJSON && xhr.responseJSON.msg ? xhr.responseJSON.msg : error;
+                    toastr.error(msg);
+                },
+                complete: function (xhr, textStatus) {
+                    $("#app-loading-indicator").addClass("opacity-0");
+                    currentButton.prop("disabled", false).html(buttonText);
+                },
+            });
+
+            return false;
+        },
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            $(element).removeClass('is-valid');
+            $(element).addClass('is-invalid');
+            error.addClass("mt-1 p-1 text-warning");
+            if (element.prop("type") === "checkbox" || element.parent().find('button').length > 0) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        success: function (label, element) {
+            $(element).removeClass('is-invalid');
+            $(element).addClass('is-valid mb-2');
+            $(label).addClass('d-none');
+        },
+    });
+</script>
+{% endblock javascript %}
+{% block content %}
+<!-- Page body -->
+<div class="page-body pt-6">
+    <div class="container-fluid px-4">
+        <div class="row">
+            <div class="col-md-5 mx-auto">
+                <form id="user_recharge_order_form" method="post" action>
+                    <div class="mb-[20px]">
+    <label class="form-label" for="trade_no" >{{_('Trade No')}}</label>
+   <input class="form-control" type="text" id="trade_no" name="trade_no"  value="{{value.trade_no}}" placeholder="{{_('Trade No')}}"  maxlength = 100 />
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="user_id" >{{_('User ID')}}</label>
+   <select id="user_id" class="form-select ajax" data-model="/admin/user" data-title="name" data-value="{{value.user_id}}" name="user_id">
+  
+</select>  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="amount" >{{_('amount')}}</label>
+   <input type="number" class="form-control" step="0.01" id="amount" name="amount" value="{{value.amount}}"  placeholder="{{_('amount')}}"  />
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="pay_amount" >{{_('Pay Amount')}}</label>
+   <input type="number" class="form-control" step="1" id="pay_amount" name="pay_amount" value="{{value.pay_amount}}"  placeholder="{{_('Pay Amount')}}"  />
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="transaction_id" >{{_('Transaction_Id')}}</label>
+   <select id="transaction_id" class="form-select ajax" data-model="/admin/transaction" data-title="name" data-value="{{value.transaction_id}}" name="transaction_id">
+  
+</select>  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="payment_method" >{{_('Payment Method')}}</label>
+   <input class="form-control" type="text" id="payment_method" name="payment_method"  value="{{value.payment_method}}" placeholder="{{_('Payment Method')}}"  maxlength = 50 />
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="pay_time" >{{_('Pay Time')}}</label>
+   <input type="datetime" class="form-control" id="pay_time" name="pay_time" value="{{value.pay_time}}" placeholder="{{_('Pay Time')}}"  />
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="ip" >{{_('IP')}}</label>
+   <input class="form-control" type="text" id="ip" name="ip"  value="{{value.ip}}" placeholder="{{_('IP')}}"  maxlength = 50 />
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="useragent" >{{_('UserAgent')}}</label>
+   <input class="form-control" type="text" id="useragent" name="useragent"  value="{{value.useragent}}" placeholder="{{_('UserAgent')}}"  maxlength = 255 />
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="memo" >{{_('Memo')}}</label>
+   <input class="form-control" type="text" id="memo" name="memo"  value="{{value.memo}}" placeholder="{{_('Memo')}}"  maxlength = 255 />
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="status" >{{_('Status')}}</label>
+   <select id="status" type="text" class="form-select" name="status">
+    <option value="created">{{_('Created')}}</option>
+  <option value="paid">{{_('Paid')}}</option>
+  <option value="expired">{{_('Expired')}}</option>
+
+</select>  </div>
+
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" form="user_recharge_order_form" data-type="submit"
+                            class="btn btn-primary btn-submit">
+                            {{_('Submit')}}
+                        </button>
+                        <button type="submit" form="user_recharge_order_form" data-type="submit-return"
+                            class="btn btn-primary btn-submit">
+                            {{_('Submit & Return')}}
+                        </button>
+                        <button type="submit" form="user_recharge_order_form" data-type="submit-new-entry"
+                            class="btn btn-primary btn-submit">
+                            {{_('Submit & New Entry')}}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>{% endblock content %}

@@ -1,0 +1,249 @@
+<!-- add.jinja2 or edit.jinja2 -->
+{% extends "admin/layout/default.jinja2" %}
+
+{% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js?v={{configs.basic.version}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js?v={{configs.basic.version}}"></script>
+<script src="/static/assets/js/backend/general_config.js"></script>
+ 
+<script>
+    var currentButton = undefined;
+    $(".btn-submit").on('click', function (event) {
+        currentButton = $(this)
+    });
+    $("#general_config_form").validate({
+        submitHandler: function (form) {
+            var buttonText = currentButton.text();
+            currentButton.prop("disabled", true).html("{{_('Please wait')}}");
+            var formData = $('#general_config_form').serializeArray(); 
+            var jsonData = {}; 
+            formData.forEach(function(item) {jsonData[item.name] = item.value;}); 
+            var type = currentButton.data('type');
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/general/config/add",
+                data: JSON.stringify(jsonData),
+                contentType: 'application/json;charset=utf-8', 
+                processData: false,
+                success: function (data) {
+                    toastr.options.timeOut = 200;
+                    toastr.options.onHidden = function () {
+                        currentButton.prop("disabled", false).html(buttonText);
+                        if (type == 'submit-return') {
+                            window.location.href = '/admin/general/config';
+                        } else if (type == 'submit-new-entry') {
+                            window.location.href = '/admin/general/config/add';
+                        } else {
+                            window.location.reload();
+                        }
+                    };
+                    toastr.success("{{_('Submit Successfully')}}");
+                },
+                error: function (xhr, status, error) {
+                    let msg = xhr.responseJSON && xhr.responseJSON.msg ? xhr.responseJSON.msg : error;
+                    toastr.error(msg);
+                },
+                complete: function (xhr, textStatus) {
+                    $("#app-loading-indicator").addClass("opacity-0");
+                    currentButton.prop("disabled", false).html(buttonText);
+                },
+            });
+
+            return false;
+        },
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            $(element).removeClass('is-valid');
+            $(element).addClass('is-invalid');
+            error.addClass("mt-1 p-1 text-warning");
+            if (element.prop("type") === "checkbox" || element.parent().find('button').length > 0) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        success: function (label, element) {
+            $(element).removeClass('is-invalid');
+            $(element).addClass('is-valid mb-2');
+            $(label).addClass('d-none');
+        },
+    });
+</script>
+
+{% endblock javascript %}
+{% block content %}
+<!-- Page body -->
+<div class="page-body pt-6">
+    <div class="container-fluid px-4">
+        <div class="row">
+            <div class="col-md-5 mx-auto">
+                <form id="general_config_form" method="post" action>
+
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="group">{{_('Config Group')}}</label>
+                        <select id="group" name="group" class="form-control selectpicker" required>
+                            {% for group in config_groups %}
+                            <option value="{{group}}">{{_(group | title)}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="name">{{_('Variable Name')}}</label>
+                        <input class="form-control" type="text" id="name" name="name" value="{{value.name}}"
+                            placeholder="{{ _('Variable Name') }}" required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="title">{{_('Variable Title')}}</label>
+                        <input class="form-control" type="text" id="title" name="title" value="{{value.title}}"
+                            placeholder="{{ _('Variable Title') }}" required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="tip">{{_('Variable Description')}}</label>
+                        <input class="form-control" type="text" id="tip" name="tip" value="{{value.tip}}"
+                            placeholder="{{ _('Variable Description') }}" />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="type">{{_('Type')}}</label>
+                        <select name="type" id="congfig-type" class="form-control selectpicker" tabindex="null">
+                            <option value="string" selected>String</option>
+                            <option value="password">Password</option>
+                            <option value="text">Text</option>
+                            <option value="editor">Editor</option>
+                            <option value="number">Number</option>
+                            <option value="date">Date</option>
+                            <option value="time">Time</option>
+                            <option value="datetime">Datetime</option>
+                            <option value="datetimerange">Datetime
+                                Range</option>
+                            <option value="select">Dropdown List</option>
+                            <option value="selects">Dropdown List
+                                (Multiple)</option>
+                            <option value="image">Image</option>
+                            <option value="images">Images (Multiple)</option>
+                            <option value="file">File</option>
+                            <option value="files">Files (Multiple)</option>
+                            <option value="switch">Switch</option>
+                            <option value="checkbox">Checkbox</option>
+                            <option value="radio">Radio Button</option>
+                            <option value="selectpage">Related Table</option>
+                            <option value="selectpages">Related Table (Multiple
+                                Select)</option>
+                            <option value="array">Array</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="visible">{{_('Visibility Condition')}}</label>
+                        <input class="form-control" type="text" id="visible" name="visible" value="{{value.visible}}"
+                            placeholder="{{ _('Visibility Condition') }}" />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="value">{{_('Variable Value')}}</label>
+                        <input class="form-control" name="value" id="value" cols="30"
+                            rows="3" value="{{value.value}}" />
+                    </div>
+                    <div class="mb-[20px] hidden tf tf-selectpage tf-selectpages">
+                        <label for="c-selectpage-table" class="form-label">{{_('Related Table')}}</label>
+                        <select id="c-selectpage-table" name="row[setting][table]" class="form-control selectpicker"
+                            data-live-search="true">
+                            <option value>{{_('Select a Related Table')}}</option>
+                        </select> 
+                    </div>
+                    
+                    <div class="mb-[20px] tf tf-array hidden">
+                        <label class="form-label">{{_('Array Options')}}</label> 
+                        <a href="javascript:;" class="btn btn-success btn-add" data-name='array' data-key='0' aria-label="{{_('Add')}}">
+                            {{_('Add')}}
+                            <i class="ti ti-plus"></i> 
+                        </a>
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="content">{{_('Data')}}</label>
+                        <input class="form-control" name="content" id="content" cols="30"
+                            rows="3"value="{{value.content}}" />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="rule">{{_('Validation Rule')}}</label>
+                        <div class="input-group mb-2">
+                            <input class="form-control" type="text" id="rule" name="rule" value="{{value.rule}}"
+                                placeholder="{{ _('Validation Rule') }}" />
+                            <button data-bs-toggle="dropdown" type="button" class="btn dropdown-toggle"
+                                aria-expanded="true">{{_('Select Rule')}} </button>
+                            <div class="dropdown-menu dropdown-menu-end" id="rule-dropdown-menu"
+                                data-popper-placement="bottom-end"
+                                style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 38px, 0px);">
+                                <a class="dropdown-item {{_('active')}}" href="javascript:;" data-value="required">{{
+                                    _('Required') }}<span class="text-muted">({{
+                                        _('required') }})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="digits">{{ _('Digits') }}<span
+                                        class="text-muted">({{ _('digits')
+                                        }})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="letters">{{ _('Letters')
+                                    }}<span class="text-muted">({{ _('letters')
+                                        }})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="date">{{
+                                    _('Date') }}<span class="text-muted">({{
+                                        _('date') }})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="time">{{ _('Time') }}<span
+                                        class="text-muted">({{ _('time')
+                                        }})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="email">{{
+                                    _('Email') }}<span class="text-muted">({{
+                                        _('email') }})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="url">{{ _('Website') }}<span
+                                        class="text-muted">({{ _('url')
+                                        }})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="qq">{{ _('QQ Number') }}<span
+                                        class="text-muted">({{ _('qq')
+                                        }})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="IDcard">{{ _('ID Card') }}<span
+                                        class="text-muted">({{ _('IDcard')
+                                        }})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="tel">{{ _('Landline Phone')
+                                    }}<span class="text-muted">({{ _('tel')
+                                        }})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="mobile">{{ _('Mobile Phone')
+                                    }}<span class="text-muted">({{ _('mobile')
+                                        }})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="zipcode">{{ _('Postal Code')
+                                    }}<span class="text-muted">({{ _('zipcode')
+                                        }})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="chinese">{{ _('Chinese Characters') }}<span class="text-muted">({{_('chinese') }})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="username">{{ _('Username')
+                                    }}<span class="text-muted">({{ _('username')}})</span></a>
+                                <a class="dropdown-item" href="javascript:;" data-value="password">{{ _('Password')
+                                    }}<span class="text-muted">({{ _('password')
+                                        }})</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="extend">{{_('Extended Attributes')}}</label>
+                        <input class="form-control" type="text" id="extend" name="extend" value="{{value.extend}}"
+                            placeholder="{{ _('Extended Attributes') }}" />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="setting">{{_('Settings')}}</label>
+                        <input class="form-control" type="text" id="setting" name="setting" value="{{value.setting}}"
+                            placeholder="{{ _('Settings') }}" />
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" form="general_config_form" data-type="submit"
+                            class="btn btn-primary btn-submit">
+                            {{_('Submit')}}
+                        </button>
+                        <button type="submit" form="general_config_form" data-type="submit-return"
+                            class="btn btn-primary btn-submit">
+                            {{_('Submit & Return')}}
+                        </button>
+                        <button type="submit" form="general_config_form" data-type="submit-new-entry"
+                            class="btn btn-primary btn-submit">
+                            {{_('Submit & New Entry')}}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>{% endblock content %}

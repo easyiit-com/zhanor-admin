@@ -1,0 +1,194 @@
+<!-- add.jinja2 or edit.jinja2 -->
+{% extends "admin/layout/default.jinja2" %}
+
+{% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js?v={{configs.basic.version}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js?v={{configs.basic.version}}"></script>
+<script src="/static/assets/js/backend/general_category.js"></script>
+<script src="/static/assets/js/backend/upload.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.0.0/tinymce.min.js"
+    integrity="sha512-xEHlM+pBhSw2P/G+5x3BR8723QPEf2bPr4BLV8p8pvtaCHmWVuSzzKy9M0oqWaXDZrB3r2Ntwmc9iJcNV/nfBQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"
+    integrity="sha512-K/oyQtMXpxI4+K0W7H25UopjM8pzq0yrVdFdG21Fh5dBe91I40pDd9A4lzNlHPHBIP2cwZuoxaUSX0GJSObvGA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/ar-dz.min.js"
+    integrity="sha512-qpDG6agspDXhnOZkCoWtFNJ13B6Fq6pwIuZoLw0b05J8TDd1qohuTaemmrpsN3ZVtB7AI7ZnqH5CVVIj01SV5g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+                    <script>   
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const input = document.getElementById("createtime");
+                            let initialDate;
+                            const existingValue = input.value.trim();
+                            if (existingValue !== "") {
+                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+                            } else {
+                                initialDate = new Date();
+                            }
+                            flatpickr("#createtime", {
+                                enableTime: true,
+                                dateFormat: "Y-m-d H:i:s",
+                                defaultDate: initialDate
+                            });
+                        }); 
+                    </script>
+                    
+                    <script>   
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const input = document.getElementById("updatetime");
+                            let initialDate;
+                            const existingValue = input.value.trim();
+                            if (existingValue !== "") {
+                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+                            } else {
+                                initialDate = new Date();
+                            }
+                            flatpickr("#updatetime", {
+                                enableTime: true,
+                                dateFormat: "Y-m-d H:i:s",
+                                defaultDate: initialDate
+                            });
+                        }); 
+                    </script>
+                    
+
+<script>
+    var currentButton = undefined;
+    $(".btn-submit").on('click', function (event) {
+        currentButton = $(this)
+    });
+    $("#general_category_form").validate({
+        submitHandler: function (form) {
+            var buttonText = currentButton.text();
+            currentButton.prop("disabled", true).html("{{_('Please wait')}}");
+            var formData = $('#general_category_form').serializeArray(); 
+            var jsonData = {}; 
+            formData.forEach(function(item) {jsonData[item.name] = item.value;}); 
+            var type = currentButton.data('type');
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/general/category/save",
+                data: JSON.stringify(jsonData),
+                contentType: 'application/json;charset=utf-8', 
+                processData: false,
+                success: function (data) {
+                    toastr.options.timeOut = 200;
+                    toastr.options.onHidden = function () {
+                        currentButton.prop("disabled", false).html(buttonText);
+                        if (type == 'submit-return') {
+                            window.location.href = '/admin/general/category';
+                        } else if (type == 'submit-new-entry') {
+                            window.location.href = '/admin/general/category/add';
+                        } else {
+                            window.location.reload();
+                        }
+                    };
+                    toastr.success("{{_('Submit Successfully')}}");
+                },
+                error: function (xhr, status, error) {
+                    let msg = xhr.responseJSON && xhr.responseJSON.msg ? xhr.responseJSON.msg : error;
+                    toastr.error(msg);
+                },
+                complete: function (xhr, textStatus) {
+                    $("#app-loading-indicator").addClass("opacity-0");
+                    currentButton.prop("disabled", false).html(buttonText);
+                },
+            });
+
+            return false;
+        },
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            $(element).removeClass('is-valid');
+            $(element).addClass('is-invalid');
+            error.addClass("mt-1 p-1 text-warning");
+            if (element.prop("type") === "checkbox" || element.parent().find('button').length > 0) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        success: function (label, element) {
+            $(element).removeClass('is-invalid');
+            $(element).addClass('is-valid mb-2');
+            $(label).addClass('d-none');
+        },
+    });
+</script>
+{% endblock javascript %}
+{% block content %}
+<!-- Page body -->
+<div class="page-body pt-6">
+    <div class="container-fluid px-4">
+        <div class="row">
+            <div class="col-md-5 mx-auto">
+                <form id="general_category_form" method="post" action>
+                    <div class="mb-[20px]">
+    <label class="form-label" for="id" required>{{_('ID')}}</label>
+   <input class="form-control" type="hidden" id="id" name="id"  value="{{value.id}}" placeholder="{{_('ID')}}"  required/>{{value.id}}
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="pid" required>{{_('Parent ID')}}</label>
+   <select id="pid" class="form-select ajax" data-model="general_category" data-title="name" data-value="{{value.pid}}" name="pid">
+  <option value='0' selected>{{_('Pealse Select')}}</option>
+
+</select>  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="type" required>{{_('GeneralCategory Type')}}</label>
+   <input class="form-control" type="text" id="type" name="type"  value="{{value.type}}" placeholder="{{_('GeneralCategory Type')}}"  maxlength = 30 required/>
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="name" required>{{_('Name')}}</label>
+   <input class="form-control" type="text" id="name" name="name"  value="{{value.name}}" placeholder="{{_('Name')}}"  maxlength = 30 required/>
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="image" >{{_('Image')}}</label>
+   <input class="form-control upload" type="file" multiple data-allowed-extensions=".jpg,.jpeg,.png,.gif" data-upload-type="image" /><div class="images-container row g-2"></div><input type="hidden" id="image" name="image" value="{{value.image}}" />  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="keywords" >{{_('Keywords')}}</label>
+   <input class="form-control" type="text" id="keywords" name="keywords"  value="{{value.keywords}}" placeholder="{{_('Keywords')}}"  maxlength = 255 />
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="description" >{{_('Description')}}</label>
+   <input class="form-control" type="text" id="description" name="description"  value="{{value.description}}" placeholder="{{_('Description')}}"  maxlength = 255 />
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="weigh" required>{{_('Weight')}}</label>
+   <input type="number" class="form-control" step="1" id="weigh" name="weigh" value="{{value.weigh}}"  placeholder="{{_('Weight')}}"  required/>
+  </div>
+<div class="mb-[20px]">
+    <label class="form-label" for="status" required>{{_('Status')}}</label>
+   <select id="status" type="text" class="form-select" name="status">
+  <option value>{{_('Pealse Select')}}</option>
+ {% if value.status %}
+  <option value="normal" {% if value.status=='normal' %} selected {% endif %}>{{_('Normal')}}</option>
+  <option value="hidden" {% if value.status=='hidden' %} selected {% endif %}>{{_('Hidden')}}</option>
+ {% else %}
+  <option value="normal" {% if 'normal'=='normal' %} selected {% endif %}>{{_('Normal')}}</option>
+  <option value="hidden" {% if 'normal'=='hidden' %} selected {% endif %}>{{_('Hidden')}}</option>
+ {% endif %}
+
+</select>  </div>
+
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" form="general_category_form" data-type="submit"
+                            class="btn btn-primary btn-submit">
+                            {{_('Submit')}}
+                        </button>
+                        <button type="submit" form="general_category_form" data-type="submit-return"
+                            class="btn btn-primary btn-submit">
+                            {{_('Submit & Return')}}
+                        </button>
+                        <button type="submit" form="general_category_form" data-type="submit-new-entry"
+                            class="btn btn-primary btn-submit">
+                            {{_('Submit & New Entry')}}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>{% endblock content %}

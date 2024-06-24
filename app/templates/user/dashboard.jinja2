@@ -1,0 +1,148 @@
+
+{% extends "user/layout/default.jinja2" %}
+{% block content %}
+<div class="page-body">
+    <div class="container-fluid px-4">
+        <div class="row row-deck row-cards">
+            
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="px-10 py-8 card-body">
+                        <h2 class="mb-[1em]">{{_('User Center')}}</h2>
+                        <div class="row">
+                            <div class="col-auto max-xl:w-full max-xl:mb-5">
+                                <div class="flex max-sm:flex-col max-sm:mb-4">
+                                    <div
+                                        class="px-9 !ps-0 border-e border-solid border-t-0 border-b-0 border-s-0 border-[var(--tblr-border-color)] max-sm:border-b max-sm:border-e-0 max-sm:px-0 max-sm:pb-3 max-sm:mb-3">
+                                        <p class="subheader">{{_('Balance')}}</p>
+                                        <p
+                                            class="mt-2 h1 text-[30px] font-semibold">
+                                            {{balance}}
+                                        </p>
+                                    </div>
+                                    <div
+                                        class="px-9 border-e border-solid border-t-0 border-b-0 border-s-0 border-[var(--tblr-border-color)] max-sm:border-b max-sm:border-e-0 max-sm:px-0 max-sm:pb-3 max-sm:mb-3">
+                                        <p class="subheader">{{_("Score")}}</p>
+                                        <p
+                                            class="mt-2 h1 text-[30px] font-semibold">
+                                            {{score}}
+                                        </p>
+                                    </div>
+                                    <div class="px-9 max-sm:p-0">
+                                        <p class="subheader">{{_('Credits')}}</p>
+                                        <p
+                                            class="mt-2 h1 text-[30px] font-semibold">
+                                            {{credits}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col max-xl:w-full">
+                                <p class="mb-3">{{_('Your Files And Images')}}</p>
+                                <div class="mb-3 progress progress-separated">
+                                    <div
+                                        class="progress-bar grow-0 shrink-0 basis-auto bg-primary"
+                                        role="progressbar" style="width: 50%"
+                                        aria-label="Text"></div>
+                                    <div
+                                        class="progress-bar grow-0 shrink-0 basis-auto bg-[#9E9EFF]"
+                                        role="progressbar" style="width: 50%"
+                                        aria-label="Images"></div>
+                                </div>
+                                <div class="row">
+                                    <div
+                                        class="col-auto d-flex align-items-center pe-2">
+                                        <span
+                                            class="legend !me-2 rounded-full bg-primary"></span>
+                                        <span>{{_('Files')}}</span>
+                                        <span
+                                            class="d-none d-md-inline d-lg-none d-xxl-inline ms-2 text-muted">{{files}}</span>
+                                    </div>
+                                    <div
+                                        class="col-auto px-2 d-flex align-items-center">
+                                        <span
+                                            class="legend !me-2 rounded-full bg-[#9E9EFF]"></span>
+                                        <span>{{_('Image')}}</span>
+                                        <span
+                                            class="d-none d-md-inline d-lg-none d-xxl-inline ms-2 text-muted">{{images}}</span>
+                                    </div>
+                                    <div
+                                        class="col-auto px-2 d-flex align-items-center">
+                                        <span
+                                            class="legend !me-2 rounded-full bg-success"></span>
+                                        <span>{{_('Total')}}</span>
+                                        <span
+                                            class="d-none d-md-inline d-lg-none d-xxl-inline ms-2 text-muted">{{total}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title text-heading"><a href="/admin/admin/log">{{_('Balance Logs')}}</a></h3>
+                    </div>
+                    <div class="card-table table-responsive">
+                        <table class="table table-vcenter">
+                            <tbody>
+                                {% for log in balance_log%}
+                                <tr>
+                                    <td class="w-1 !pe-0">
+                                        <span
+                                            class="avatar w-[43px] h-[43px] [&_svg]:w-[20px] [&_svg]:h-[20px]"
+                                            style="background: #81FFC2">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="40"
+                                                viewBox="0 96 960 960"
+                                                width="40">
+                                                <path
+                                                    d="M196.666 965.333q-43.824 0-74.912-31.087-31.087-31.088-31.087-74.912V701.667h105.999v157.667h157.667v105.999H196.666Zm409.001 0V859.334h157.667V701.667H870v157.667q0 43.824-31.284 74.912-31.283 31.087-75.382 31.087H605.667ZM344 739.333 180.667 576 344 412.667 418.333 489l-86 87 86 87L344 739.333Zm272 0L541.667 663l86-87-86-87L616 412.667 779.333 576 616 739.333Zm-525.333-289V292.666q0-44.099 31.087-75.382Q152.842 186 196.666 186h157.667v106.666H196.666v157.667H90.667Zm672.667 0V292.666H605.667V186h157.667q44.099 0 75.382 31.284Q870 248.567 870 292.666v157.667H763.334Z" />
+                                            </svg>
+                                        </span>
+                                    </td>
+                                    <td class="td-truncate">
+                                        <a
+                                            href="#"
+                                            class="block text-truncate text-heading hover:no-underline">
+                                            <span class="font-medium">{{log.username}}</span>
+                                            <br>
+                                            <span
+                                                class="italic text-muted opacity-80 dark:!text-white dark:!opacity-50">{{log.url}}</span>
+                                        </a>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <span class="text-heading">Ip: {{log.ip}}</span>
+                                        <br>
+                                        <span
+                                            class="italic text-muted opacity-80 dark:!text-white dark:!opacity-50">{{log.createtime}}</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title text-heading">{{_('Credits Log')}}</h3>
+                    </div>
+                    <div class="card-table table-responsive">
+                        <table class="table table-vcenter">
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
