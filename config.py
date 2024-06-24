@@ -10,10 +10,13 @@ class Config:
     SECRET_KEY = 'your_secret_key'
     JWT_SECRET_KEY = 'jwt-secret-key'
     
-    BABEL_DEFAULT_LOCALE = 'zh'
+    # 多语言
     LANGUAGES = ['en', 'zh']
+    BABEL_DEFAULT_LOCALE = 'zh'
+    BABEL_DOMAIN = 'messages'
     BABEL_DEFAULT_TIMEZONE = 'Asia/Shanghai'
     BABEL_TRANSLATION_DIRECTORIES = 'app/locales'
+    
     # Website Config
     CONFIG_GROUPS =['basic','dictionary','email','user']
     # SQLAlchemy

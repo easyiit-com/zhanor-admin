@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-04-16 11:02+0800\n"
-"PO-Revision-Date: 2024-04-15 16:01+0800\n"
+"POT-Creation-Date: 2024-06-24 15:01+0800\n"
+"PO-Revision-Date: 2024-06-24 15:13+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
@@ -17,282 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
-
-msgid "Back To Dashboard"
-msgstr ""
-
-msgid "Dashboard"
-msgstr ""
-
-msgid "Please wait"
-msgstr ""
-
-msgid "Member ID"
-msgstr ""
-
-msgid "Administrator ID"
-msgstr ""
-
-msgid "Category ID (Single Select)"
-msgstr ""
-
-msgid "Category IDs (Multiple Select)"
-msgstr ""
-
-msgid "Tags"
-msgstr ""
-
-msgid "Weekday (Single Select)"
-msgstr ""
-
-msgid "Monday"
-msgstr ""
-
-msgid "Tuesday"
-msgstr ""
-
-msgid "Wednesday"
-msgstr ""
-
-msgid "Flags (Multiple Select)"
-msgstr ""
-
-msgid "Hot"
-msgstr ""
-
-msgid "Index"
-msgstr ""
-
-msgid "Recommend"
-msgstr ""
-
-msgid "Gender (Single Select)"
-msgstr ""
-
-msgid "Male"
-msgstr ""
-
-msgid "Female"
-msgstr ""
-
-msgid "Hobbies (Multiple Select)"
-msgstr ""
-
-msgid "Music"
-msgstr ""
-
-msgid "Reading"
-msgstr ""
-
-msgid "Swimming"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "Content"
-msgstr ""
-
-msgid "Image"
-msgstr ""
-
-msgid "Image Group"
-msgstr ""
-
-msgid "Attachment"
-msgstr ""
-
-msgid "Keywords"
-msgstr ""
-
-msgid "Description"
-msgstr ""
-
-msgid "City/Province"
-msgstr ""
-
-msgid "Configuration (key=value pairs)"
-msgstr ""
-
-msgid "Two-Dimensional Array"
-msgstr ""
-
-msgid "Price"
-msgstr ""
-
-msgid "Views"
-msgstr ""
-
-msgid "Time Range"
-msgstr ""
-
-msgid "Start Date"
-msgstr ""
-
-msgid "Activity Time"
-msgstr ""
-
-msgid "Year"
-msgstr ""
-
-msgid "Time"
-msgstr ""
-
-msgid "Refresh Time"
-msgstr ""
-
-msgid "Deletion Time"
-msgstr ""
-
-msgid "Weight"
-msgstr ""
-
-msgid "Switch"
-msgstr ""
-
-msgid "Status"
-msgstr ""
-
-msgid "Normal"
-msgstr ""
-
-msgid "Hidden"
-msgstr ""
-
-msgid "State Value"
-msgstr ""
-
-msgid "Submit"
-msgstr ""
-
-msgid "Submit & Return"
-msgstr ""
-
-msgid "Submit & New Entry"
-msgstr ""
-
-msgid "ID"
-msgstr ""
-
-msgid "Creation Time"
-msgstr ""
-
-msgid "Update Time"
-msgstr ""
-
-msgid "Add"
-msgstr ""
-
-msgid "Batch Deletion"
-msgstr ""
-
-msgid "Actions"
-msgstr ""
-
-msgid "Prev"
-msgstr ""
-
-msgid "next"
-msgstr ""
-
-msgid "Details"
-msgstr ""
-
-msgid "Close"
-msgstr ""
-
-msgid "Selecte Table"
-msgstr ""
-
-msgid "Table fields show in list"
-msgstr ""
-
-msgid "Model Code"
-msgstr ""
-
-msgid "Template Index Code"
-msgstr ""
-
-msgid "Template Add Code"
-msgstr ""
-
-msgid "Template Edit Code"
-msgstr ""
-
-msgid "View Code"
-msgstr ""
-
-msgid "JavaScript Code"
-msgstr ""
-
-msgid "Route Code"
-msgstr ""
-
-msgid "Category"
-msgstr ""
-
-msgid "Tag"
-msgstr ""
-
-msgid "Username"
-msgstr ""
-
-msgid "Wechat"
-msgstr ""
-
-msgid "Alipay"
-msgstr ""
-
-msgid "Trade No"
-msgstr ""
-
-msgid "User ID"
-msgstr ""
-
-msgid "amount"
-msgstr ""
-
-msgid "Pay Amount"
-msgstr ""
-
-msgid "Transaction_Id"
-msgstr ""
-
-msgid "Payment Method"
-msgstr ""
-
-msgid "Pay Time"
-msgstr ""
-
-msgid "IP"
-msgstr ""
-
-msgid "Creation Time "
-msgstr ""
-
-msgid "UserAgent"
-msgstr ""
-
-msgid "Memo"
-msgstr ""
-
-msgid "Balance"
-msgstr ""
-
-msgid "Recharge Amount"
-msgstr ""
-
-msgid "Other"
-msgstr ""
-
-msgid "Recharge"
-msgstr ""
-
-msgid "Pay by scanning the QR code"
-msgstr ""
-
-msgid "Pay Successfull"
-msgstr ""
 
 msgid "User Center"
 msgstr ""
@@ -309,7 +33,13 @@ msgstr ""
 msgid "Online user count"
 msgstr ""
 
+msgid "Attachment"
+msgstr ""
+
 msgid "Files"
+msgstr ""
+
+msgid "Image"
 msgstr ""
 
 msgid "Total"
@@ -321,91 +51,97 @@ msgstr ""
 msgid "Favorite Menu"
 msgstr ""
 
+msgid "Please wait"
+msgstr ""
+
 msgid "Submit Successfully"
 msgstr ""
 
-msgid "Please enter the same password as above"
+msgid "Group Id"
 msgstr ""
 
-msgid "Please enter a valid email address"
+msgid "Pealse Select"
 msgstr ""
 
-msgid "Please Accept This Plain Text"
+msgid "Username"
 msgstr ""
 
-msgid "Back to Home"
-msgstr ""
-
-msgid "Sign In"
-msgstr ""
-
-msgid "Email Address"
-msgstr ""
-
-msgid "Please Input Your Email"
+msgid "Nickname"
 msgstr ""
 
 msgid "Password"
 msgstr ""
 
-msgid "Please Input Your Your password"
+msgid "Avatar"
 msgstr ""
 
-msgid "Show Password"
+msgid "Email"
 msgstr ""
 
-msgid "Remember me"
+msgid "Mobile Number"
 msgstr ""
 
-msgid "Network Addon"
+msgid "Login Failure Count"
 msgstr ""
 
-msgid "Local Addon"
+msgid "Login Time"
 msgstr ""
 
-msgid "UUID"
+msgid "Login IP"
 msgstr ""
 
-msgid "Author"
+msgid "Session Token"
 msgstr ""
 
-msgid "Version"
+msgid "Status"
 msgstr ""
 
-msgid "Downloads Count"
+msgid "Normal"
 msgstr ""
 
-msgid "Paid"
+msgid "Hidden"
 msgstr ""
 
-msgid "Enabled"
+msgid "Submit"
 msgstr ""
 
-msgid "Created"
+msgid "Submit & Return"
 msgstr ""
 
-msgid "Updated"
+msgid "Submit & New Entry"
 msgstr ""
 
-msgid "Free"
+msgid "ID"
 msgstr ""
 
-msgid "Unbought"
+msgid "Leave blank for no modification"
 msgstr ""
 
-msgid "No Install"
+msgid "Add"
 msgstr ""
 
-msgid "Install"
+msgid "Batch Deletion"
 msgstr ""
 
-msgid "Setting"
+msgid "Update Time"
 msgstr ""
 
-msgid "Uninstall"
+msgid "Actions"
 msgstr ""
 
-msgid "MD5"
+msgid "Prev"
+msgstr ""
+
+msgid "next"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Creation Time"
+msgstr ""
+
+msgid "Close"
 msgstr ""
 
 msgid "Parent Group"
@@ -415,6 +151,9 @@ msgid "Group Name"
 msgstr ""
 
 msgid "Rule IDs"
+msgstr ""
+
+msgid "Administrator ID"
 msgstr ""
 
 msgid "Administrator Name"
@@ -433,6 +172,9 @@ msgid "User Agent"
 msgstr ""
 
 msgid "Operation Time"
+msgstr ""
+
+msgid "Content"
 msgstr ""
 
 msgid "Type"
@@ -454,6 +196,12 @@ msgid "Route Name"
 msgstr ""
 
 msgid "Url_Path"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Description"
 msgstr ""
 
 msgid "Icon"
@@ -486,31 +234,10 @@ msgstr ""
 msgid "Updatetime"
 msgstr ""
 
-msgid "Group Id"
+msgid "GeneralCategory"
 msgstr ""
 
-msgid "Nickname"
-msgstr ""
-
-msgid "Avatar"
-msgstr ""
-
-msgid "Email"
-msgstr ""
-
-msgid "Mobile Number"
-msgstr ""
-
-msgid "Login Failure Count"
-msgstr ""
-
-msgid "Login Time"
-msgstr ""
-
-msgid "Login IP"
-msgstr ""
-
-msgid "Session Token"
+msgid "Member ID"
 msgstr ""
 
 msgid "Physical Path"
@@ -546,16 +273,19 @@ msgstr ""
 msgid "Image Type"
 msgstr ""
 
-msgid "Leave blank for no modification"
-msgstr ""
-
 msgid "Parent ID"
 msgstr ""
 
-msgid "Category Type"
+msgid "GeneralCategory Type"
 msgstr ""
 
 msgid "Name"
+msgstr ""
+
+msgid "Keywords"
+msgstr ""
+
+msgid "Weight"
 msgstr ""
 
 msgid "Config Group"
@@ -621,6 +351,9 @@ msgstr ""
 msgid "date"
 msgstr ""
 
+msgid "Time"
+msgstr ""
+
 msgid "time"
 msgstr ""
 
@@ -681,6 +414,15 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
+msgid "Group"
+msgstr ""
+
+msgid "Type: string, text, int, bool, array, datetime, date, file"
+msgstr ""
+
+msgid "Variable Dictionary Data"
+msgstr ""
+
 msgid "Copy Variate"
 msgstr ""
 
@@ -726,7 +468,13 @@ msgstr ""
 msgid "Search results"
 msgstr ""
 
+msgid "Dashboard"
+msgstr ""
+
 msgid "Generals"
+msgstr ""
+
+msgid "Category"
 msgstr ""
 
 msgid "Config"
@@ -780,45 +528,6 @@ msgstr ""
 msgid "User Recharge Order"
 msgstr ""
 
-msgid "Change in Balance"
-msgstr ""
-
-msgid "Balance Before Change"
-msgstr ""
-
-msgid "Balance After Change"
-msgstr ""
-
-msgid "Memo/Note"
-msgstr ""
-
-msgid "Permission Nodes"
-msgstr ""
-
-msgid "None"
-msgstr ""
-
-msgid "Url Path"
-msgstr ""
-
-msgid "Selcet Icon"
-msgstr ""
-
-msgid "Select Icon"
-msgstr ""
-
-msgid "Input keyword To Search"
-msgstr ""
-
-msgid "Change in Scores"
-msgstr ""
-
-msgid "Points Before Change"
-msgstr ""
-
-msgid "Points After Change"
-msgstr ""
-
 msgid "Group ID"
 msgstr ""
 
@@ -831,10 +540,19 @@ msgstr ""
 msgid "Gender"
 msgstr ""
 
+msgid "Female"
+msgstr ""
+
+msgid "Male"
+msgstr ""
+
 msgid "Date of Birth"
 msgstr ""
 
 msgid "Motto"
+msgstr ""
+
+msgid "Balance"
 msgstr ""
 
 msgid "Points"
@@ -858,13 +576,118 @@ msgstr ""
 msgid "Joining IP Address"
 msgstr ""
 
-msgid "Joining Time"
-msgstr ""
-
 msgid "Verification"
 msgstr ""
 
 msgid "Token"
+msgstr ""
+
+msgid "Change in Balance"
+msgstr ""
+
+msgid "Balance Before Change"
+msgstr ""
+
+msgid "Balance After Change"
+msgstr ""
+
+msgid "Memo/Note"
+msgstr ""
+
+msgid "Permission Nodes"
+msgstr ""
+
+msgid "Trade No"
+msgstr ""
+
+msgid "User ID"
+msgstr ""
+
+msgid "amount"
+msgstr ""
+
+msgid "Pay Amount"
+msgstr ""
+
+msgid "Transaction_Id"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid "Pay Time"
+msgstr ""
+
+msgid "IP"
+msgstr ""
+
+msgid "UserAgent"
+msgstr ""
+
+msgid "Memo"
+msgstr ""
+
+msgid "Created"
+msgstr ""
+
+msgid "Paid"
+msgstr ""
+
+msgid "Expired"
+msgstr ""
+
+msgid "Creation Time "
+msgstr ""
+
+msgid "Url Path"
+msgstr ""
+
+msgid "Change in Scores"
+msgstr ""
+
+msgid "Points Before Change"
+msgstr ""
+
+msgid "Points After Change"
+msgstr ""
+
+msgid "Please enter the same password as above"
+msgstr ""
+
+msgid "Please enter a valid email address"
+msgstr ""
+
+msgid "Please Accept This Plain Text"
+msgstr ""
+
+msgid "Back to Home"
+msgstr ""
+
+msgid "Sign In"
+msgstr ""
+
+msgid "Email Address"
+msgstr ""
+
+msgid "Please Input Your Email"
+msgstr ""
+
+msgid "Please Input Your password"
+msgstr ""
+
+msgid "Show Password"
+msgstr ""
+
+msgid "Captcha"
+msgstr ""
+
+msgid "Please Input Captcha"
+msgstr ""
+
+msgid "Change Captcha"
+msgstr ""
+
+msgid "Remember me"
 msgstr ""
 
 msgid "Score"
@@ -901,9 +724,6 @@ msgid "New Password"
 msgstr ""
 
 msgid "Please Input Your New Password"
-msgstr ""
-
-msgid "Please Input Your password"
 msgstr ""
 
 msgid "Forgot Password?"
@@ -949,44 +769,5 @@ msgid "User Recharge"
 msgstr ""
 
 msgid "Files And Images"
-msgstr ""
-
-msgid "Error,Need User ID"
-msgstr ""
-
-msgid "Login Success"
-msgstr ""
-
-msgid "Login failed, Some Error"
-msgstr ""
-
-msgid "User Register"
-msgstr ""
-
-msgid "The email or name or mobile you entered is already registered"
-msgstr ""
-
-msgid "Success"
-msgstr ""
-
-msgid "The verification code has expired."
-msgstr ""
-
-msgid "Max attempts exceeded. Account temporarily locked. Retry in 30 minutes."
-msgstr ""
-
-msgid "Verification code is incorrect."
-msgstr ""
-
-msgid "Some Error"
-msgstr ""
-
-msgid "Send Verification Code Failed"
-msgstr ""
-
-msgid "Send Verification Code Failed, This email address is not valid"
-msgstr ""
-
-msgid "Logout successful"
 msgstr ""
 
