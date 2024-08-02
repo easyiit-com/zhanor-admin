@@ -1,7 +1,7 @@
-{
-    "demo": "enabled",
+{ 
     "generator": "enabled",
     "recharge": "enabled",
-    "jiguang_verification":"enabled"
+    "jiguang_verification":"enabled",
+    "vip":"enabled"
 
 }

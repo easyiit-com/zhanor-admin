@@ -172,9 +172,5 @@ main-local.py
 config-local.py
 command.txt
 make.py
-app/views/admin/admin copy.py
-app/views/admin/admin_rule copy.py
-app/views/admin/general_config copy.py
-app/views/admin/general_profile copy.py
-app/views/admin/user copy.py
 README_自己备注用的.md
+* copy.*

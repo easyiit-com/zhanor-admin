@@ -77,49 +77,47 @@ def create_app(test_config=None):
 
     @app.before_request
     def before_request():
-        if current_user and current_user.is_authenticated:
-            g.user = current_user
-        else:
-            g.user = None
+        g.user = current_user._get_current_object() if current_user.is_authenticated else None
 
-        # 获取请求方法，例如 'GET', 'POST', 'DELETE' 等
         request_method = request.method
-        print(f"请求方法: {request_method}，user:{g.user}")
+        print(f"请求方法: {request_method}, user: {g.user}")
 
-        # 检查是否为POST请求并且有JSON数据
         if request.method == "POST":
-            # 尝试获取JSON数据，如果请求体不是有效的JSON会抛出异常
             try:
+                # 获取其他有用的信息
                 user_agent = request.headers.get("User-Agent")
                 route_name = request.endpoint
                 full_url = request.url
-                request_json = request.get_json()
-                
-                # 过滤敏感信息，例如将'password'设置为空字符串
-                if "password" in request_json:
-                    request_json["password"] = ""
-                
+
+                # 获取原始 JSON 数据
+                request_json = request.get_json(silent=True) or {}
+
+                # 过滤敏感信息用于日志记录
+                log_json = request_json.copy()
+                if "password" in log_json:
+                    log_json["password"] = ""
+
                 # 序列化request_json为JSON字符串
-                content_str = json.dumps(request_json)
-                
-                client_ip = request.remote_addr
-                admin_log = AdminLog(
-                    admin_id=current_user.id,
-                    username=current_user.name,
-                    url=full_url,
-                    title=route_name,
-                    content=content_str,  # 存储序列化后的字符串
-                    ip=client_ip,
-                    useragent=user_agent,
-                    createtime=now(),
-                )
-                db_session = db.get_db()
-                db_session.add(admin_log)
-                db_session.commit()
-                print(f"请求的JSON数据（已序列化）: {content_str}")
+                content_str = json.dumps(log_json)
+
+                # 创建并保存日志条目
+                if g.user:
+                    admin_log = AdminLog(
+                        admin_id=g.user.id,
+                        username=g.user.name,
+                        url=full_url,
+                        title=route_name,
+                        content=content_str,  # 存储序列化后的字符串
+                        ip=request.remote_addr,
+                        useragent=user_agent,
+                        createtime=datetime.utcnow(),  # 使用 utcnow() 或 now() 根据你的需求
+                    )
+                    db_session = db.session
+                    db_session.add(admin_log)
+                    db_session.commit()
+                    print(f"请求的JSON数据（已序列化）: {content_str}")
             except Exception as e:
-                print(f"获取JSON数据时出错: {e}")
-                # 可以选择在此处处理错误或者让异常传递出去
+                print(f"处理请求时发生错误: {e}")
 
     # static
     @app.route("/static/<path:path>")
@@ -212,27 +210,28 @@ def create_app(test_config=None):
         """
         plugins_folder = Path(plugin_dir)
 
-        # for plugin_dir in plugins_folder.glob("**/*"):
-        # if not plugin_dir.is_dir():
-        #     continue
-        router_file = Path(os.path.join(plugin_dir, "views.py"))
-        if router_file.is_file():
-            module_name = f"app.plugins.{Path(plugin_dir).name}"
-            try:
-                plugin_module = importlib.import_module(f"{module_name}.views")
-                router_instance = getattr(plugin_module, "bp", None)
-                if isinstance(router_instance, Blueprint):
-                    app.register_blueprint(router_instance)
-                    logging.info(f"Register {module_name}")
-                else:
-                    logging.error(f"Unkown {module_name}")
-            except Exception as e:
-                logging.error(f"Import Plugins {module_name} Catch Error：{e}")
+        for sub_dir in plugins_folder.glob("**/"):
+            if not sub_dir.is_dir():
+                continue
+            router_file = sub_dir / "views.py"
+            if router_file.is_file():
+                module_name = f"app.plugins.{sub_dir.parts[-2]}.{sub_dir.parts[-1]}"
+                try:
+                    plugin_module = importlib.import_module(f"{module_name}.views")
+                    router_instance = getattr(plugin_module, "bp", None)
+                    if isinstance(router_instance, Blueprint):
+                        app.register_blueprint(router_instance)
+                        logging.info(f"Registered {module_name}")
+                    else:
+                        logging.error(f"Unknown {module_name}")
+                except Exception as e:
+                    logging.error(f"Import Plugins {module_name} Catch Error：{e}")
 
+        plugin_json_file = plugins_folder / "plugin.json"
+        if plugin_json_file.is_file():
             try:
-                with open(os.path.join(plugin_dir, "plugin.json"), "r") as file:
+                with open(plugin_json_file, "r") as file:
                     plugin_data = file.read()
-
                 loaded_data = json.loads(plugin_data)
                 admin_rule = loaded_data.get("admin_menu", [])
                 plugin_admin_rules.extend(admin_rule)
@@ -245,20 +244,20 @@ def create_app(test_config=None):
     current_dir = os.getcwd()
     plugins_directory = os.path.join(current_dir, "app", "plugins")
     try:
-        with open(plugins_directory + "/plugins_status.json", "r") as f:
+        with open(os.path.join(plugins_directory, "plugins_status.json"), "r") as f:
             plugins_status = json.load(f)
     except FileNotFoundError:
         plugins_status = {}
     except json.JSONDecodeError:
-        with open(plugins_directory + "/plugins_status.json", "w") as f:
+        with open(os.path.join(plugins_directory, "plugins_status.json"), "w") as f:
             f.truncate(0)
         plugins_status = {}
 
     for key, value in plugins_status.items():
         plugin_name = key
-        plugins_dir = os.path.join(plugins_directory, plugin_name)
-        if value == "enabled" and isdir(plugins_dir):
-            scan_plugins_folder(plugins_dir)
+        plugin_dir = os.path.join(plugins_directory, plugin_name)
+        if value == "enabled" and isdir(plugin_dir):
+            scan_plugins_folder(plugin_dir)
     # g.plugins_status = plugins_status
     # api
 
