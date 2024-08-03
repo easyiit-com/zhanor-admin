@@ -29,7 +29,7 @@ jquery：jquery 3.7.1
 -------------------------------------------
 1.demo插件，演示系统的表单提交。
 
-2.代码生成器，可以根据设计好的数据表自动生成model，模版，views，还有对应的js文件，数据表的CRUD功能就有了。
+2.<a href='https://github.com/easyiit-com/generator-for-flask-admin-panel' target="_blank">代码生成器</a>，可以根据设计好的数据表自动生成model，模版，views，还有对应的js文件，数据表的CRUD功能就有了。
 
 3.会员余额充值插件，集成了国内常用的微信和支付宝支付接口。下一个插件是vip购买插件，开发中...
 
