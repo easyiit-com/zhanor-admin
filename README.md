@@ -6,6 +6,12 @@
 截图：
 
 ![Example Image](screen_shot/admin.png)
+![Example Image](screen_shot/dashboard.png)
+![Example Image](screen_shot/general_category_add.png)
+![Example Image](screen_shot/general_category.png)
+![Example Image](screen_shot/general_config.png)
+![Example Image](screen_shot/generattor.png)
+![Example Image](screen_shot/profile.png)
 
 选择flask的原因：flask用的人多
 
