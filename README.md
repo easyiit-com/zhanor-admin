@@ -3,6 +3,10 @@
 
 栈鱼的来历，作者是一只做全栈开发的鱼。开发应该是热爱的人做自由的事。
 
+截图：
+
+![Example Image](screen_shot/admin.png)
+
 选择flask的原因：flask用的人多
 
 框架：flask
