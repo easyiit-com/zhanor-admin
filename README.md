@@ -1,9 +1,11 @@
 
-栈鱼 Admin Panel 是基于flask 2.0框架开发的一个通用后台管理系统，数据库及后台的功能参考了国内的fastadmin。开发此系统主要是因为没有找到一个好用的、python版的UI好看一点的通用后台系统，近期人工智能的项目较多，大多都是python，急切的需要一个python版的后台做支持。
+# ZhanYu Admin Panel
 
-栈鱼的来历，作者是一只做全栈开发的鱼。开发应该是热爱的人做自由的事。
+ZhanYu Admin Panel is a general backend management system developed based on the Flask 2.0 framework. The database and backend functionalities are inspired by the domestic FastAdmin. The primary motivation for developing this system was the lack of a well-designed, Python-based, and aesthetically pleasing general-purpose admin panel. Recently, there have been numerous AI projects, most of which are based on Python, creating an urgent need for a Python-based backend to support them.
 
-截图：
+**Origin of ZhanYu**: The author is a fish that does full-stack development. Development should be something that passionate people do freely.
+
+## Screenshots
 
 ![Example Image](screen_shot/admin.png)
 ![Example Image](screen_shot/dashboard.png)
@@ -13,69 +15,63 @@
 ![Example Image](screen_shot/generattor.png)
 ![Example Image](screen_shot/profile.png)
 
-选择flask的原因：flask用的人多
+## Why Flask?
 
-框架：flask
+Flask is widely used.
 
-模版：jinja2
+- **Framework**: Flask
+- **Template**: Jinja2
+- **Frontend**: Based on the TablerUI library using Bootstrap + jQuery
+- **Date Picker**: Flatpickr 4.6.13
+- **Toast**: Toastr.js 2.1.4
+- **Icon Library**: Tabler-icons
+- **Clipboard**: Clipboard.js 2.0.11
+- **jQuery**: jQuery 3.7.1
+- **Form Validation**: jQuery-validate 1.19.5
 
-前端：基于bootscrap的tablerUI库+jQuery
+Other updates are ongoing...
 
-时间选择器：flatpickr 4.6.13
+## Currently Developed Plugins
 
-toast：toastr.js 2.1.4
+1. **Demo Plugin**: Demonstrates the system's form submission.
+2. **[Code Generator](https://github.com/easyiit-com/generator-for-flask-admin-panel)**: Automatically generates models, templates, views, and corresponding JS files based on designed data tables, enabling CRUD functionality for the data tables.
+3. **Member Balance Recharge Plugin**: Integrates commonly used WeChat and Alipay payment interfaces in China. The next plugin under development is the VIP purchase plugin.
 
-图标库：tabler-icons
+These three plugins can basically meet the needs of building a highly flexible backend system. Flask's excellent plugin functionality is very suitable for large projects.
 
-粘贴板：clipboard.js 2.0.11
+### Plugins Under Development
 
-jquery：jquery 3.7.1
+- Jiguang Authentication
+- WeChat and Alipay Third-Party Login
 
-表单验证：jquery-validate 1.19.5 
+## Getting Started
 
-其他更新中...
+Follow the steps below to install:
 
-目前开发了3个插件:
--------------------------------------------
-1.demo插件，演示系统的表单提交。
+If you have not switched to the newly created project directory, please enter the directory. The current working directory should be the same as where this `README.txt` file and `setup.py` file are located.
 
-2.<a href='https://github.com/easyiit-com/generator-for-flask-admin-panel' target="_blank">代码生成器</a>，可以根据设计好的数据表自动生成model，模版，views，还有对应的js文件，数据表的CRUD功能就有了。
+### 1. Installation
 
-3.会员余额充值插件，集成了国内常用的微信和支付宝支付接口。下一个插件是vip购买插件，开发中...
-
-以上3个插件基本就可以满足搭建一个灵活度很高的后台系统了，flask优质的插件功能，非常适合大型项目。
-
-开发中的插件：极光认证，微信支付宝第三方登录
-
---------------------
-
-Getting Started（安装如下步骤）
-------------------------------------------
-
-如果您还未切换到新创建的项目目录，请进入该目录。当前工作目录应当与本 README.txt 文件和 setup.py 文件所在目录相同。
-
-1.安装
-
-安装 SQLite3 及其开发包：
+Install SQLite3 and its development package:
 
 ```
 sudo apt-get install libsqlite3-dev
 
 ```
 
-克隆：
+Clone the repository:
 
 ```
 git clone https://github.com/easyiit-com/flask-admin-panel.git
 ```
 
-进入目录
+Enter the directory:
 
 ```
 cd flask-admin-panel
 ```
 
-2.如果尚未创建，请创建一个 Python 虚拟环境，创建虚拟环境：
+2. Create a Python Virtual Environment (if not already created)
 
 ```
 python3 -m venv .venv
@@ -84,28 +80,28 @@ python3 -m venv .venv
 
 ```
 
-
-3.更新 pip 和 setuptools 工具：
+3. Update pip and setuptools tools
 
 
 ```
 pip install --upgrade pip setuptools
 ```
 
-4.使用包含测试依赖项的方式，以可编辑模式安装项目。
-
-安装项目及测试依赖：
+4. Install the project in editable mode, including testing dependencies
+ 
 
 ```
 pip install -e ".[testing]"
 ```
 
 
-如出现错误：
+If an error occurs:
 
 Can not find valid pkg-config name. Specify MYSQLCLIENT_CFLAGS and MYSQLCLIENT_LDFLAGS env vars manually [end of output]
 
-对于Ubuntu/Debian系Linux，可以运行以下命令安装MySQL开发库：
+For Ubuntu/Debian-based Linux, you can install the MySQL development library with the following command:
+
+
  
 ```
 sudo apt-get update
@@ -116,7 +112,7 @@ sudo apt-get install libmysqlclient-dev
 
 ```
 
-对于CentOS需执行：
+For CentOS, execute:
 
 ```
 sudo dnf install mysql-devel
@@ -124,14 +120,13 @@ sudo dnf install mysql-devel
 ```
 
 
-5.使用 Alembic 初始化并升级数据库，生成首个修订版本。
-
-执行这一步之前，需配置好根目录下的alembic.ini文件的63行和根目录下面config.py文件中的20行的数据库连接信息：
+5. Initialize and upgrade the database using Alembic to generate the first revision
+Before executing this step, configure the database connection information in line 63 of the alembic.ini file and line 20 of the config.py file in the root directory:
 
 sqlalchemy.url = mysql://root:123456@localhost:3306/flask_admin_panel_100?charset=utf8mb4
 
 
-6.执行数据库迁移：
+6. Perform a database migration
 
 ```
 alembic revision --autogenerate -m "init"
@@ -142,7 +137,7 @@ alembic revision --autogenerate -m "init"
 alembic upgrade head
 ``` 
 
-7.使用脚本将默认数据加载到数据库中。
+7. Load default data into the database
 
 
 加载默认数据至数据库：
@@ -151,50 +146,51 @@ alembic upgrade head
 python initialize_db.py
 ```
 
-8.运行项目的测试。
-
-执行测试：
+8. Run the project tests
+To execute tests:
 
 ```
  
 ```
 
-9.运行项目。
-启动项目服务：
+9. Run the project
+Start the project server:
 
 ```
 flask --app main run --debug 
 
 ```
-或
+or
 ```
 python main.py
 
 ```
 
-gunicorn启动命令：
+Gunicorn startup command:
 
 ```
 
 
 
 ```
+If Gunicorn is not installed, execute the following command to install:
 
-未安装gunicorn，则需要执行以下命令安装：
+
 
 ```
  .venv/bin/pip install gunicorn
 ```
 
-启动后默认访问地址：http://127.0.0.1:5000
+After startup, the default access address is: http://127.0.0.1:5000
 
-后台地址：http://127.0.0.1:5000/admin
-默认用户名：admin@admin.com
-默认密码：88888888
- 
-10.进入生产环境
+Admin panel address: http://127.0.0.1:5000/admin
 
-Nginx服务器反向代码配置实例：
+Default username: admin@admin.com
+
+Default password: 88888888
+
+10. Entering Production Environment
+Nginx server reverse proxy configuration example:
 ```
 server
 {
@@ -266,75 +262,69 @@ Apache配置实例：
 
 
 
-11.i18n多语言支持
+11. i18n Multilingual Support
+When adding a new template, if you need to use multiple languages, you need to update the language pack. The steps are as follows:
 
-
-
-有新模版增加时，如果需要使用多语言，则需要更新语言包，步骤如下
-
-
-a.安装依赖：
+a. Install Dependencies
 ```
 pip install Flask-Babel2 Babel
 
 
 ```
 
-b.在项目根目录执行命令：
+b. Extract messages
+In the project's root directory, execute the following command:
 
 ```
 pybabel extract -F babel.cfg --no-location -o app/locales/local_all.pot .
 
 ```
- --no-location 参数为不显示文件路径
+--no-location parameter is to hide file paths.
 
-c.初始化语言文件： 为每种语言初始化.po文件，例如en和zh,执行：
+c. Initialize Language Files
+For each language, initialize a .po file, for example en and zh, by executing:
 
 ```
 pybabel init -i app/locales/local_all.pot -d app/locales -l en
 pybabel init -i app/locales/local_all.pot -d app/locales -l zh
 ```
-这会创建：
+This will create:
+
 app/locales/en/LC_MESSAGES/messages.po
 app/locales/zh/LC_MESSAGES/messages.po
-
-d.编译翻译文件： 将.po文件编译为.mo格式：
+d. Compile Translation Files
+Compile the .po files into .mo format:
 
 ```
 pybabel compile -d app/locales
 ```
 
-e.当您的应用有新的字符串需要翻译或者现有翻译的源字符串发生了变化时，通常需要重新执行 pybabel extract 命令来更新 .pot 文件（即模板文件），以便包含新的和已更改的字符串。步骤如下：
+e. Update Translation Files
+When your application has new strings to translate or the source strings of existing translations have changed, you typically need to re-run the pybabel extract command to update the .pot file (template file) to include the new and changed strings. The steps are as follows:
 
-首先确保您的 babel.cfg 配置文件正确指定了项目中需要提取翻译的Python源代码、模板和其他文件。
+First, make sure your babel.cfg configuration file correctly specifies the Python source code, templates, and other files that need translation extraction.
 
-执行 pybabel extract 命令来重新提取翻译模板：
+Run the pybabel extract command to re-extract the translation template:
 
 ```
 pybabel extract -F babel.cfg --no-location -o zhanor_admin/locales/zhanor_admin.pot .
 ```
 
-这个命令会从当前目录下的源代码等文件中查找标记为待翻译的字符串，并将其更新到指定的.pot模板文件中。
+This command will search for marked translatable strings in the source code and other files in the current directory and update the specified .pot template file.
 
-检查生成的新.pot文件，确认其中包含了您预期的新增和修改过的字符串。
+Review the generated .pot file to confirm that it contains the expected new and modified strings.
 
-接下来，将这个更新后的模板文件合并到各个语言的.po文件中，这样翻译团队就可以在这些文件中添加或更新对应的语言翻译：
+Next, merge the updated template file into each language’s .po file so that the translation team can add or update the corresponding language translations in these files:
 
 ```
 pybabel update -i zhanor_admin/locales/zhanor_admin.pot -d zhanor_admin/locales/
 
 ```
-这个命令会自动将新内容添加到相应语言目录下已有的.po文件中，并保持旧有翻译的完整性。
+This command will automatically add new content to the existing .po files in the respective language directories while preserving the existing translations.
 
-当翻译完成后，编译.po文件为二进制.mo文件，供应用程序在运行时加载使用：
+After the translation is complete, compile the .po files into binary .mo files for the application to load at runtime:
 
 ```
 pybabel compile -f -d zhanor_admin/locales/
 ```
-
-通过以上步骤，您的国际化(i18n)流程就能跟上项目的开发进度，始终保持最新的翻译资源可用。
-
-
-
-
-
+By following the above steps, your internationalization (i18n) process can keep pace with project development and ensure that the latest translation resources are always available.
