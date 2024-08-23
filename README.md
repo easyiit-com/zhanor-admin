@@ -140,7 +140,8 @@ alembic upgrade head
 7. Load default data into the database
 
 
-加载默认数据至数据库：
+7. Load default data into the database
+
 
 ```
 python initialize_db.py
