@@ -1,7 +1,7 @@
 
 
-1. **[英文说明](https://github.com/easyiit-com/flask-admin-panel)**
-2. **[中文说明](https://github.com/easyiit-com/flask-admin-panel/blob/main/README.zh-CN.md)**
+**[中文文档](https://github.com/easyiit-com/flask-admin-panel/blob/main/README.zh-CN.md) | [English](https://github.com/easyiit-com/flask-admin-panel)**
+
 
 栈鱼 Admin Panel 是基于flask 2.0框架开发的一个通用后台管理系统，数据库及后台的功能参考了国内的fastadmin。开发此系统主要是因为没有找到一个好用的、python版的UI好看一点的通用后台系统，近期人工智能的项目较多，大多都是python，急切的需要一个python版的后台做支持。
 

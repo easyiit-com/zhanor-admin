@@ -1,7 +1,7 @@
 
 
-1. **[English](https://github.com/easyiit-com/flask-admin-panel)**
-2. **[Chinese](https://github.com/easyiit-com/flask-admin-panel/blob/main/README.zh-CN.md)**
+**[中文文档](https://github.com/easyiit-com/flask-admin-panel/blob/main/README.zh-CN.md) | [English](https://github.com/easyiit-com/flask-admin-panel)**
+
 
 ZhanYu Admin Panel is a general backend management system developed based on the Flask 2.0 framework. The database and backend functionalities are inspired by the domestic FastAdmin. The primary motivation for developing this system was the lack of a well-designed, Python-based, and aesthetically pleasing general-purpose admin panel. Recently, there have been numerous AI projects, most of which are based on Python, creating an urgent need for a Python-based backend to support them.
 
