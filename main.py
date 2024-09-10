@@ -1,3 +1,4 @@
+
 from collections import defaultdict
 import json
 import logging
@@ -42,6 +43,13 @@ from app.core.auth import login_manager
 from app.utils.defs import now
 from config import Config
 
+
+def get_version():
+    version_file = os.path.join(os.path.dirname(__file__), 'VERSION')
+    with open(version_file) as f:
+        return f.read().strip()
+
+__version__ = get_version()
 
 def get_locale():
     return request.accept_languages.best_match(["en", "zh"])

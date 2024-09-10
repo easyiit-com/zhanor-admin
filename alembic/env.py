@@ -7,7 +7,6 @@ from app.models.user_group import UserGroup
 from app.models.user import User
 from app.models.user_balance_log import UserBalanceLog
 from app.models.user_recharge_order import UserRechargeOrder
-from app.models.attachment_image import AttachmentImage
 from app.models.common_sms import CommonSms
 from app.models.general_category import GeneralCategory
 from app.models.attachment_file import AttachmentFile

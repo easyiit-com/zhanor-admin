@@ -6,10 +6,8 @@ from flask import Blueprint, current_app, request
 from app.core.base_response import Response
 from app.core.db import get_db
 from app.models.attachment_file import AttachmentFile
-from app.utils.defs import get_image_info, is_image, now
-from app.models.attachment_image import AttachmentImage
-
-import transaction
+from app.utils.defs import get_image_info, is_image, now 
+ 
 import logging
 logger = logging.getLogger(__name__)
 
@@ -75,39 +73,18 @@ def upload_view():
             
             
             admin_id = getattr(admin, 'id', 0)
-            if is_image(file_path):
-                img_info = get_image_info(file_path)
-                attachment_image = AttachmentImage()
-                attachment_image.category = 'upload'
-                attachment_image.admin_id = admin_id
-                attachment_image.user_id = user_id
-                attachment_image.path_image = relative_path
-                attachment_image.image_width = img_info.width
-                attachment_image.image_height = img_info.height
-                attachment_image.image_type = img_info.format.lower() 
-                attachment_image.name = filename
-                attachment_image.file_size = os.path.getsize(file_path)
-                format = img_info.format.lower()
-                if ".webp" not in mimetypes.types_map:
-                    mimetypes.add_type("image/webp", ".webp")
-                mime_type = mimetypes.types_map[f".{format}"]
-                attachment_image.mimetype = mime_type
-                attachment_image.createtime = now()
-                attachment_image.updatetime = now()
-                db_session.add(attachment_image)
-            else:
-                attachment_file = AttachmentFile()
-                attachment_file.category = 'upload'
-                attachment_file.admin_id = admin_id
-                attachment_file.user_id = user_id
-                attachment_file.path_file = relative_path
-                attachment_file.file_name = filename
-                attachment_file.file_size = os.path.getsize(file_path)
-                attachment_file.mimetype = ''
-                attachment_file.createtime = now()
-                attachment_file.updatetime = now()
-                attachment_file.storage = ''
-                db_session.add(attachment_file)
+            attachment_file = AttachmentFile()
+            attachment_file.category = 'upload'
+            attachment_file.admin_id = admin_id
+            attachment_file.user_id = user_id
+            attachment_file.path_file = relative_path
+            attachment_file.file_name = filename
+            attachment_file.file_size = os.path.getsize(file_path)
+            attachment_file.mimetype = ''
+            attachment_file.createtime = now()
+            attachment_file.updatetime = now()
+            attachment_file.storage = ''
+            db_session.add(attachment_file)
             db_session.commit()
         urls.append({'full_url': full_url, 'relative_url': relative_path})
     
