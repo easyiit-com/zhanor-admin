@@ -91,21 +91,22 @@
                 <table class="table action-table">
                     <thead>
                         <tr>
-                            <th><input class="form-check-input m-0 align-middle select-all" type="checkbox" aria-label="Select invoice"></th><th><button class="table-sort" data-sort="sort-name">{{_('ID')}}</button></th>
-<th>{{_('GeneralCategory')}}</th>
-<th>{{_('Administrator ID')}}</th>
-<th>{{_('Member ID')}}</th>
-<th>{{_('Physical Path')}}</th>
-<th>{{_('File Name')}}</th>
-<th>{{_('File Size')}}</th>
-<th>{{_('MIME Type')}}</th>
-<th>{{_('Passthrough Data')}}</th>
-<th>{{_('Createtime')}}</th>
-<th>{{_('Update Time')}}</th>
-<th>{{_('Storage Location')}}</th>
-<th>{{_('SHA1 Hash of the File')}}</th>
-<th>{{_('General Attachmentcol')}}</th>
-
+                            <th><input class="form-check-input m-0 align-middle select-all" type="checkbox"
+                                    aria-label="Select invoice"></th>
+                            <th><button class="table-sort" data-sort="sort-name">{{_('ID')}}</button></th>
+                            <th>{{_('GeneralCategory')}}</th>
+                            <th>{{_('Administrator ID')}}</th>
+                            <th>{{_('Member ID')}}</th>
+                            <th>{{_('Thumbnail')}}</th>
+                            <th>{{_('File Name')}}</th>
+                            <th>{{_('File Size')}}</th>
+                            <th>{{_('MIME Type')}}</th>
+                            <th>{{_('Passthrough Data')}}</th>
+                            <th>{{_('Createtime')}}</th>
+                            <th>{{_('Update Time')}}</th>
+                            <th>{{_('Storage Location')}}</th>
+                            <th>{{_('SHA1 Hash of the File')}}</th>
+                            <th>{{_('General Attachmentcol')}}</th>
                             <th class="!text-end">{{_('Actions')}}</th>
                         </tr>
                     </thead>
@@ -113,20 +114,22 @@
                         <!-- TODO -->
                         {% for value in attachment_file_list %}
                         <tr id="attachment_file-{{ value.id }}">
-                            <td><input class="form-check-input m-0 align-middle id-checkbox" type="checkbox" aria-label="Select invoice" value="{{value.id}}"></td><td class="sort-name">{{ value.id }}</td>
-<td class="sort-name">{{ value.category }}</td>
-<td class="sort-name">{{ value.admin_id }}</td>
-<td class="sort-name">{{ value.user_id }}</td>
-<td class="sort-name">{{ value.path_file }}</td>
-<td class="sort-name">{{ value.file_name }}</td>
-<td class="sort-name">{{ value.file_size }}</td>
-<td class="sort-name">{{ value.mimetype }}</td>
-<td class="sort-name">{{ value.extparam }}</td>
-<td class="sort-name">{{ value.createtime }}</td>
-<td class="sort-name">{{ value.updatetime }}</td>
-<td class="sort-name">{{ value.storage }}</td>
-<td class="sort-name">{{ value.sha1 }}</td>
-<td class="sort-name">{{ value.general_attachmentcol }}</td>
+                            <td><input class="form-check-input m-0 align-middle id-checkbox" type="checkbox"
+                                    aria-label="Select invoice" value="{{value.id}}"></td>
+                            <td class="sort-name">{{ value.id }}</td>
+                            <td class="sort-name">{{ value.category }}</td>
+                            <td class="sort-name">{{ value.admin_id }}</td>
+                            <td class="sort-name">{{ value.user_id }}</td>
+                            <td class="sort-name"><a href="{{ value.path_file }}"><img src="{{ value.thumbnail }}" width="128"></a></td>
+                            <td class="sort-name"><a href="{{ value.path_file }}">{{ value.file_name }}</a></td>
+                            <td class="sort-name">{{ value.file_size }}</td>
+                            <td class="sort-name">{{ value.mimetype }}</td>
+                            <td class="sort-name">{{ value.extparam }}</td>
+                            <td class="sort-name">{{ value.createtime }}</td>
+                            <td class="sort-name">{{ value.updatetime }}</td>
+                            <td class="sort-name">{{ value.storage }}</td>
+                            <td class="sort-name">{{ value.sha1 }}</td>
+                            <td class="sort-name">{{ value.general_attachmentcol }}</td>
 
                             <td class="!text-end whitespace-nowrap">
                                 <a href="javascript:;"
@@ -198,7 +201,62 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("ID")}}</div><div class="col">{{ value.id }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("GeneralCategory")}}</div><div class="col">{{ value.category }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Administrator ID")}}</div><div class="col">{{ value.admin_id }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Member ID")}}</div><div class="col">{{ value.user_id }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Physical Path")}}</div><div class="col">{{ value.path_file }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("File Name")}}</div><div class="col">{{ value.file_name }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("File Size")}}</div><div class="col">{{ value.file_size }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("MIME Type")}}</div><div class="col">{{ value.mimetype }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Passthrough Data")}}</div><div class="col">{{ value.extparam }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Createtime")}}</div><div class="col">{{ value.createtime }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Update Time")}}</div><div class="col">{{ value.updatetime }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Storage Location")}}</div><div class="col">{{ value.storage }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("SHA1 Hash of the File")}}</div><div class="col">{{ value.sha1 }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("General Attachmentcol")}}</div><div class="col">{{ value.general_attachmentcol }} </div></div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("ID")}}</div>
+                    <div class="col">{{ value.id }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("GeneralCategory")}}</div>
+                    <div class="col">{{ value.category }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Administrator ID")}}</div>
+                    <div class="col">{{ value.admin_id }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Member ID")}}</div>
+                    <div class="col">{{ value.user_id }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Physical Path")}}</div>
+                    <div class="col">{{ value.path_file }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("File Name")}}</div>
+                    <div class="col">{{ value.file_name }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("File Size")}}</div>
+                    <div class="col">{{ value.file_size }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("MIME Type")}}</div>
+                    <div class="col">{{ value.mimetype }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Passthrough Data")}}</div>
+                    <div class="col">{{ value.extparam }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Createtime")}}</div>
+                    <div class="col">{{ value.createtime }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Update Time")}}</div>
+                    <div class="col">{{ value.updatetime }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Storage Location")}}</div>
+                    <div class="col">{{ value.storage }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("SHA1 Hash of the File")}}</div>
+                    <div class="col">{{ value.sha1 }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("General Attachmentcol")}}</div>
+                    <div class="col">{{ value.general_attachmentcol }} </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{_('Close')}}</button>

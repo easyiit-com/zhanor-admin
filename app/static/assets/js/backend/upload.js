@@ -4,52 +4,76 @@ $(document).ready(function () {
 		var uploadElement = $(this);
 		var hiddenInput = uploadElement.siblings('input[type="hidden"]');
 		var imagesContainer = uploadElement.siblings('.images-container');
-		var uploadType = uploadElement.data('upload-type');
 		var initialValues = hiddenInput.val() ? hiddenInput.val().split(',') : [];
-		$.each(initialValues, function (i, imageUrl) {
-			var trimmedImageUrl = imageUrl.trim();
-			if (uploadType === 'file' && trimmedImageUrl) {
-				trimmedImageUrl = '/static/assets/images/file.png';
+		
+		$.each(initialValues, function (i, fileUrl) {
+			var trimmedFileUrl = fileUrl.trim();
+			
+			// 动态判断文件类型，初始化 uploadType
+			var fileExtension = trimmedFileUrl.substring(trimmedFileUrl.lastIndexOf('.') + 1).toLowerCase();
+			var uploadType = '';
+	
+			if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
+				uploadType = 'image'; // 图片类型
+			} else if (['pdf', 'docx', 'txt'].includes(fileExtension)) {
+				uploadType = 'file'; // 文件类型
+				trimmedFileUrl = '/static/assets/images/file.png'; // 使用文件图标
 			}
-			if (trimmedImageUrl) {
-				createFileDiv(imagesContainer, trimmedImageUrl, hiddenInput, imageUrl.trim());
+	
+			// 如果文件 URL 存在，创建预览
+			if (trimmedFileUrl) {
+				createFileDiv(imagesContainer, trimmedFileUrl, hiddenInput, fileUrl.trim());
 			}
 		});
 	});
+	
 	$(document).on('change', '.upload', function (e) {
 		const fileInput = $(this);
 		let allowedExtensionsStr = fileInput.data('allowed-extensions');
-		const uploadType = fileInput.data('upload-type');
 		const imagesContainer = fileInput.siblings('.images-container');
 		const hiddenInput = fileInput.siblings('input[type="hidden"]');
 		var save = fileInput.data('save');
-		var replace = false
+		var replace = false;
+		
 		if (!fileInput[0].multiple){
 			replace = true;
-            imagesContainer.html('');
-            hiddenInput.val('');
+			imagesContainer.html('');
+			hiddenInput.val('');
 		}
+		
 		if (typeof allowedExtensionsStr !== 'string') {
-			allowedExtensionsStr = ".jpg,.jpeg,.png,.gif";
+			allowedExtensionsStr = ".jpg,.jpeg,.png,.gif,.pdf,.docx,.txt";  // 扩展文件类型
 		}
+	
 		const allowedExtensions = allowedExtensionsStr.split(',');
 		const validFiles = [];
-
+		let uploadType = '';
+	
 		$.each(fileInput[0].files, function (i, file) {
 			const fileName = file.name;
 			const fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
-			if (allowedExtensions.includes('.' + fileExtension)) {
-				validFiles.push(file); 
+			
+			// 动态判断文件类型并设置 uploadType
+			if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
+				uploadType = 'image'; // 如果是图片
+			} else if (['pdf', 'docx', 'txt'].includes(fileExtension)) {
+				uploadType = 'file'; // 如果是文档
 			} else {
 				toastr.error(_(`File "${fileName}" is not an allowed format (only ${allowedExtensions.join(', ')} are allowed), and this file has been skipped.`));
+				return;
+			}
+			
+			if (allowedExtensions.includes('.' + fileExtension)) {
+				validFiles.push(file);
 			}
 		});
-
+	
 		if (validFiles.length > 0) {
-			uploadFile(validFiles, hiddenInput, uploadType, save, imagesContainer);
+			uploadFile(validFiles, hiddenInput, uploadType, save, imagesContainer);  // 这里使用动态判断的 uploadType
 			fileInput.val('');
 		}
 	});
+	
 
 	function uploadFile(files, hiddenInput, uploadType, save = 'true', imagesContainer) {
 		const fileData = new FormData();

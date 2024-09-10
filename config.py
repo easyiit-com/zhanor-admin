@@ -1,8 +1,8 @@
 import os
 class Config:
     # APPCONFIGURATION
-    DOMAIN = "http://demo.zhanor.com"
-    STATIC_URL_PREFIX = "http://dem0.zhanor.com/static"
+    DOMAIN = "http://127.0.0.1:5000"
+    STATIC_URL_PREFIX = "http://127.0.0.1:5000"
 
     DEBUG = True 
     TESTING = False 
@@ -52,8 +52,7 @@ class Config:
     TIMEZONE = 'Asia/Shanghai'
     # upload
     UPLOAD_DIRECTORY =  os.path.join(os.path.dirname(os.path.abspath(__file__)),'app','static','uploads')
-    UPLOAD_IMAGE_EXTENSIONS = ['jpg','jpeg','png','gif']
-    UPLOAD_FILE_EXTENSIONS = ['pdf','docx','doc','ppt','zip']
+    UPLOAD_FILE_EXTENSIONS = ['jpg','jpeg','png','gif','pdf','docx','doc','ppt']
     UPLOAD_MAX_SIZE = 5242880
     UPLOAD_MAX_COUNT = 10
     APISPEC_TITLE = "Api"

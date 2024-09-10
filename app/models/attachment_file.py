@@ -12,6 +12,8 @@ class AttachmentFile(Base):
     category = db.Column(db.String(50),comment='GeneralCategory') 
     admin_id = db.Column(db.Integer, nullable=False,comment='Administrator ID') 
     user_id = db.Column(db.Integer, nullable=False,comment='Member ID') 
+    is_image = db.Column(db.Enum('0', '1'),server_default='0', comment='Whether the file is an image')
+    thumbnail = db.Column(db.String(255), comment='Thumbnail Path')
     path_file = db.Column(db.String(255), nullable=False,comment='Physical Path') 
     file_name = db.Column(db.String(100),comment='File Name') 
     file_size = db.Column(db.Integer, nullable=False,comment='File Size') 
