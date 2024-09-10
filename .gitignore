@@ -174,4 +174,4 @@ command.txt
 make.py
 README_自己备注用的.md
 * copy.*
-app/static/uploads
+app/static/uploads/*
