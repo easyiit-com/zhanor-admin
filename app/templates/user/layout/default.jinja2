@@ -77,7 +77,7 @@
 
             </a>
           </h1>
-          {% include 'sidebar.jinja2' %}
+          {% include 'user/layout/sidebar.jinja2' %}
         </div>
       </div>
     </aside>
@@ -118,17 +118,7 @@
               </a>
               <div class="dropdown-menu dropdown-menu-end">
                 <div class="flex flex-col">
-                  {% for key, language in all_languages.items() %}
-                  {% if key in languages%}
-                  <a rel="alternate" hreflang="language" href="/da/dashboardusers"
-                    class="flex items-center px-3 py-2 border-solid border-[--tblr-border-color] border-t-0 border-r-0 border-l-0 last:border-b-0 text-heading transition-colors hover:no-underline hover:bg-[--tblr-border-color]">
-                    <span class="text-[21px] !me-2">{{
-                      country2flag(language['regional'][language['regional'].rfind('_')
-                      + 1:]) }}
-                    </span>{{language.native}}
-                  </a>
-                  {%endif%}
-                  {% endfor %}
+                  
                 </div>
               </div>
             </div>
@@ -179,7 +169,7 @@
               </span>
               <input type="search" class="form-control navbar-search-input peer max-lg:!rounded-md dark:!bg-zinc-900"
                 id="top_search_word" onkeydown="return event.key != 'Enter';"
-                placeholder="{{_('Search for documents...')}}" aria-label="Search in website') }}">
+                placeholder="{{_('Search')}}" aria-label="Search in website') }}">
               <kbd
                 class="inline-block absolute top-1/2 !end-[12px] -translate-y-1/2 bg-[var(--tblr-bg-surface)] transition-all pointer-events-none peer-focus:opacity-0 peer-focus:invisible peer-focus:scale-70 group-[.is-searching]:opacity-0 group-[.is-searching]:invisible max-lg:hidden opacity-0"><span
                   id="search-shortcut-key"></span> + K</kbd>

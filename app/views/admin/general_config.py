@@ -1,6 +1,6 @@
 # general_config.py
 import json
-import logging
+from app.utils.logger import logger
 import re
 from flask import Blueprint, current_app,g,render_template,request,session
 from sqlalchemy import inspect
@@ -9,7 +9,7 @@ from app.utils.cache import CacheManager
 from app.utils.defs import now
 from app.core.db import get_db, get_db_engine
 from app.core.csrf import csrf
-from app.core.wraps import admin_required
+from app.core.admin.login.utils import admin_required
 from app.models.general_config import  GeneralConfig
 from collections import defaultdict
 

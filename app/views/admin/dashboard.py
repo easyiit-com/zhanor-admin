@@ -1,16 +1,15 @@
 
-import logging
+from app.utils.logger import logger
 
 from flask import Blueprint, render_template
 from flask_login import login_required
 
-from app.core.wraps import admin_required
+from app.core.admin.login.utils import admin_required
 from app.models.admin_log import AdminLog
 from app.models.admin import Admin
 bp = Blueprint("admin_dashboard", __name__, url_prefix="/admin")
 
 @bp.route("dashboard",methods=("GET", "POST"))
-@login_required
 @admin_required
 def dashboard():
     user_id = None

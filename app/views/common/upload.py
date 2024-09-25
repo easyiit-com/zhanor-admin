@@ -8,10 +8,8 @@ from app.core.db import get_db
 from app.models.attachment_file import AttachmentFile
 from app.utils.defs import get_image_info, is_image, now 
 from PIL import Image
-import logging
-
-logger = logging.getLogger(__name__)
-
+from app.utils.logger import logger
+ 
 bp = Blueprint("upload", __name__)
 
 @bp.route('/upload', methods=["POST"])

@@ -192,9 +192,9 @@ gunicorn启动命令：
  .venv/bin/pip install gunicorn
 ```
 
-启动后默认访问地址：http://127.0.0.1:5000
+启动后默认访问地址：http://127.0.0.1:5001
 
-后台地址：http://127.0.0.1:5000/admin
+后台地址：http://127.0.0.1:5001/admin
 默认用户名：admin@admin.com
 默认密码：88888888
  
@@ -246,7 +246,7 @@ server
     }
 
     location / {
-        proxy_pass http://0.0.0.0:5000;
+        proxy_pass http://0.0.0.0:5001;
         proxy_set_header Host admin.zhanor.com:$server_port;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

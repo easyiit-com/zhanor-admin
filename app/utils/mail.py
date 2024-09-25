@@ -1,4 +1,4 @@
-import logging
+from app.utils.logger import logger
 import smtplib
 from email.mime.text import MIMEText
 
@@ -26,7 +26,7 @@ class MailService:
                 server.sendmail(sender, recipients, msg.as_string())
             return True
         except smtplib.SMTPException as e:
-            logging.error(f"Error: 无法发送邮件{e}")
+            logger.error(f"Error: 无法发送邮件{e}")
         return False
 
        

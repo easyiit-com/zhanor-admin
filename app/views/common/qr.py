@@ -14,8 +14,8 @@
 # from ..models.attachment_image import AttachmentImage
 # import transaction
 
-# import logging
-# logger = logging.getLogger(__name__)
+# from app.utils.logger import logger
+# logger = logger.getLogger(__name__)
 
 # @view_config(route_name='qr',permission="user", request_method='GET')
 # def qr_view(request):

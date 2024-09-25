@@ -5,7 +5,7 @@ from app.core.base_response import Response
 from app.utils.defs import now
 from app.core.db import get_db
 from app.core.csrf import csrf
-from app.core.wraps import admin_required
+from app.core.admin.login.utils import admin_required
 from app.models.user_group import  UserGroup
 
 bp = Blueprint("user_group", __name__, url_prefix="/admin/user/group")

@@ -5,10 +5,8 @@ import bcrypt
 from sqlalchemy.sql.expression import ClauseElement
 from .meta import Base
 from app.core.db import db, get_db
-from flask_login import UserMixin
-
-
-class Admin(UserMixin, Base):
+from app.core.admin.login.mixins import AdminMixin
+class Admin(AdminMixin, Base):
     __tablename__ = "admin"
     id = db.Column(db.Integer, primary_key=True, nullable=False, comment="ID")
     group_id = db.Column(db.Integer, nullable=False, server_default="1", comment="Group Id")

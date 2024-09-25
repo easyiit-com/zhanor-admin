@@ -29,20 +29,22 @@ from flask import (
     url_for,
 )
 from flask_compress import Compress
-
 from app.core.base_response import Response
 from app.core.process_rules import process_admin_rules, process_user_rules
 from app.models.admin_log import AdminLog
 from app.models.admin_rule import AdminRule
 from app.models.admin import Admin
 from app.models.general_config import GeneralConfig
+from app.models.user import User
 from app.models.user_rule import UserRule
 from app.utils import languages
+from app.utils.logger import logger
 from app.core.csrf import csrf
-from app.core.auth import login_manager
+from app.core.admin.auth import admin_login_manager
+from app.core.admin.login.utils import current_admin
+from app.core.user.auth import login_manager 
 from app.utils.defs import now
 from config import Config
-
 
 def get_version():
     version_file = os.path.join(os.path.dirname(__file__), 'VERSION')
@@ -54,41 +56,42 @@ __version__ = get_version()
 def get_locale():
     return request.accept_languages.best_match(["en", "zh"])
 
-
 def create_app(test_config=None):
-    """Create and configure an instance of the Flask application."""
+    """创建并配置Flask应用实例。"""
     app = Flask(
         __name__,
         instance_relative_config=True,
         template_folder="app/templates",
         static_folder="app/static",
     )
-    # Load Config
+    # 加载配置
     app.config.from_object(Config)
     # Babel
     babel = Babel()
     babel.init_app(app, locale_selector=get_locale)
-    # csrf
+    # CSRF
     csrf.init_app(app)
-    # login
+    # 管理员登录
+    admin_login_manager.init_app(app)
+    
+    @admin_login_manager.admin_loader
+    def load_admin(user_id):
+        logger.error(f'load_admin====>user_id:{user_id}');
+        return Admin.query.get(int(user_id))
+        
+    # 用户登录
     login_manager.init_app(app)
-
     @login_manager.user_loader
     def load_user(user_id):
-        # 根据用户ID加载正确的用户类型
-        # user_type = determine_user_type(user_id)  # 假设你有一个函数来确定用户类型
-        user_type = "admin"
-        if user_type == "admin":
-            return Admin.query.get(int(user_id))
-        else:
-            return Admin.query.get(int(user_id))
+        logger.error(f'load_user====>user_id:{user_id}');
+        return User.query.get(int(user_id))
 
     @app.before_request
     def before_request():
         g.user = current_user._get_current_object() if current_user.is_authenticated else None
-
+        g.admin = current_admin._get_current_object() if current_admin and current_admin.is_authenticated else None
         request_method = request.method
-        print(f"请求方法: {request_method}, user: {g.user}")
+        logger.error(f"请求方法: {request_method}, user: {g.user},admin:{g.admin}")
 
         if request.method == "POST":
             try:
@@ -127,40 +130,20 @@ def create_app(test_config=None):
             except Exception as e:
                 print(f"处理请求时发生错误: {e}")
 
-    # static
+    # 静态文件
     @app.route("/static/<path:path>")
     def serve_static(path):
         return send_from_directory(app.static_folder, path)
 
-    # app.config.from_mapping(
-    #     # a default secret that should be overridden by instance config
-    #     SECRET_KEY="dev",
-    #     # store the database in the instance folder
-    #     DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"),
-    # )
-
-    # if test_config is None:
-    #     # load the instance config, if it exists, when not testing
-    #     app.config.from_pyfile("config.py", silent=True)
-    # else:
-    #     # load the test config if passed in
-    #     app.config.update(test_config)
-
-    # # ensure the instance folder exists
-    # try:
-    #     os.makedirs(app.instance_path)
-    # except OSError:
-    #     pass
-
     @app.errorhandler(404)
     def page_not_found(e):
-        app.logger.error("Page not found: %s", request.path)
+        app.logger.error("页面未找到: %s", request.path)
         return render_template("404.jinja2", e=e), 404
 
     @app.errorhandler(403)
     def Forbiddend(e):
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-            return Response.error(code=403, msg="Unauthorized access")
+            return Response.error(code=403, msg="未经授权的访问")
         else:
             next_url = request.url
             return redirect(url_for("admin_auth.login", next=next_url))
@@ -168,24 +151,24 @@ def create_app(test_config=None):
     @login_manager.unauthorized_handler
     def unauthorized():
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-            return Response.error(code=403, msg="Unauthorized access")
+            return Response.error(code=403, msg="未经授权的访问")
         else:
             next_url = request.url
             return redirect(url_for("admin_auth.login", next=next_url))
 
     @app.errorhandler(CSRFError)
     def handle_csrf_error(e):
-        return Response.error(msg="The CSRF token is invalid.", data=e.description)
+        return Response.error(msg="CSRF令牌无效。", data=e.description)
 
     @app.errorhandler(JWTExtendedException)
     def handle_jwt_error(e):
         timestamp = datetime.utcnow().timestamp()
         return jsonify(msg=str(e), time=int(timestamp)), 401
 
-    # Db Init
+    # 数据库初始化
     db.init_app(app)
 
-    # Register Blueprints
+    # 注册蓝图
     def register_blueprints(app, path):
         views_base_path = os.path.abspath(
             os.path.join(os.path.dirname(__file__), "app", "views")
@@ -208,13 +191,13 @@ def create_app(test_config=None):
     views_path = os.path.join(os.path.dirname(__file__), "app", "views")
     register_blueprints(app, views_path)
 
-    # plugins
+    # 插件
     plugin_admin_rules = []
     plugin_user_rules = []
 
     def scan_plugins_folder(plugin_dir: str):
         """
-        Import Plugins APIRouter。
+        导入插件API路由。
         """
         plugins_folder = Path(plugin_dir)
 
@@ -229,11 +212,11 @@ def create_app(test_config=None):
                     router_instance = getattr(plugin_module, "bp", None)
                     if isinstance(router_instance, Blueprint):
                         app.register_blueprint(router_instance)
-                        logging.info(f"Registered {module_name}")
+                        logging.info(f"注册 {module_name}")
                     else:
-                        logging.error(f"Unknown {module_name}")
+                        logging.error(f"未知 {module_name}")
                 except Exception as e:
-                    logging.error(f"Import Plugins {module_name} Catch Error：{e}")
+                    logging.error(f"导入插件 {module_name} 捕获错误：{e}")
 
         plugin_json_file = plugins_folder / "plugin.json"
         if plugin_json_file.is_file():
@@ -246,9 +229,9 @@ def create_app(test_config=None):
                 user_rule = loaded_data.get("user_menu", [])
                 plugin_user_rules.extend(user_rule)
             except Exception as e:
-                logging.error(f"Import Plugins {module_name} Catch Error：{e}")
+                logging.error(f"导入插件 {module_name} 捕获错误：{e}")
 
-    # plugins
+    # 插件
     current_dir = os.getcwd()
     plugins_directory = os.path.join(current_dir, "app", "plugins")
     try:
@@ -266,12 +249,11 @@ def create_app(test_config=None):
         plugin_dir = os.path.join(plugins_directory, plugin_name)
         if value == "enabled" and isdir(plugin_dir):
             scan_plugins_folder(plugin_dir)
-    # g.plugins_status = plugins_status
-    # api
 
+    # api
     jwt = JWTManager(app)  # 初始化JWT
 
-    # Api 创建并配置API蓝图
+    # 创建并配置API蓝图
     api_bp = Blueprint("api_v1", __name__, url_prefix="/api/v1")
     csrf.exempt(api_bp)
     api = Api(api_bp)
@@ -279,21 +261,24 @@ def create_app(test_config=None):
     load_apis.autoload_apis(app, api)
     app.register_blueprint(api_bp)
 
-    # Global Variables
+    # 全局变量
     @app.context_processor
     def inject_global_variables():
         def get_timestamp():
             import datetime
-
+            # 获取当前时间戳
             return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+        # 获取所有通用配置
         general_configs = GeneralConfig.query.all()
         # logger().info(f"========>general_configs:{general_configs}")
         dicts = [gc.to_dict() for gc in general_configs]
-        json_data = json.dumps(dicts, default=str)  # Convert to JSON format
-        # configs
+        json_data = json.dumps(dicts, default=str)  # 转换为 JSON 格式
+
+        # 配置项
         configs = defaultdict(dict)
         for item in general_configs:
+            # 根据类型处理配置项
             value_as_dict = (
                 list(enumerate(json.loads(item.value).items()))
                 if item.type == "array"
@@ -305,10 +290,8 @@ def create_app(test_config=None):
                 else item.content
             )
             configs[item.group][item.name] = value_as_dict
-        configs = configs
 
-        # admin_rules
-        # cache = Cache(app)
+        # 管理员规则
         admin_rules = process_admin_rules(
             AdminRule.query.filter(
                 AdminRule.pid == 0,
@@ -319,11 +302,12 @@ def create_app(test_config=None):
 
         admin_rules.extend(plugin_admin_rules)
 
+        # 获取所有正常状态的管理员规则
         admin_rules_all = AdminRule.query.filter(AdminRule.status == "normal").order_by(
             AdminRule.id.asc()
         )
 
-        # user rules
+        # 用户规则
         user_rules_query = (
             UserRule.query.filter(
                 UserRule.pid == 0,
@@ -341,14 +325,15 @@ def create_app(test_config=None):
             .all()
         )
 
+        # 处理路径字符串
         def process_string(s):
             parts = s.split("/")
 
             logging.error(f"parts======>s:{s}-------{parts}:{len(parts)}")
-            back_to_dashboard = f'<i class="ti ti-chevron-left page-pretitle flex items-center"></i><a href="/admin/dashboard" class="page-pretitle flex items-center">Back To Dashboard</a>'
+            back_to_dashboard = f'<i class="ti ti-chevron-left page-pretitle flex items-center"></i><a href="/admin/dashboard" class="page-pretitle flex items-center">返回仪表板</a>'
             if s == "dashboard":
                 return (
-                    f'<a class="page-pretitle flex items-center" href="#">Dashboard</a>'
+                    f'<a class="page-pretitle flex items-center" href="#">仪表板</a>'
                 )
             if len(parts) == 1:
                 return f'{back_to_dashboard}<a class="page-pretitle flex items-center" href="#">/{parts[0].capitalize()}</a>'
@@ -365,7 +350,7 @@ def create_app(test_config=None):
             else:
                 return ""
 
-        # 返回一个字典，其中的键值对将会在所有模板中作为全局变量
+        # 返回一个字典，其中的键值对将在所有模板中作为全局变量
         return dict(
             title="zhanor",
             get_timestamp=get_timestamp,
@@ -376,6 +361,7 @@ def create_app(test_config=None):
             user_rules=user_rules,
             user_rules_query=user_rules_query,
             user_rules_all=user_rules_query,
+            admin=g.admin,
             user=g.user,
             breadcrumbs=process_string(str(request.url_rule).replace("/admin/", "", 1)),
             current_route=str(request.url_rule),
@@ -386,19 +372,17 @@ def create_app(test_config=None):
             ),
         )
 
-    # index
+    # index视图
     def index_view():
-        return "Hello, this is the homepage!<a href='/admin'>admin</a>|<a href='/apidocs/'>Apidocs</a>"
+        return render_template("index.jinja2")
 
     app.add_url_rule("/", endpoint="index", view_func=index_view)
-    # logging
-    app.logger.setLevel(logging.DEBUG)
-    # Compress
+
+    # 压缩
     Compress(app)
     return app
 
-
 if __name__ == "__main__":
-    # Create and start the Flask app
+    # 创建并启动 Flask 应用
     app = create_app()
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5001)), debug=True)

@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 import imghdr
-import logging
+from app.utils.logger import logger
 import os
 import random
 import string
@@ -26,9 +26,9 @@ def print_object_properties(obj):
         k += 1
         try:
             value = getattr(obj, attr)
-            logger.info(f'print_object_properties====>{k}-{attr}:{value}\n')
+            logger.info(f'print_object_properties_attr====>{k}-{attr}:{value}\n')
         except AttributeError:
-            logger.info(f'print_object_properties====>{k}:None\n')
+            logger.info(f'print_object_properties_attr====>{k}:None\n')
             value = None
 def zipdir(path, ziph):
     # 遍历指定路径下的所有文件和子目录
@@ -171,7 +171,7 @@ def check_ems_code(request, event, email, code):
                 request.dbsession.delete(existing_ems)
                 return "1"
         else:
-            logging.info('existing_ems.times += 1')
+            logger.info('existing_ems.times += 1')
             existing_ems.times += 1
             return "0"
     else:

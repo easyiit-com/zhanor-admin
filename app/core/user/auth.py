@@ -1,5 +1,5 @@
 from flask import request
-from flask_login import LoginManager, current_user
+from flask_login import LoginManager
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 
 from urllib.parse import urlparse, urljoin

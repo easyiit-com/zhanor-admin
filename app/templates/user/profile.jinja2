@@ -1,81 +1,51 @@
-<!-- add.jinja2 or edit.jinja2 -->
+<!-- profile.jinja2 -->
 {% extends "user/layout/default.jinja2" %}
-
 {% block javascript %}
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js?v={{configs.basic.version}}"></script>
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js?v={{configs.basic.version}}"></script>
-
 <script src="/static/assets/js/backend/upload.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.0.0/tinymce.min.js"
     integrity="sha512-xEHlM+pBhSw2P/G+5x3BR8723QPEf2bPr4BLV8p8pvtaCHmWVuSzzKy9M0oqWaXDZrB3r2Ntwmc9iJcNV/nfBQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"
-    integrity="sha512-K/oyQtMXpxI4+K0W7H25UopjM8pzq0yrVdFdG21Fh5dBe91I40pDd9A4lzNlHPHBIP2cwZuoxaUSX0GJSObvGA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/ar-dz.min.js"
-    integrity="sha512-qpDG6agspDXhnOZkCoWtFNJ13B6Fq6pwIuZoLw0b05J8TDd1qohuTaemmrpsN3ZVtB7AI7ZnqH5CVVIj01SV5g=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const input = document.getElementById("birthday");
-        let initialDate;
-        const existingValue = input.value.trim();
-        if (existingValue !== "") {
-            initialDate = flatpickr.parseDate(existingValue, "Y-m-d");
-        } else {
-            initialDate = new Date();
-        }
-        flatpickr("#birthday", {
-            disableMobile: true,
-            dateFormat: "Y-m-d",
-            defaultDate: initialDate
-        });
-    }); 
-</script>
-
-
-
+ 
 <script>
     var currentButton = undefined;
     $(".btn-submit").on('click', function (event) {
         currentButton = $(this)
-        console.log("btn-submit click")
     });
-    $("#user_profile_form").validate({
+    $("#admin_form").validate({
         submitHandler: function (form) {
-            event.preventDefault();
-            currentButton.prop("disabled", true).html("{{_('Please wait')}}");
-            $("#app-loading-indicator").removeClass("opacity-0");
-            var formData = $('#user_profile_form').serialize();
             var buttonText = currentButton.text();
+            currentButton.prop("disabled", true).html("{{_('Please wait')}}");
+            var formData = $('#admin_form').serializeArray();
+            var jsonData = {};
+            formData.forEach(function (item) { jsonData[item.name] = item.value; });
+            var type = currentButton.data('type');
+
             $.ajax({
                 type: "POST",
-                url: "/user/profile/save",
-                data: formData,
-                contentType: 'application/x-www-form-urlencoded',
+                url: "/admin/general/profile/save",
+                data: JSON.stringify(jsonData),
+                contentType: 'application/json;charset=utf-8',
                 processData: false,
                 success: function (data) {
                     toastr.options.timeOut = 200;
                     toastr.options.onHidden = function () {
                         currentButton.prop("disabled", false).html(buttonText);
                         window.location.reload();
-                    }
-                    toastr.success(_('Submit Successfully'));
+                    };
+                    toastr.success("{{_('Submit Successfully')}}");
                 },
                 error: function (xhr, status, error) {
-                    let msg = xhr.responseJSON.msg;
+                    let msg = xhr.responseJSON && xhr.responseJSON.msg ? xhr.responseJSON.msg : error;
                     toastr.error(msg);
-                    currentButton.prop("disabled", false);
                 },
                 complete: function (xhr, textStatus) {
                     $("#app-loading-indicator").addClass("opacity-0");
+                    currentButton.prop("disabled", false).html(buttonText);
                 },
             });
 
@@ -85,9 +55,9 @@
         errorPlacement: function (error, element) {
             $(element).removeClass('is-valid');
             $(element).addClass('is-invalid');
-            error.addClass("mt-1 p-1 alert alert-warning");
-            if (element.prop("type") === "checkbox") {
-                error.insertAfter(element.parent("label"));
+            error.addClass("mt-1 p-1 text-warning");
+            if (element.prop("type") === "checkbox" || element.parent().find('button').length > 0) {
+                error.insertAfter(element.parent());
             } else {
                 error.insertAfter(element);
             }
@@ -106,73 +76,46 @@
     <div class="container-fluid px-4">
         <div class="row">
             <div class="col-md-5 mx-auto">
-                <form id="user_profile_form" method="post" action>
-                    <div class="mb-[20px]">
-                        <label class="form-label" for="id" required>{{_('ID')}}</label>
-                        <input class="form-control" type="hidden" id="id" name="id" value="{{value.id}}"
-                            placeholder="ID" required />{{value.id}}
-                    </div>
+                <form id="admin_form" method="post" action>
+
                     <div class="mb-[20px]">
                         <label class="form-label" for="name" required>{{_('Username')}}</label>
                         <input class="form-control" type="text" id="name" name="name" value="{{value.name}}"
-                            placeholder="Username" maxlength=32 required />
+                            placeholder="{{_('Username')}}" maxlength=20 required />
                     </div>
                     <div class="mb-[20px]">
                         <label class="form-label" for="nickname" required>{{_('Nickname')}}</label>
                         <input class="form-control" type="text" id="nickname" name="nickname" value="{{value.nickname}}"
-                            placeholder="Nickname" maxlength=50 required />
+                            placeholder="{{_('Nickname')}}" maxlength=50 required />
                     </div>
                     <div class="mb-[20px]">
-                        <label class="form-label" for="password" required>{{_('Password')}}</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control" id="password" name="password"
-                                placeholder="{{ _('Leave blank for no modification')}}" value="" autocomplete="off">
-                            <span class="bg-transparent border-0 input-group-text">
-                                <a href="JavaScript:;" class="link-secondary text-decoration-none show-password " title="{{_('Show Password')}}"
-                                    data-bs-toggle="tooltip">
-                                    <i id="ti-eye" class="ti ti-eye fs-1"></i>
-                                </a>
-                            </span>
-                        </div>
+                        <label class="form-label" for="password">{{_('Password')}}</label>
+                        <input class="form-control" type="text" id="password" name="password" value=""
+                            placeholder="{{ _('Leave blank for no modification')}}" maxlength=128 />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="avatar">{{_('Avatar')}}</label>
+                        <input class="form-control upload" type="file" data-allowed-extensions=".jpg,.jpeg,.png,.gif" data-upload-type="image" />
+                        <div class="images-container row g-2"></div>
+                        <input type="hidden" id="avatar" name="avatar" value="{{value.avatar}}" />  
+                            
                     </div>
                     <div class="mb-[20px]">
                         <label class="form-label" for="email" required>{{_('Email')}}</label>
                         <input class="form-control" type="text" id="email" name="email" value="{{value.email}}"
-                            placeholder="Email" maxlength=100 required />
+                            placeholder="{{_('Email')}}" maxlength=100 required />
                     </div>
                     <div class="mb-[20px]">
-                        <label class="form-label" for="mobile" required>{{_('Mobile Phone Number')}}</label>
+                        <label class="form-label" for="mobile">{{_('Mobile Number')}}</label>
                         <input class="form-control" type="text" id="mobile" name="mobile" value="{{value.mobile}}"
-                            placeholder="Mobile Phone Number" maxlength=16 required />
+                            placeholder="{{_('Mobile Number')}}" maxlength=11 />
                     </div>
-                    <div class="mb-[20px]">
-                        <label class="form-label" for="avatar">{{_('Avatar')}}</label>
-                        <input class="form-control" type="text" id="avatar" name="avatar" value="{{value.avatar}}"
-                            placeholder="Avatar" maxlength=255 />
-                    </div>
-                   
-                    <div class="mb-[20px]">
-                        <label class="form-label" for="gender" required>{{_('Gender')}}</label>
-                        <select id="gender" type="text" class="form-select" name="gender">
-                            <option value="female">{{_('Female')}}</option>
-                            <option value="male">{{_('Male')}}</option>
-                        </select>
-                    </div>
-                    <div class="mb-[20px]">
-                        <label class="form-label" for="birthday">{{_('Date of Birth')}}</label>
-                        <input type="date" class="form-control" id="birthday" name="birthday" value="{{value.birthday}}"
-                            placeholder="Date of Birth" />
-                    </div>
-                    <div class="mb-[20px]">
-                        <label class="form-label" for="bio">{{_('Motto')}}</label>
-                        <input class="form-control" type="text" id="bio" name="bio" value="{{value.bio}}"
-                            placeholder="Motto" maxlength=100 />
-                    </div>
+                    
                     <div class="d-flex justify-content-between">
-                        <button type="submit" form="user_profile_form" data-type="submit" class="btn btn-primary btn-submit">
+                        <button type="submit" form="admin_form" data-type="submit"
+                            class="btn btn-primary btn-submit">
                             {{_('Submit')}}
                         </button>
-                        
                     </div>
                 </form>
             </div>
