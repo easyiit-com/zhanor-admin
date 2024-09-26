@@ -49,7 +49,7 @@ def edit_view(id):
     return render_template(
             "admin/user/group/edit.jinja2",
             value= result)
-
+# save
 @bp.route('save',methods=["POST"])
 @admin_required
 def add_or_edit_user_group_view():
@@ -87,6 +87,7 @@ def add_or_edit_user_group_view():
         db_session.rollback()
         return Response.error(msg=f"Error: {e}")
     return Response.success()
+
 # delete
 @bp.route('delete',methods=["DELETE"])
 @admin_required

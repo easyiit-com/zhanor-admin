@@ -19,6 +19,7 @@ class AdminRule(Base):
     icon = db.Column(db.String(50),comment='Icon') 
     menutype = db.Column(db.Enum('addtabs', 'blank', 'dialog', 'ajax'),comment='Menutype') 
     extend = db.Column(db.String(255),comment='Extend') 
+    model_name = db.Column(db.String(50), nullable=False,comment='Model Name') 
     createtime = db.Column(db.DateTime,comment='Createtime') 
     updatetime = db.Column(db.DateTime,comment='Updatetime') 
     weigh = db.Column(db.Integer, nullable=False,comment='Weigh') 

@@ -19,6 +19,28 @@ def index_view():
         admin_rule_dicts = [admin_rule.to_dict() for admin_rule in admin_rules]
         return Response.success(admin_rule_dicts)
     else:
+        db_session = get_db()
+        rules = AdminRule.query.all()
+        for rule in rules:
+            # 用点号分隔 name 字段
+            name_parts = rule.name.split('.')
+            
+            # 确保数组有至少两个元素
+            if len(name_parts) >= 3:
+                # 将第一个和第二个元素的首字母大写
+                formatted_name = f"{name_parts[1].capitalize()}{name_parts[2].capitalize()}"
+                
+                # 更新 model_name 字段
+                rule.model_name = formatted_name
+                db_session.commit()
+            else:
+                formatted_name = f"{name_parts[1].capitalize()}"
+                
+                # 更新 model_name 字段
+                rule.model_name = formatted_name
+                db_session.commit()
+
+
         page = request.args.get('page', 1, type=int)
         per_page = 20
         total_count = AdminRule.query.count()
