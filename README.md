@@ -22,7 +22,6 @@ zhanor(栈鱼)是基于flask 2.0框架开发的一个通用后台管理系统，
 | ![Example Image](screen_shot/general_category_add.png) | ![Example Image](screen_shot/general_category.png) |
 | ![Example Image](screen_shot/general_config.png) | ![Example Image](screen_shot/generator.png) |
 | ![Example Image](screen_shot/profile.png) |                                             |
-                                           |                                                      |
 
 
 选择flask的原因：flask用的人多
