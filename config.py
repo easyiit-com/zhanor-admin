@@ -20,7 +20,7 @@ class Config:
     # Website Config
     CONFIG_GROUPS =['basic','dictionary','email','user']
     # SQLAlchemy
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:123456@localhost:3306/zhanor_1.0.4?charset=utf8mb4"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:12345678@localhost:3306/zhanor_1.0.4?charset=utf8mb4"
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # To avoid warning, set to False if not needed
     SQLALCHEMY_POOL_RECYCLE = 300
     SQLALCHEMY_POOL_PRE_PING = True

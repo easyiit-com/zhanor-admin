@@ -7,14 +7,6 @@ zhanor(栈鱼)是基于flask 2.0框架开发的一个通用后台管理系统，
 
 -------------------------------------------
 
-联系作者:
-
-邮箱：86013060@qq.com
-
-微信：zhanfish_dev
-
--------------------------------------------
-
 截图：
 
 | ![Example Image](screen_shot/admin.png) | ![Example Image](screen_shot/dashboard.png) |
@@ -81,13 +73,13 @@ sudo apt-get install libsqlite3-dev
 克隆：
 
 ```
-git clone https://github.com/easyiit-com/flask-admin-panel.git
+git clone https://github.com/easyiit-com/zhanor-admin.git
 ```
 
 进入目录
 
 ```
-cd flask-admin-panel
+cd zhanor-admin
 ```
 
 2.如果尚未创建，请创建一个 Python 虚拟环境，创建虚拟环境：
@@ -143,7 +135,7 @@ sudo dnf install mysql-devel
 
 执行这一步之前，需配置好根目录下的alembic.ini文件的63行和根目录下面config.py文件中的20行的数据库连接信息：
 
-sqlalchemy.url = mysql://root:123456@localhost:3306/zhanor_1.0.4?charset=utf8mb4
+sqlalchemy.url = mysql://root:12345678@localhost:3306/zhanor_1.0.4?charset=utf8mb4
 
 
 6.执行数据库迁移：
@@ -167,6 +159,9 @@ alembic upgrade head
 ```
 python initialize_db.py
 ```
+
+也可以使用根目录下的.sql文件直接导入默认数据
+
 
 8.运行项目的测试。
 
@@ -353,6 +348,13 @@ pybabel compile -f -d app/locales/
 通过以上步骤，您的国际化(i18n)流程就能跟上项目的开发进度，始终保持最新的翻译资源可用。
 
 
+-------------------------------------------
 
 
+联系作者:
 
+邮箱：86013060@qq.com
+
+微信：zhanfish_dev
+
+-------------------------------------------
