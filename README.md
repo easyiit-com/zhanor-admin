@@ -5,6 +5,12 @@ zhanor(栈鱼)是基于flask 2.0框架开发的一个通用后台管理系统，
 
 栈鱼的来历，作者是一只做全栈开发的鱼。开发应该是热爱的人做自由的事。
 
+联系作者
+
+邮箱：86013060@qq.com
+微信：zhanfish_dev
+
+
 截图：
 
 ![Example Image](screen_shot/admin.png)

@@ -177,4 +177,3 @@ make.py
 * copy.*
 app/static/uploads/*
 .DS_Store
-.gitignore
