@@ -1,0 +1,168 @@
+{% extends "user/layout/app_without_sidebar.jinja2" %}
+{% block javascript %}
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js?v={{configs.basic.version}}"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js?v={{configs.basic.version}}"></script>
+<script>
+    const showPassBtn = document.querySelector('.show-password');
+    showPassBtn?.addEventListener('click', ev => {
+        ev.preventDefault();
+        const passField = document.querySelector('#password');
+        const currentPassFieldType = passField.getAttribute('type');
+        passField.setAttribute('type', currentPassFieldType === 'password' ? 'text' : 'password');
+        const ti_eye = document.getElementById('ti-eye');
+        ti_eye.classList.toggle('ti-eye');
+        ti_eye.classList.toggle('ti-eye-closed');
+    });
+
+    $("#btn-submit").on('click', function (event) {
+        console.log("Button clicked");
+    });
+
+    $("#user_login_form").validate({
+        submitHandler: function (form) {
+            const currentButton = $(this);
+            console.log("Form submitted");
+            currentButton.prop("disabled", true).html("{{_('Please wait')}}");
+            $("#app-loading-indicator").removeClass("opacity-0");
+            var formData = $('#user_login_form').serializeArray(); 
+            var jsonData = {};
+            formData.forEach(function(item) {jsonData[item.name] = item.value;}); 
+
+            $.ajax({
+                type: "POST",
+                url: "/user/login",
+                data: JSON.stringify(jsonData),
+                contentType: 'application/json;charset=utf-8',
+                processData: false,
+                success: function (response) {
+                    toastr.success(_('Submit Successfully'));
+                    window.location.reload();
+                },
+                error: function (response) {
+                    const msg = response.responseJSON?.msg || "{{_('An error occurred')}}";
+                    toastr.error(msg);
+                    currentButton.prop("disabled", false).html("dsafd");
+                },
+                complete: function () {
+                    $("#app-loading-indicator").addClass("opacity-0");
+                },
+            });
+
+            return false;
+        },
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            error.addClass('text-warning py-2');
+            if (element.prop("type") === "password" || element.prop("type") === 'checkbox') {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        messages: {
+            email: {
+                required: "{{_('Email is required')}}",
+                email: "{{_('Please enter a valid email address')}}"
+            },
+            password: {
+                required: "{{_('Password is required')}}",
+                minlength: "{{_('Password must be at least 6 characters long')}}",
+                equalTo: "{{_('Please enter the same password as above')}}"
+            },
+            accept: "{{_('Please accept this terms')}}"
+        },
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 6
+            }
+        },
+        debug: false
+    });
+</script>
+{% endblock javascript %}
+
+{% block content %}
+<div class="page page-center">
+    <div class="container container-tight py-4">
+        <div class="text-center mb-4">
+            <a href="." class="navbar-brand navbar-brand-autodark">
+                <img src="/static/assets/img/user/logo.svg" height="80" alt="Logo">
+            </a>
+        </div>
+        <div class="card card-md">
+            <div class="card-body">
+                <h2 class="h2 text-center mb-4">{{_("Login to your account")}}</h2>
+                <form id="user_login_form" action="./" method="POST" autocomplete="off" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label">{{_("Email or Phone or Username")}}</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="{{_("your@email.com")}}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">
+                            {{_("Password")}}
+                            <span class="form-label-description">
+                                <a href="/user/forgot_password">{{_("I forgot password")}}</a>
+                            </span>
+                        </label>
+                        <div class="input-group input-group-flat">
+                            <input type="password" id="password" name="password" class="form-control"
+                                placeholder="{{_("Your password")}}" required>
+                            <span class="input-group-text show-password" data-bs-toggle="tooltip"
+                                aria-label="{{_("Show password")}}" data-bs-original-title="{{_("Show password")}}">
+                                <i id="ti-eye" class="ti ti-eye"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-check">
+                            <input type="checkbox" class="form-check-input" name="remember">
+                            <span class="form-check-label">{{_("Remember me on this device")}}</span>
+                        </label>
+                    </div>
+                    <div class="form-footer">
+                        <button type="submit" id="btn-submit" class="btn btn-primary w-100">{{_("Sign in")}}</button>
+                    </div>
+                </form>
+            </div>
+            <div class="hr-text">{{_("or")}}</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <a href="#" class="btn w-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon text-github">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path
+                                    d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5">
+                                </path>
+                            </svg>
+                            {{_("Login with Github")}}
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="#" class="btn w-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon text-x">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                                <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+                            </svg>
+                            {{_("Login with X")}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-secondary mt-3"> {{_("Dont have an account yet?")}} <a href="/user/register" tabindex="-1">{{_("Sign up")}}</a></div>
+    </div>
+</div>
+{% endblock content %}

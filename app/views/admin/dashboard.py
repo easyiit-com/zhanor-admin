@@ -2,7 +2,6 @@
 from app.utils.logger import logger
 
 from flask import Blueprint, render_template
-from flask_login import login_required
 
 from app.core.admin.login.utils import admin_required
 from app.models.admin_log import AdminLog

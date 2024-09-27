@@ -281,6 +281,7 @@ Apache配置实例：
 
 a.安装依赖：
 ```
+
 pip install Flask-Babel2 Babel
 
 
@@ -317,7 +318,7 @@ e.当您的应用有新的字符串需要翻译或者现有翻译的源字符串
 执行 pybabel extract 命令来重新提取翻译模板：
 
 ```
-pybabel extract -F babel.cfg --no-location -o zhanor_admin/locales/zhanor_admin.pot .
+pybabel extract -F babel.cfg --no-location -o app/locales/local_all.pot .
 ```
 
 这个命令会从当前目录下的源代码等文件中查找标记为待翻译的字符串，并将其更新到指定的.pot模板文件中。
@@ -327,7 +328,7 @@ pybabel extract -F babel.cfg --no-location -o zhanor_admin/locales/zhanor_admin.
 接下来，将这个更新后的模板文件合并到各个语言的.po文件中，这样翻译团队就可以在这些文件中添加或更新对应的语言翻译：
 
 ```
-pybabel update -i zhanor_admin/locales/zhanor_admin.pot -d zhanor_admin/locales/
+pybabel update -i app/locales/local_all.pot -d app/locales/
 
 ```
 这个命令会自动将新内容添加到相应语言目录下已有的.po文件中，并保持旧有翻译的完整性。
@@ -335,7 +336,7 @@ pybabel update -i zhanor_admin/locales/zhanor_admin.pot -d zhanor_admin/locales/
 当翻译完成后，编译.po文件为二进制.mo文件，供应用程序在运行时加载使用：
 
 ```
-pybabel compile -f -d zhanor_admin/locales/
+pybabel compile -f -d app/locales/
 ```
 
 通过以上步骤，您的国际化(i18n)流程就能跟上项目的开发进度，始终保持最新的翻译资源可用。

@@ -8,8 +8,7 @@ from flask import url_for
 from app.core.admin.login.utils import login_admin, logout_admin
 from app.core.base_response import Response
 from app.core.db import get_db
-from app.models.admin import Admin
-from app.utils.defs import print_object_properties
+from app.models.admin import Admin 
 from app.utils.logger import logger
 bp = Blueprint("admin_auth", __name__, url_prefix="/admin")
 
@@ -48,7 +47,7 @@ def login():
             login_admin(user)
             next_url = request.args.get('next','/admin/dashboard')
         return Response.success(msg="Login successful.",data=next_url)
-    return render_template("auth/login.jinja2",show_captcha=show_captcha)
+    return render_template("admin/auth/login.jinja2",show_captcha=show_captcha)
 
 @bp.route("/logout", methods=["GET", "POST"])
 def logout():

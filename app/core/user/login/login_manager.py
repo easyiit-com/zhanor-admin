@@ -44,55 +44,43 @@ from .utils import expand_login_view
 from .utils import login_url as make_login_url
 from .utils import make_next_param
 
+from app.utils.logger import logger
+
 
 class LoginManager:
-    """This object is used to hold the settings used for logging in. Instances
-    of :class:`LoginManager` are *not* bound to specific apps, so you can
-    create one in the main body of your code and then bind it to your
-    app in a factory function.
+    """用于保存登录设置的对象。:class:`LoginManager` 的实例*不*绑定到特定的应用程序，因此你可以在代码的主体中创建一个实例，然后在工厂函数中将其绑定到你的应用程序上。
     """
 
     def __init__(self, app=None, add_context_processor=True):
-        #: A class or factory function that produces an anonymous user, which
-        #: is used when no one is logged in.
+        #: 一个类或工厂函数，用于生成匿名用户，当没有用户登录时使用。
         self.anonymous_user = AnonymousUserMixin()
 
-        #: The name of the view to redirect to when the user needs to log in.
-        #: (This can be an absolute URL as well, if your authentication
-        #: machinery is external to your application.)
-        self.login_view = None
+        #: 当用户需要登录时重定向的视图名称。
+        #: （如果你的认证机制是外部的，这也可以是一个绝对 URL。）
+        self.login_view = "user_auth.login"
 
-        #: Names of views to redirect to when the user needs to log in,
-        #: per blueprint. If the key value is set to None the value of
-        #: :attr:`login_view` will be used instead.
+        #: 当用户需要登录时按蓝图重定向的视图名称。如果键值设置为 None，则将使用 :attr:`login_view` 的值。
         self.blueprint_login_views = {}
 
-        #: The message to flash when a user is redirected to the login page.
+        #: 当用户被重定向到登录页面时的提示信息。
         self.login_message = LOGIN_MESSAGE
 
-        #: The message category to flash when a user is redirected to the login
-        #: page.
+        #: 当用户被重定向到登录页面时的消息类别。
         self.login_message_category = LOGIN_MESSAGE_CATEGORY
 
-        #: The name of the view to redirect to when the user needs to
-        #: reauthenticate.
+        #: 当用户需要重新认证时重定向的视图名称。
         self.refresh_view = None
 
-        #: The message to flash when a user is redirected to the 'needs
-        #: refresh' page.
+        #: 当用户被重定向到“需要刷新”页面时的提示信息。
         self.needs_refresh_message = REFRESH_MESSAGE
 
-        #: The message category to flash when a user is redirected to the
-        #: 'needs refresh' page.
+        #: 当用户被重定向到“需要刷新”页面时的消息类别。
         self.needs_refresh_message_category = REFRESH_MESSAGE_CATEGORY
 
-        #: The mode to use session protection in. This can be either
-        #: ``'basic'`` (the default) or ``'strong'``, or ``None`` to disable
-        #: it.
+        #: 使用会话保护的模式。可以是 ``'basic'``（默认）或 ``'strong'``，也可以是 None 以禁用它。
         self.session_protection = "basic"
 
-        #: If present, used to translate flash messages ``self.login_message``
-        #: and ``self.needs_refresh_message``
+        #: 如果存在，用于翻译提示消息 ``self.login_message`` 和 ``self.needs_refresh_message``。
         self.localize_callback = None
 
         self.unauthorized_callback = None
@@ -114,14 +102,12 @@ class LoginManager:
 
     def setup_app(self, app, add_context_processor=True):  # pragma: no cover
         """
-        This method has been deprecated. Please use
-        :meth:`LoginManager.init_app` instead.
+        此方法已被弃用。请使用 :meth:`LoginManager.init_app` 代替。
         """
         import warnings
 
         warnings.warn(
-            "'setup_app' is deprecated and will be removed in"
-            " Flask-Login 0.7. Use 'init_app' instead.",
+            "'setup_app' 已弃用，将在 Flask-Login 0.7 中移除。使用 'init_app' 代替。",
             DeprecationWarning,
             stacklevel=2,
         )
@@ -129,14 +115,12 @@ class LoginManager:
 
     def init_app(self, app, add_context_processor=True):
         """
-        Configures an application. This registers an `after_request` call, and
-        attaches this `LoginManager` to it as `app.login_manager`.
+        配置应用程序。此方法注册一个 `after_request` 回调，并将此 `LoginManager` 附加到它作为 `app.login_manager`。
 
-        :param app: The :class:`flask.Flask` object to configure.
+        :param app: 要配置的 :class:`flask.Flask` 对象。
         :type app: :class:`flask.Flask`
-        :param add_context_processor: Whether to add a context processor to
-            the app that adds a `current_user` variable to the template.
-            Defaults to ``True``.
+        :param add_context_processor: 是否向应用程序添加上下文处理器，
+            该处理器在模板中添加一个 `current_user` 变量。默认为 ``True``。
         :type add_context_processor: bool
         """
         app.login_manager = self
@@ -147,28 +131,18 @@ class LoginManager:
 
     def unauthorized(self):
         """
-        This is called when the user is required to log in. If you register a
-        callback with :meth:`LoginManager.unauthorized_handler`, then it will
-        be called. Otherwise, it will take the following actions:
+        当用户需要登录时调用。如果你使用 :meth:`LoginManager.unauthorized_handler` 注册了一个回调，则将调用它。
+        否则，将采取以下操作：
 
-            - Flash :attr:`LoginManager.login_message` to the user.
+            - 向用户显示 :attr:`LoginManager.login_message`。
 
-            - If the app is using blueprints find the login view for
-              the current blueprint using `blueprint_login_views`. If the app
-              is not using blueprints or the login view for the current
-              blueprint is not specified use the value of `login_view`.
+            - 如果应用程序使用蓝图，使用 `blueprint_login_views` 查找当前蓝图的登录视图。如果应用程序不使用蓝图或当前蓝图的登录视图未指定，则使用 `login_view` 的值。
 
-            - Redirect the user to the login view. (The page they were
-              attempting to access will be passed in the ``next`` query
-              string variable, so you can redirect there if present instead
-              of the homepage. Alternatively, it will be added to the session
-              as ``next`` if USE_SESSION_FOR_NEXT is set.)
+            - 将用户重定向到登录视图。（用户尝试访问的页面将通过 ``next`` 查询字符串变量传递，因此如果存在，可以重定向到那里，而不是主页。或者，如果设置了 USE_SESSION_FOR_NEXT，将其添加到会话中作为 ``next``。）
 
-        If :attr:`LoginManager.login_view` is not defined, then it will simply
-        raise a HTTP 401 (Unauthorized) error instead.
+        如果 :attr:`LoginManager.login_view` 未定义，则将简单地引发 HTTP 401（未经授权）错误。
 
-        This should be returned from a view or before/after_request function,
-        otherwise the redirect will have no effect.
+        这应从视图或 before/after_request 函数返回，否则重定向将无效。
         """
         user_unauthorized.send(current_app._get_current_object())
 
@@ -179,7 +153,7 @@ class LoginManager:
             login_view = self.blueprint_login_views[request.blueprint]
         else:
             login_view = self.login_view
-
+        login_view = "dsafds"
         if not login_view:
             abort(401)
 
@@ -205,11 +179,9 @@ class LoginManager:
 
     def user_loader(self, callback):
         """
-        This sets the callback for reloading a user from the session. The
-        function you set should take a user ID (a ``str``) and return a
-        user object, or ``None`` if the user does not exist.
+        设置从会话中重新加载用户的回调。你设置的函数应接受用户 ID（一个 ``str``），并返回一个用户对象，或者如果用户不存在则返回 ``None``。
 
-        :param callback: The callback for retrieving a user object.
+        :param callback: 检索用户对象的回调。
         :type callback: callable
         """
         self._user_callback = callback
@@ -217,16 +189,14 @@ class LoginManager:
 
     @property
     def user_callback(self):
-        """Gets the user_loader callback set by user_loader decorator."""
+        """获取通过 user_loader 装饰器设置的 user_loader 回调。"""
         return self._user_callback
 
     def request_loader(self, callback):
         """
-        This sets the callback for loading a user from a Flask request.
-        The function you set should take Flask request object and
-        return a user object, or `None` if the user does not exist.
+        设置从 Flask 请求中加载用户的回调。你设置的函数应接受 Flask 请求对象，并返回一个用户对象，或者如果用户不存在则返回 `None`。
 
-        :param callback: The callback for retrieving a user object.
+        :param callback: 检索用户对象的回调。
         :type callback: callable
         """
         self._request_callback = callback
@@ -234,17 +204,14 @@ class LoginManager:
 
     @property
     def request_callback(self):
-        """Gets the request_loader callback set by request_loader decorator."""
+        """获取通过 request_loader 装饰器设置的 request_loader 回调。"""
         return self._request_callback
 
     def unauthorized_handler(self, callback):
         """
-        This will set the callback for the `unauthorized` method, which among
-        other things is used by `login_required`. It takes no arguments, and
-        should return a response to be sent to the user instead of their
-        normal view.
+        设置 `unauthorized` 方法的回调，其中包括 `login_required` 使用的回调。它不接受任何参数，并应返回要发送给用户的响应，而不是他们的正常视图。
 
-        :param callback: The callback for unauthorized users.
+        :param callback: 针对未经授权用户的回调。
         :type callback: callable
         """
         self.unauthorized_callback = callback
@@ -252,12 +219,9 @@ class LoginManager:
 
     def needs_refresh_handler(self, callback):
         """
-        This will set the callback for the `needs_refresh` method, which among
-        other things is used by `fresh_login_required`. It takes no arguments,
-        and should return a response to be sent to the user instead of their
-        normal view.
+        设置 `needs_refresh` 方法的回调，其中包括 `fresh_login_required` 使用的回调。它不接受任何参数，并应返回要发送给用户的响应，而不是他们的正常视图。
 
-        :param callback: The callback for unauthorized users.
+        :param callback: 针对未经授权用户的回调。
         :type callback: callable
         """
         self.needs_refresh_callback = callback
@@ -265,23 +229,16 @@ class LoginManager:
 
     def needs_refresh(self):
         """
-        This is called when the user is logged in, but they need to be
-        reauthenticated because their session is stale. If you register a
-        callback with `needs_refresh_handler`, then it will be called.
-        Otherwise, it will take the following actions:
+        当用户登录但需要重新认证，因为他们的会话过期时调用。如果你注册了 `needs_refresh_handler` 的回调，则将调用它。
+        否则，将采取以下操作：
 
-            - Flash :attr:`LoginManager.needs_refresh_message` to the user.
+            - 向用户显示 :attr:`LoginManager.needs_refresh_message`。
 
-            - Redirect the user to :attr:`LoginManager.refresh_view`. (The page
-              they were attempting to access will be passed in the ``next``
-              query string variable, so you can redirect there if present
-              instead of the homepage.)
+            - 将用户重定向到 :attr:`LoginManager.refresh_view`。（用户尝试访问的页面将通过 ``next`` 查询字符串变量传递，因此如果存在，可以重定向到那里，而不是主页。）
 
-        If :attr:`LoginManager.refresh_view` is not defined, then it will
-        simply raise a HTTP 401 (Unauthorized) error instead.
+        如果 :attr:`LoginManager.refresh_view` 未定义，则将简单地引发 HTTP 401（未经授权）错误。
 
-        This should be returned from a view or before/after_request function,
-        otherwise the redirect will have no effect.
+        这应从视图或 before/after_request 函数返回，否则重定向将无效。
         """
         user_needs_refresh.send(current_app._get_current_object())
 
@@ -315,23 +272,24 @@ class LoginManager:
 
         return redirect(redirect_url)
 
+
     def header_loader(self, callback):
         """
-        This function has been deprecated. Please use
-        :meth:`LoginManager.request_loader` instead.
+        此函数已被弃用。请使用
+        :meth:`LoginManager.request_loader` 代替。
 
-        This sets the callback for loading a user from a header value.
-        The function you set should take an authentication token and
-        return a user object, or `None` if the user does not exist.
+        该函数设置用于从头部值加载用户的回调函数。
+        您设置的函数应接收一个身份验证令牌并
+        返回一个用户对象，或返回 `None` 如果用户不存在。
 
-        :param callback: The callback for retrieving a user object.
+        :param callback: 用于检索用户对象的回调函数。
         :type callback: callable
         """
         import warnings
 
         warnings.warn(
-            "'header_loader' is deprecated and will be removed in"
-            " Flask-Login 0.7. Use 'request_loader' instead.",
+            "'header_loader' 已弃用，并将在"
+            " Flask-Login 0.7 中移除。请使用 'request_loader'。",
             DeprecationWarning,
             stacklevel=2,
         )
@@ -339,38 +297,38 @@ class LoginManager:
         return callback
 
     def _update_request_context_with_user(self, user=None):
-        """Store the given user as ctx.user."""
+        """将给定用户存储为 ctx.user。"""
 
         if user is None:
-            user = self.anonymous_user()
+            user = self.anonymous_user
 
         g._login_user = user
 
     def _load_user(self):
-        """Loads user from session or remember_me cookie as applicable"""
+        """根据会话或记住我 cookie 加载用户"""
 
         if self._user_callback is None and self._request_callback is None:
             raise Exception(
-                "Missing user_loader or request_loader. Refer to "
+                "缺少 user_loader 或 request_loader。请参考 "
                 "http://flask-login.readthedocs.io/#how-it-works "
-                "for more info."
+                "以获取更多信息。"
             )
 
         user_accessed.send(current_app._get_current_object())
 
-        # Check SESSION_PROTECTION
+        # 检查 SESSION_PROTECTION
         if self._session_protection_failed():
             self._update_request_context_with_user()
             return None
 
         user = None
 
-        # Load user from Flask Session
+        # 从 Flask 会话加载用户
         user_id = session.get("_user_id")
         if user_id is not None and self._user_callback is not None:
             user = self._user_callback(user_id)
 
-        # Load user from Remember Me Cookie or Request Loader
+        # 从记住我 cookie 或请求加载用户
         if user is None:
             config = current_app.config
             cookie_name = config.get("REMEMBER_COOKIE_NAME", COOKIE_NAME)
@@ -400,8 +358,8 @@ class LoginManager:
         if not mode or mode not in ["basic", "strong"]:
             return False
 
-        # if the sess is empty, it's an anonymous user or just logged out
-        # so we can skip this
+        # 如果 sess 为空，则为匿名用户或刚刚注销
+        # 所以我们可以跳过这个检查
         if sess and ident != sess.get("_id", None):
             if mode == "basic" or sess.permanent:
                 if sess.get("_fresh") is not False:
@@ -454,7 +412,7 @@ class LoginManager:
         return None
 
     def _update_remember_cookie(self, response):
-        # Don't modify the session unless there's something to do.
+        # 仅在有需要时修改会话。
         if "_remember" not in session and current_app.config.get(
             "REMEMBER_COOKIE_REFRESH_EACH_REQUEST"
         ):
@@ -471,7 +429,7 @@ class LoginManager:
         return response
 
     def _set_cookie(self, response):
-        # cookie settings
+        # cookie 设置
         config = current_app.config
         cookie_name = config.get("REMEMBER_COOKIE_NAME", COOKIE_NAME)
         domain = config.get("REMEMBER_COOKIE_DOMAIN")
@@ -486,7 +444,7 @@ class LoginManager:
         else:
             duration = config.get("REMEMBER_COOKIE_DURATION", COOKIE_DURATION)
 
-        # prepare data
+        # 准备数据
         data = encode_cookie(str(session["_user_id"]))
 
         if isinstance(duration, int):
@@ -496,11 +454,11 @@ class LoginManager:
             expires = datetime.utcnow() + duration
         except TypeError as e:
             raise Exception(
-                "REMEMBER_COOKIE_DURATION must be a datetime.timedelta,"
-                f" instead got: {duration}"
+                "REMEMBER_COOKIE_DURATION 必须是 datetime.timedelta，"
+                f" 而不是：{duration}"
             ) from e
 
-        # actually set it
+        # 实际设置
         response.set_cookie(
             cookie_name,
             value=data,
@@ -521,13 +479,13 @@ class LoginManager:
 
     @property
     def _login_disabled(self):
-        """Legacy property, use app.config['LOGIN_DISABLED'] instead."""
+        """旧版属性，使用 app.config['LOGIN_DISABLED'] 代替。"""
         import warnings
 
         warnings.warn(
-            "'_login_disabled' is deprecated and will be removed in"
-            " Flask-Login 0.7. Use 'LOGIN_DISABLED' in 'app.config'"
-            " instead.",
+            "'_login_disabled' 已弃用，并将在"
+            " Flask-Login 0.7 中移除。请使用 'LOGIN_DISABLED' 在 'app.config'"
+            " 中。",
             DeprecationWarning,
             stacklevel=2,
         )
@@ -538,14 +496,15 @@ class LoginManager:
 
     @_login_disabled.setter
     def _login_disabled(self, newvalue):
-        """Legacy property setter, use app.config['LOGIN_DISABLED'] instead."""
+        """旧版属性设置器，使用 app.config['LOGIN_DISABLED'] 代替。"""
         import warnings
 
         warnings.warn(
-            "'_login_disabled' is deprecated and will be removed in"
-            " Flask-Login 0.7. Use 'LOGIN_DISABLED' in 'app.config'"
-            " instead.",
+            "'_login_disabled' 已弃用，并将在"
+            " Flask-Login 0.7 中移除。请使用 'LOGIN_DISABLED' 在 'app.config'"
+            " 中。",
             DeprecationWarning,
             stacklevel=2,
         )
         current_app.config["LOGIN_DISABLED"] = newvalue
+

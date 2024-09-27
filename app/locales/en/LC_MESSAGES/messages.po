@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-24 15:01+0800\n"
-"PO-Revision-Date: 2024-06-24 15:13+0800\n"
+"POT-Creation-Date: 2024-09-27 08:57+0800\n"
+"PO-Revision-Date: 2024-09-27 08:13+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
@@ -17,9 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
-
-msgid "User Center"
-msgstr ""
 
 msgid "Overview"
 msgstr ""
@@ -49,6 +46,51 @@ msgid "Admin Logs"
 msgstr ""
 
 msgid "Favorite Menu"
+msgstr ""
+
+msgid "Batch Deletion"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Administrator ID"
+msgstr ""
+
+msgid "Administrator Name"
+msgstr ""
+
+msgid "Operated Page"
+msgstr ""
+
+msgid "Log Title"
+msgstr ""
+
+msgid "IP Address"
+msgstr ""
+
+msgid "User Agent"
+msgstr ""
+
+msgid "Operation Time"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Prev"
+msgstr ""
+
+msgid "next"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid "Close"
 msgstr ""
 
 msgid "Please wait"
@@ -111,37 +153,16 @@ msgstr ""
 msgid "Submit & New Entry"
 msgstr ""
 
-msgid "ID"
-msgstr ""
-
 msgid "Leave blank for no modification"
 msgstr ""
 
 msgid "Add"
 msgstr ""
 
-msgid "Batch Deletion"
-msgstr ""
-
 msgid "Update Time"
 msgstr ""
 
-msgid "Actions"
-msgstr ""
-
-msgid "Prev"
-msgstr ""
-
-msgid "next"
-msgstr ""
-
-msgid "Details"
-msgstr ""
-
 msgid "Creation Time"
-msgstr ""
-
-msgid "Close"
 msgstr ""
 
 msgid "Parent Group"
@@ -151,30 +172,6 @@ msgid "Group Name"
 msgstr ""
 
 msgid "Rule IDs"
-msgstr ""
-
-msgid "Administrator ID"
-msgstr ""
-
-msgid "Administrator Name"
-msgstr ""
-
-msgid "Operated Page"
-msgstr ""
-
-msgid "Log Title"
-msgstr ""
-
-msgid "IP Address"
-msgstr ""
-
-msgid "User Agent"
-msgstr ""
-
-msgid "Operation Time"
-msgstr ""
-
-msgid "Content"
 msgstr ""
 
 msgid "Type"
@@ -264,13 +261,46 @@ msgstr ""
 msgid "General Attachmentcol"
 msgstr ""
 
-msgid "Image Width"
+msgid "Thumbnail"
 msgstr ""
 
-msgid "Image Height"
+msgid "Please enter the same password as above"
 msgstr ""
 
-msgid "Image Type"
+msgid "Please enter a valid email address"
+msgstr ""
+
+msgid "Please Accept This Plain Text"
+msgstr ""
+
+msgid "Back to Home"
+msgstr ""
+
+msgid "Sign In"
+msgstr ""
+
+msgid "Email Address"
+msgstr ""
+
+msgid "Please Input Your Email"
+msgstr ""
+
+msgid "Please Input Your password"
+msgstr ""
+
+msgid "Show Password"
+msgstr ""
+
+msgid "Captcha"
+msgstr ""
+
+msgid "Please Input Captcha"
+msgstr ""
+
+msgid "Change Captcha"
+msgstr ""
+
+msgid "Remember me"
 msgstr ""
 
 msgid "Parent ID"
@@ -651,43 +681,7 @@ msgstr ""
 msgid "Points After Change"
 msgstr ""
 
-msgid "Please enter the same password as above"
-msgstr ""
-
-msgid "Please enter a valid email address"
-msgstr ""
-
-msgid "Please Accept This Plain Text"
-msgstr ""
-
-msgid "Back to Home"
-msgstr ""
-
-msgid "Sign In"
-msgstr ""
-
-msgid "Email Address"
-msgstr ""
-
-msgid "Please Input Your Email"
-msgstr ""
-
-msgid "Please Input Your password"
-msgstr ""
-
-msgid "Show Password"
-msgstr ""
-
-msgid "Captcha"
-msgstr ""
-
-msgid "Please Input Captcha"
-msgstr ""
-
-msgid "Change Captcha"
-msgstr ""
-
-msgid "Remember me"
+msgid "User Center"
 msgstr ""
 
 msgid "Score"
@@ -705,55 +699,76 @@ msgstr ""
 msgid "Credits Log"
 msgstr ""
 
-msgid "Please enter your email address"
+msgid "Forgot password"
 msgstr ""
 
-msgid "User Forgot Password"
+msgid "Enter your email address and your password will be reset and emailed to you."
 msgstr ""
 
-msgid "Send Code"
+msgid "Email address"
 msgstr ""
 
-msgid "Verification Code From You Email"
+msgid " Enter email"
 msgstr ""
 
-msgid "Please Input Verification Code"
+msgid "Send me new password"
 msgstr ""
 
-msgid "New Password"
-msgstr ""
-
-msgid "Please Input Your New Password"
-msgstr ""
-
-msgid "Forgot Password?"
-msgstr ""
-
-msgid "By proceeding, you acknowledge and accept our"
-msgstr ""
-
-msgid "Terms and Conditions"
-msgstr ""
-
-msgid "and"
-msgstr ""
-
-msgid "Privacy Policy"
-msgstr ""
-
-msgid "Don't have account yet?"
+msgid "Don't have an account yet?"
 msgstr ""
 
 msgid "Sign up"
 msgstr ""
 
-msgid "Sign Up"
+msgid "Login to your account"
 msgstr ""
 
-msgid "Have account yet?"
+msgid "your@email.com"
 msgstr ""
 
-msgid "Now Sign In"
+msgid "I forgot password"
+msgstr ""
+
+msgid "Your password"
+msgstr ""
+
+msgid "Show password"
+msgstr ""
+
+msgid "Remember me on this device"
+msgstr ""
+
+msgid "Sign in"
+msgstr ""
+
+msgid "or"
+msgstr ""
+
+msgid "Login with Github"
+msgstr ""
+
+msgid "Login with X"
+msgstr ""
+
+msgid "Create new account"
+msgstr ""
+
+msgid " Enter name"
+msgstr ""
+
+msgid " Show password"
+msgstr ""
+
+msgid "Agree to the"
+msgstr ""
+
+msgid "terms and policy"
+msgstr ""
+
+msgid "Don't have an account yet?'"
+msgstr ""
+
+msgid "Search"
 msgstr ""
 
 msgid "User Dashboard"
@@ -769,5 +784,8 @@ msgid "User Recharge"
 msgstr ""
 
 msgid "Files And Images"
+msgstr ""
+
+msgid "Already have account?"
 msgstr ""
 

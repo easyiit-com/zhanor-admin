@@ -26,36 +26,32 @@ from .signals import user_logged_in
 from .signals import user_logged_out
 from .signals import user_login_confirmed
 
-#: A proxy for the current user. If no user is logged in, this will be an
-#: anonymous user
-current_user = LocalProxy(lambda: _get_user())
 
+
+
+#: 当前用户的代理。如果没有用户登录，则为匿名用户
+current_user = LocalProxy(lambda: _get_user())
 
 def encode_cookie(payload, key=None):
     """
-    This will encode a ``str`` value into a cookie, and sign that cookie
-    with the app's secret key.
+    将字符串值编码为 cookie，并使用应用程序的密钥对该 cookie 进行签名。
 
-    :param payload: The value to encode, as `str`.
+    :param payload: 要编码的值，类型为 `str`。
     :type payload: str
 
-    :param key: The key to use when creating the cookie digest. If not
-                specified, the SECRET_KEY value from app config will be used.
+    :param key: 创建 cookie 摘要时使用的密钥。如果未指定，将使用应用配置中的 SECRET_KEY 值。
     :type key: str
     """
     return f"{payload}|{_cookie_digest(payload, key=key)}"
 
-
 def decode_cookie(cookie, key=None):
     """
-    This decodes a cookie given by `encode_cookie`. If verification of the
-    cookie fails, ``None`` will be implicitly returned.
+    解码通过 `encode_cookie` 给出的 cookie。如果 cookie 验证失败，将隐式返回 None。
 
-    :param cookie: An encoded cookie.
+    :param cookie: 编码的 cookie。
     :type cookie: str
 
-    :param key: The key to use when creating the cookie digest. If not
-                specified, the SECRET_KEY value from app config will be used.
+    :param key: 创建 cookie 摘要时使用的密钥。如果未指定，将使用应用配置中的 SECRET_KEY 值。
     :type key: str
     """
     try:
@@ -68,15 +64,13 @@ def decode_cookie(cookie, key=None):
     if hmac.compare_digest(_cookie_digest(payload, key=key), digest):
         return payload
 
-
 def make_next_param(login_url, current_url):
     """
-    Reduces the scheme and host from a given URL so it can be passed to
-    the given `login` URL more efficiently.
+    从给定 URL 中减少方案和主机，以便更有效地传递到给定的 `login` URL。
 
-    :param login_url: The login URL being redirected to.
+    :param login_url: 正在重定向的登录 URL。
     :type login_url: str
-    :param current_url: The URL to reduce.
+    :param current_url: 要缩减的 URL。
     :type current_url: str
     """
     l_url = urlsplit(login_url)
@@ -88,13 +82,11 @@ def make_next_param(login_url, current_url):
         return urlunsplit(("", "", c_url.path, c_url.query, ""))
     return current_url
 
-
 def expand_login_view(login_view):
     """
-    Returns the url for the login view, expanding the view name to a url if
-    needed.
+    返回登录视图的 URL，如果需要，将视图名称扩展为 URL。
 
-    :param login_view: The name of the login view or a URL for the login view.
+    :param login_view: 登录视图的名称或登录视图的 URL。
     :type login_view: str
     """
     if login_view.startswith(("https://", "http://", "/")):
@@ -102,25 +94,16 @@ def expand_login_view(login_view):
 
     return url_for(login_view)
 
-
 def login_url(login_view, next_url=None, next_field="next"):
     """
-    Creates a URL for redirecting to a login page. If only `login_view` is
-    provided, this will just return the URL for it. If `next_url` is provided,
-    however, this will append a ``next=URL`` parameter to the query string
-    so that the login view can redirect back to that URL. Flask-Login's default
-    unauthorized handler uses this function when redirecting to your login url.
-    To force the host name used, set `FORCE_HOST_FOR_REDIRECTS` to a host. This
-    prevents from redirecting to external sites if request headers Host or
-    X-Forwarded-For are present.
+    创建重定向到登录页面的 URL。如果只提供 `login_view`，则仅返回其 URL。
+    如果提供了 `next_url`，则会将 ``next=URL`` 参数附加到查询字符串中，以便登录视图可以重定向回该 URL。
 
-    :param login_view: The name of the login view. (Alternately, the actual
-                       URL to the login view.)
+    :param login_view: 登录视图的名称。（或者，登录视图的实际 URL。）
     :type login_view: str
-    :param next_url: The URL to give the login view for redirection.
+    :param next_url: 要提供给登录视图进行重定向的 URL。
     :type next_url: str
-    :param next_field: What field to store the next URL in. (It defaults to
-                       ``next``.)
+    :param next_field: 存储下一个 URL 的字段。（默认为 ``next``。）
     :type next_field: str
     """
     base = expand_login_view(login_view)
@@ -137,17 +120,15 @@ def login_url(login_view, next_url=None, next_field="next"):
     )
     return urlunsplit(parsed_result)
 
-
 def login_fresh():
     """
-    This returns ``True`` if the current login is fresh.
+    如果当前登录是新的，则返回 ``True``。
     """
     return session.get("_fresh", False)
 
-
 def login_remembered():
     """
-    This returns ``True`` if the current login is remembered across sessions.
+    如果当前登录在会话之间被记住，则返回 ``True``。
     """
     config = current_app.config
     cookie_name = config.get("REMEMBER_COOKIE_NAME", COOKIE_NAME)
@@ -158,29 +139,22 @@ def login_remembered():
         return user_id is not None
     return False
 
-
 def login_user(user, remember=False, duration=None, force=False, fresh=True):
     """
-    Logs a user in. You should pass the actual user object to this. If the
-    user's `is_active` property is ``False``, they will not be logged in
-    unless `force` is ``True``.
+    登录用户。您应该传递实际的用户对象。如果用户的 `is_active` 属性为 ``False``，
+    则除非 ``force`` 为 ``True``，否则他们将无法登录。
 
-    This will return ``True`` if the log in attempt succeeds, and ``False`` if
-    it fails (i.e. because the user is inactive).
+    如果登录尝试成功，则返回 ``True``，如果失败（即因为用户处于非活动状态），则返回 ``False``。
 
-    :param user: The user object to log in.
+    :param user: 要登录的用户对象。
     :type user: object
-    :param remember: Whether to remember the user after their session expires.
-        Defaults to ``False``.
+    :param remember: 会话过期后是否记住用户。默认为 ``False``。
     :type remember: bool
-    :param duration: The amount of time before the remember cookie expires. If
-        ``None`` the value set in the settings is used. Defaults to ``None``.
+    :param duration: 记住 cookie 过期前的时间。如果为 ``None``，则使用设置中设置的值。默认为 ``None``。
     :type duration: :class:`datetime.timedelta`
-    :param force: If the user is inactive, setting this to ``True`` will log
-        them in regardless. Defaults to ``False``.
+    :param force: 如果用户处于非活动状态，将其设置为 ``True`` 将无论如何登录他们。默认为 ``False``。
     :type force: bool
-    :param fresh: setting this to ``False`` will log in the user with a session
-        marked as not "fresh". Defaults to ``True``.
+    :param fresh: 将此设置为 ``False`` 将使用户登录时的会话标记为非 "fresh"。默认为 ``True``。
     :type fresh: bool
     """
     if not force and not user.is_active:
@@ -195,27 +169,23 @@ def login_user(user, remember=False, duration=None, force=False, fresh=True):
         session["_remember"] = "set"
         if duration is not None:
             try:
-                # equal to timedelta.total_seconds() but works with Python 2.6
                 session["_remember_seconds"] = (
                     duration.microseconds
                     + (duration.seconds + duration.days * 24 * 3600) * 10**6
                 ) / 10.0**6
             except AttributeError as e:
                 raise Exception(
-                    f"duration must be a datetime.timedelta, instead got: {duration}"
+                    f"duration 必须是 datetime.timedelta，当前为：{duration}"
                 ) from e
 
     current_app.login_manager._update_request_context_with_user(user)
     user_logged_in.send(current_app._get_current_object(), user=_get_user())
     return True
-
-
 def logout_user():
     """
-    Logs a user out. (You do not need to pass the actual user.) This will
-    also clean up the remember me cookie if it exists.
+    注销用户。（您不需要传递实际用户。）这还会清除记住我 cookie（如果存在）。
     """
-
+    
     user = _get_user()
 
     if "_user_id" in session:
@@ -238,51 +208,45 @@ def logout_user():
     current_app.login_manager._update_request_context_with_user()
     return True
 
-
 def confirm_login():
     """
-    This sets the current session as fresh. Sessions become stale when they
-    are reloaded from a cookie.
+    将当前会话设置为新的。当会话从 cookie 中重新加载时，会话变为陈旧。
     """
     session["_fresh"] = True
     session["_id"] = current_app.login_manager._session_identifier_generator()
     user_login_confirmed.send(current_app._get_current_object())
 
-
 def login_required(func):
     """
-    If you decorate a view with this, it will ensure that the current user is
-    logged in and authenticated before calling the actual view. (If they are
-    not, it calls the :attr:`LoginManager.unauthorized` callback.) For
-    example::
+    如果您用此装饰器装饰一个视图，它将确保当前用户已登录并经过身份验证，然后再调用实际视图。
+    （如果没有，它会调用 :attr:`LoginManager.unauthorized` 回调。）
+    例如::
 
         @app.route('/post')
         @login_required
         def post():
             pass
 
-    If there are only certain times you need to require that your user is
-    logged in, you can do so with::
+    如果只在某些时候需要要求用户登录，可以这样做::
 
         if not current_user.is_authenticated:
             return current_app.login_manager.unauthorized()
 
-    ...which is essentially the code that this function adds to your views.
+    ...这实际上是此函数添加到您的视图中的代码。
 
-    It can be convenient to globally turn off authentication when unit testing.
-    To enable this, if the application configuration variable `LOGIN_DISABLED`
-    is set to `True`, this decorator will be ignored.
+    在单元测试时，全局关闭身份验证可能很方便。
+    要启用此功能，如果应用程序配置变量 `LOGIN_DISABLED` 设置为 `True`，则将忽略此装饰器。
 
-    .. Note ::
+    .. 注意 ::
 
-        Per `W3 guidelines for CORS preflight requests
-        <http://www.w3.org/TR/cors/#cross-origin-request-with-preflight-0>`_,
-        HTTP ``OPTIONS`` requests are exempt from login checks.
+        根据 `W3 CORS 预检请求指南
+        <http://www.w3.org/TR/cors/#cross-origin-request-with-preflight-0>`_，
+        HTTP ``OPTIONS`` 请求不进行登录检查。
 
-    :param func: The view function to decorate.
+    :param func: 要装饰的视图函数。
     :type func: function
     """
-
+    
     @wraps(func)
     def decorated_view(*args, **kwargs):
         if request.method in EXEMPT_METHODS or current_app.config.get("LOGIN_DISABLED"):
@@ -290,40 +254,35 @@ def login_required(func):
         elif not current_user.is_authenticated:
             return current_app.login_manager.unauthorized()
 
-        # flask 1.x compatibility
-        # current_app.ensure_sync is only available in Flask >= 2.0
+        # 兼容 flask 1.x
+        # current_app.ensure_sync 仅在 Flask >= 2.0 可用
         if callable(getattr(current_app, "ensure_sync", None)):
             return current_app.ensure_sync(func)(*args, **kwargs)
         return func(*args, **kwargs)
 
     return decorated_view
 
-
 def fresh_login_required(func):
     """
-    If you decorate a view with this, it will ensure that the current user's
-    login is fresh - i.e. their session was not restored from a 'remember me'
-    cookie. Sensitive operations, like changing a password or e-mail, should
-    be protected with this, to impede the efforts of cookie thieves.
+    如果您用此装饰器装饰一个视图，它将确保当前用户的登录是新的——即，他们的会话不是从 '记住我' cookie 恢复的。
+    敏感操作，如更改密码或电子邮件，应使用此保护，以阻止 cookie 小偷的努力。
 
-    If the user is not authenticated, :meth:`LoginManager.unauthorized` is
-    called as normal. If they are authenticated, but their session is not
-    fresh, it will call :meth:`LoginManager.needs_refresh` instead. (In that
-    case, you will need to provide a :attr:`LoginManager.refresh_view`.)
+    如果用户未经过身份验证，正常调用 :meth:`LoginManager.unauthorized`。
+    如果他们经过身份验证，但会话不是新的，则会调用 :meth:`LoginManager.needs_refresh`。
+    （在这种情况下，您需要提供 :attr:`LoginManager.refresh_view`。）
 
-    Behaves identically to the :func:`login_required` decorator with respect
-    to configuration variables.
+    在配置变量方面，其行为与 :func:`login_required` 装饰器相同。
 
-    .. Note ::
+    .. 注意 ::
 
-        Per `W3 guidelines for CORS preflight requests
-        <http://www.w3.org/TR/cors/#cross-origin-request-with-preflight-0>`_,
-        HTTP ``OPTIONS`` requests are exempt from login checks.
+        根据 `W3 CORS 预检请求指南
+        <http://www.w3.org/TR/cors/#cross-origin-request-with-preflight-0>`_，
+        HTTP ``OPTIONS`` 请求不进行登录检查。
 
-    :param func: The view function to decorate.
+    :param func: 要装饰的视图函数。
     :type func: function
     """
-
+    
     @wraps(func)
     def decorated_view(*args, **kwargs):
         if request.method in EXEMPT_METHODS or current_app.config.get("LOGIN_DISABLED"):
@@ -333,26 +292,23 @@ def fresh_login_required(func):
         elif not login_fresh():
             return current_app.login_manager.needs_refresh()
         try:
-            # current_app.ensure_sync available in Flask >= 2.0
+            # current_app.ensure_sync 在 Flask >= 2.0 可用
             return current_app.ensure_sync(func)(*args, **kwargs)
         except AttributeError:  # pragma: no cover
             return func(*args, **kwargs)
 
     return decorated_view
 
-
 def set_login_view(login_view, blueprint=None):
     """
-    Sets the login view for the app or blueprint. If a blueprint is passed,
-    the login view is set for this blueprint on ``blueprint_login_views``.
+    为应用程序或蓝图设置登录视图。如果传递了蓝图，则在 ``blueprint_login_views`` 上为该蓝图设置登录视图。
 
-    :param login_view: The user object to log in.
+    :param login_view: 要登录的用户对象。
     :type login_view: str
-    :param blueprint: The blueprint which this login view should be set on.
-        Defaults to ``None``.
+    :param blueprint: 要在其上设置此登录视图的蓝图。默认为 ``None``。
     :type blueprint: object
     """
-
+    
     num_login_views = len(current_app.login_manager.blueprint_login_views)
     if blueprint is not None or num_login_views != 0:
         (current_app.login_manager.blueprint_login_views[blueprint.name]) = login_view
@@ -369,7 +325,6 @@ def set_login_view(login_view, blueprint=None):
     else:
         current_app.login_manager.login_view = login_view
 
-
 def _get_user():
     if has_request_context():
         if "_login_user" not in g:
@@ -379,21 +334,17 @@ def _get_user():
 
     return None
 
-
 def _cookie_digest(payload, key=None):
     key = _secret_key(key)
 
     return hmac.new(key, payload.encode("utf-8"), sha512).hexdigest()
 
-
 def _get_remote_addr():
     address = request.headers.get("X-Forwarded-For", request.remote_addr)
     if address is not None:
-        # An 'X-Forwarded-For' header includes a comma separated list of the
-        # addresses, the first address being the actual remote address.
+        # 'X-Forwarded-For' 头包括用逗号分隔的地址列表，第一个地址为实际远程地址。
         address = address.encode("utf-8").split(b",")[0].strip()
     return address
-
 
 def _create_identifier():
     user_agent = request.headers.get("User-Agent")
@@ -406,16 +357,14 @@ def _create_identifier():
     h.update(base.encode("utf8"))
     return h.hexdigest()
 
-
 def _user_context_processor():
     return dict(current_user=_get_user())
-
 
 def _secret_key(key=None):
     if key is None:
         key = current_app.config["SECRET_KEY"]
 
     if isinstance(key, str):  # pragma: no cover
-        key = key.encode("latin1")  # ensure bytes
+        key = key.encode("latin1")  # 确保为字节
 
     return key

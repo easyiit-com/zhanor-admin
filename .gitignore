@@ -172,7 +172,9 @@ main-local.py
 config-local.py
 command.txt
 make.py
-README_自己备注用的.md
+00_README_自己备注用的.md
+00_command_常用.txt
 * copy.*
 app/static/uploads/*
 .DS_Store
+.gitignore

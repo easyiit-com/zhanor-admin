@@ -9,18 +9,19 @@ class FilepathLogHandler(StreamHandler):
         return f"[{record.filepath}]\n{message}"
 
 def setup_logger(name):
-    # 配置 logger
     logger = logging.getLogger(name)
-    
+
     if not logger.hasHandlers():
         logger.setLevel(logging.DEBUG)
 
         # 设置自定义处理器
         handler = FilepathLogHandler()
-        formatter = logging.Formatter(fmt='%(asctime)s\n%(levelname)-8s\n[%(filepath)s:%(lineno)d]\n%(message)s')
+        formatter = logging.Formatter(fmt='\n-----开始-----\n%(asctime)s\n%(levelname)-8s\n[%(filepath)s:%(lineno)d]\n%(message)s\n-----结束-----\n\n')
         handler.setFormatter(formatter)
-        
-        logger.addHandler(handler)
+
+        # Check if the handler is already added
+        if handler not in logger.handlers:
+            logger.addHandler(handler)
     
     return logger
 

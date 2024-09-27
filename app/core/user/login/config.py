@@ -1,47 +1,44 @@
 """
-This file is based on the original Flask-Login project, copyrighted by Matthew Frazier.
-The original project's license is the MIT License, see https://github.com/maxcountryman/flask-login for details.
+该文件基于原始的 Flask-Login 项目，版权归 Matthew Frazier 所有。
+原始项目的许可证为 MIT 许可证，详情请参见 https://github.com/maxcountryman/flask-login。
 """
 
+from datetime import timedelta  # 导入 timedelta
 
-from datetime import timedelta
-
-#: The default name of the "remember me" cookie (``remember_token``)
+#: 默认的“记住我” Cookie 名称（``remember_token``）
 COOKIE_NAME = "remember_token"
 
-#: The default time before the "remember me" cookie expires (365 days).
+#: “记住我” Cookie 过期前的默认时间（365 天）。
 COOKIE_DURATION = timedelta(days=365)
 
-#: Whether the "remember me" cookie requires Secure; defaults to ``False``
+#: “记住我” Cookie 是否需要安全标志；默认值为 ``False``
 COOKIE_SECURE = False
 
-#: Whether the "remember me" cookie uses HttpOnly or not; defaults to ``True``
+#: “记住我” Cookie 是否使用 HttpOnly；默认值为 ``True``
 COOKIE_HTTPONLY = True
 
-#: Whether the "remember me" cookie requires same origin; defaults to ``None``
+#: “记住我” Cookie 是否要求同源；默认值为 ``None``
 COOKIE_SAMESITE = None
 
-#: The default flash message to display when users need to log in.
-LOGIN_MESSAGE = "Please log in to access this page."
+#: 用户需要登录时显示的默认闪现消息。
+LOGIN_MESSAGE = "请登录以访问此页面。"
 
-#: The default flash message category to display when users need to log in.
+#: 用户需要登录时显示的默认闪现消息类别。
 LOGIN_MESSAGE_CATEGORY = "message"
 
-#: The default flash message to display when users need to reauthenticate.
-REFRESH_MESSAGE = "Please reauthenticate to access this page."
+#: 用户需要重新验证时显示的默认闪现消息。
+REFRESH_MESSAGE = "请重新验证以访问此页面。"
 
-#: The default flash message category to display when users need to
-#: reauthenticate.
+#: 用户需要重新验证时显示的默认闪现消息类别。
 REFRESH_MESSAGE_CATEGORY = "message"
 
-#: The default attribute to retreive the str id of the user
+#: 获取用户 str ID 的默认属性
 ID_ATTRIBUTE = "get_id"
 
-#: Default name of the auth header (``Authorization``)
+#: 默认的认证头名称（``Authorization``）
 AUTH_HEADER_NAME = "Authorization"
 
-#: A set of session keys that are populated by Flask-Login. Use this set to
-#: purge keys safely and accurately.
+#: 由 Flask-Login 填充的一组会话键。使用此集合可以安全准确地清除键。
 SESSION_KEYS = {
     "_user_id",
     "_remember",
@@ -51,11 +48,8 @@ SESSION_KEYS = {
     "next",
 }
 
-#: A set of HTTP methods which are exempt from `login_required` and
-#: `fresh_login_required`. By default, this is just ``OPTIONS``.
+#: 免于 `login_required` 和 `fresh_login_required` 的 HTTP 方法集合。默认情况下仅为 ``OPTIONS``。
 EXEMPT_METHODS = {"OPTIONS"}
 
-#: If true, the page the user is attempting to access is stored in the session
-#: rather than a url parameter when redirecting to the login view; defaults to
-#: ``False``.
+#: 如果为真，用户尝试访问的页面在重定向到登录视图时存储在会话中，而不是 URL 参数中；默认值为 ``False``。
 USE_SESSION_FOR_NEXT = False

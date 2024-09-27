@@ -11,7 +11,6 @@ from flask_jwt_extended.exceptions import JWTExtendedException
 from datetime import datetime
 from flask_babel import Babel
 from flask_jwt_extended import JWTManager
-from flask_login import current_user
 from flask_restful import Api, Resource
 from flask_wtf.csrf import CSRFError
 from app.api import load_apis
@@ -40,9 +39,13 @@ from app.models.user_rule import UserRule
 from app.utils import languages
 from app.utils.logger import logger
 from app.core.csrf import csrf
+
 from app.core.admin.auth import admin_login_manager
-from app.core.admin.login.utils import current_admin
+from app.core.admin.login import current_admin
+
+from app.core.user.login import current_user
 from app.core.user.auth import login_manager 
+
 from app.utils.defs import now
 from config import Config
 
@@ -76,7 +79,6 @@ def create_app(test_config=None):
     
     @admin_login_manager.admin_loader
     def load_admin(user_id):
-        logger.error(f'load_admin====>user_id:{user_id}');
         return Admin.query.get(int(user_id))
         
     # 用户登录
@@ -91,7 +93,7 @@ def create_app(test_config=None):
         g.user = current_user._get_current_object() if current_user.is_authenticated else None
         g.admin = current_admin._get_current_object() if current_admin and current_admin.is_authenticated else None
         request_method = request.method
-        logger.error(f"请求方法: {request_method}, user: {g.user},admin:{g.admin}")
+        logger.info(f"请求方法: {request_method}, user: {g.user},admin:{g.admin}")
 
         if request.method == "POST":
             try:
@@ -145,10 +147,17 @@ def create_app(test_config=None):
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return Response.error(code=403, msg="未经授权的访问")
         else:
-            next_url = request.url
-            return redirect(url_for("admin_auth.login", next=next_url))
+            return render_template("403.jinja2", e=e), 404
 
     @login_manager.unauthorized_handler
+    def unauthorized():
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return Response.error(code=403, msg="未经授权的访问")
+        else:
+            next_url = request.url
+            return redirect(url_for("user_auth.login", next=next_url))
+
+    @admin_login_manager.unauthorized_handler
     def unauthorized():
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return Response.error(code=403, msg="未经授权的访问")

@@ -7,6 +7,7 @@ from app.core.db import get_db
 from app.core.csrf import csrf
 from app.core.admin.login.utils import admin_required
 from app.models.user import  User
+from app.utils.logger import logger
 
 bp = Blueprint("admin_user", __name__, url_prefix="/admin/user")
 # list
@@ -71,7 +72,11 @@ def add_or_edit_user_view():
                 user.createtime = now()
         for field, value in data.items():
             if field not in ["id", "createtime", "updatetime"] and hasattr(user, field):
-                if isinstance(value, list) and field.endswith("[]"): 
+                if field == "password":
+                    pw = value
+                    if(pw!=''):
+                        user.set_password(pw)
+                elif isinstance(value, list) and field.endswith("[]"): 
                     setattr(user, field[:-2], ','.join(map(str, value)))
                 else:
                     setattr(user, field, value)

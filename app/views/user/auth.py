@@ -9,7 +9,7 @@ from flask import render_template
 from flask import request
 from flask import session
 from flask import url_for
-from flask_login import login_user, logout_user
+from app.core.user.login import login_user, logout_user
 from app.core.base_response import Response
 from app.core.db import get_db
 from app.models.user import User
@@ -20,7 +20,7 @@ bp = Blueprint("user_auth", __name__, url_prefix="/user")
 def login():
     """User Login"""
     if g and hasattr(g, 'user') and g.user:
-        return redirect(url_for("user_dashboard.dashboard"))
+        return redirect(url_for("user.index"))
     
     show_captcha = session.get('show_captcha', False)
 
@@ -50,7 +50,18 @@ def login():
             next_url = request.args.get('next', '/user/dashboard')
             return Response.success(msg="Login successful.", data=next_url)
     
-    return render_template("auth/login.jinja2", show_captcha=show_captcha)
+    return render_template("user/auth/login.jinja2", show_captcha=show_captcha)
+
+
+@bp.route("/resgister", methods=["GET", "POST"])
+def resgister():
+    show_captcha = True
+    return render_template("user/auth/resgister.jinja2", show_captcha=show_captcha)
+
+@bp.route("/forgot_password", methods=["GET", "POST"])
+def forgot_password():
+    show_captcha = True
+    return render_template("user/auth/forgot_password.jinja2", show_captcha=show_captcha)
 
 @bp.route("/logout", methods=["GET", "POST"])
 def logout():

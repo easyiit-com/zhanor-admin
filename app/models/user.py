@@ -5,9 +5,9 @@ import bcrypt
 from sqlalchemy.sql.expression import ClauseElement
 from .meta import Base
 from app.core.db import db, get_db
+from app.core.user.login.mixins import UserMixin
 
- 
-class User(Base):
+class User(UserMixin,Base):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True, nullable=False,comment='ID') 
     user_group_id = db.Column(db.Integer, nullable=False,comment='Group ID') 

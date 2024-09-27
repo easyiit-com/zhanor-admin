@@ -7,27 +7,27 @@ from app.models.user_score_log import UserScoreLog
 from app.utils.defs import now
 from app.core.db import get_db
 from app.core.csrf import csrf
-from app.core.admin.login.utils import admin_required
-from app.models.user import  User
+from app.core.user.login.utils import login_required
+from app.models.user import User
 
 bp = Blueprint("user", __name__, url_prefix="/user", template_folder="templates/user")
 
 # dashboard
 @bp.route('',methods=["GET","POST"])
-# @admin_required
-def index_view():
+@login_required
+def index():
     return redirect(url_for('user.dashboard_view'))
 
 # dashboard
 @bp.route('dashboard',methods=["GET","POST"])
-# @admin_required
+@login_required
 def dashboard_view():
     return render_template("user/dashboard.jinja2")
 
 
 # profile
 @bp.route('profile',methods=["GET","POST"])
-# @admin_required
+@login_required
 def profile_view():
     # user_id = g.user.id
     user_id = 1
@@ -37,7 +37,7 @@ def profile_view():
 
 # balance log
 @bp.route('balance/log',methods=["GET","POST"])
-# @admin_required
+@login_required
 def balance_log_view():
     page = int(request.form.get('page', 1))
     per_page = 20
@@ -53,7 +53,7 @@ def balance_log_view():
 
 # score log
 @bp.route('score/log',methods=["GET","POST"])
-# @admin_required
+@login_required
 def score_log_view():
     page = int(request.form.get('page', 1))
     per_page = 20

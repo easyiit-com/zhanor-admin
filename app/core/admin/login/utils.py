@@ -13,7 +13,6 @@ from flask import current_app, g, has_request_context, request, session, url_for
 from werkzeug.local import LocalProxy
 
 from app.utils.logger import logger
-from app.utils.defs import print_object_properties
 from .config import ADMIN_COOKIE_NAME, ADMIN_EXEMPT_METHODS
 from .signals import admin_logged_in, admin_logged_out, admin_login_confirmed
 
@@ -191,10 +190,7 @@ def admin_required(func):
     """
     @wraps(func)
     def decorated_view(*args, **kwargs):
-        logger.error(f"======>admin_required-1:{current_admin}")
-        print_object_properties(current_admin)
-        
-
+    
         logger.error(session)
 
         if request.method in ADMIN_EXEMPT_METHODS or current_app.config.get("LOGIN_DISABLED"):
