@@ -26,9 +26,9 @@
             console.log("Form submitted");
             currentButton.prop("disabled", true).html("{{_('Please wait')}}");
             $("#app-loading-indicator").removeClass("opacity-0");
-            var formData = $('#user_login_form').serializeArray(); 
+            var formData = $('#user_login_form').serializeArray();
             var jsonData = {};
-            formData.forEach(function(item) {jsonData[item.name] = item.value;}); 
+            formData.forEach(function (item) { jsonData[item.name] = item.value; });
 
             $.ajax({
                 type: "POST",
@@ -43,7 +43,7 @@
                 error: function (response) {
                     const msg = response.responseJSON?.msg || "{{_('An error occurred')}}";
                     toastr.error(msg);
-                    currentButton.prop("disabled", false).html("dsafd");
+                    currentButton.prop("disabled", false).html("{{_('Sign in')}}");
                 },
                 complete: function () {
                     $("#app-loading-indicator").addClass("opacity-0");
@@ -62,21 +62,20 @@
             }
         },
         messages: {
-            email: {
-                required: "{{_('Email is required')}}",
-                email: "{{_('Please enter a valid email address')}}"
+            login: {
+                required: "{{_('Username, phone number, or email is required')}}",
+                minlength: "{{_('Please enter at least 3 characters')}}"
             },
             password: {
                 required: "{{_('Password is required')}}",
-                minlength: "{{_('Password must be at least 6 characters long')}}",
-                equalTo: "{{_('Please enter the same password as above')}}"
+                minlength: "{{_('Password must be at least 6 characters long')}}"
             },
             accept: "{{_('Please accept this terms')}}"
         },
         rules: {
-            email: {
+            login: {
                 required: true,
-                email: true
+                minlength: 3
             },
             password: {
                 required: true,
@@ -86,8 +85,8 @@
         debug: false
     });
 </script>
-{% endblock javascript %}
 
+{% endblock javascript %}
 {% block content %}
 <div class="page page-center">
     <div class="container container-tight py-4">
@@ -101,8 +100,8 @@
                 <h2 class="h2 text-center mb-4">{{_("Login to your account")}}</h2>
                 <form id="user_login_form" action="./" method="POST" autocomplete="off" novalidate>
                     <div class="mb-3">
-                        <label class="form-label">{{_("Email or Phone or Username")}}</label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="{{_("your@email.com")}}" required>
+                        <label class="form-label">{{_("Account")}}</label>
+                        <input type="text" id="login" name="login" class="form-control" placeholder="{{_("your username, phone number, or email")}}" required>
                     </div>
                     <div class="mb-2">
                         <label class="form-label">
@@ -112,10 +111,8 @@
                             </span>
                         </label>
                         <div class="input-group input-group-flat">
-                            <input type="password" id="password" name="password" class="form-control"
-                                placeholder="{{_("Your password")}}" required>
-                            <span class="input-group-text show-password" data-bs-toggle="tooltip"
-                                aria-label="{{_("Show password")}}" data-bs-original-title="{{_("Show password")}}">
+                            <input type="password" id="password" name="password" class="form-control" placeholder="{{_("Your password")}}" required>
+                            <span class="input-group-text show-password" data-bs-toggle="tooltip" aria-label="{{_(" Show password")}}" data-bs-original-title="{{_(" Show password")}}">
                                 <i id="ti-eye" class="ti ti-eye"></i>
                             </span>
                         </div>
@@ -123,7 +120,7 @@
                     <div class="mb-2">
                         <label class="form-check">
                             <input type="checkbox" class="form-check-input" name="remember">
-                            <span class="form-check-label">{{_("Remember me on this device")}}</span>
+                            <span class="form-check-label">{{_("Remember me")}}</span>
                         </label>
                     </div>
                     <div class="form-footer">

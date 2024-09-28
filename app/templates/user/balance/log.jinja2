@@ -2,87 +2,12 @@
 {% extends "user/layout/default.jinja2" %}
 {% block javascript %}
 <script>
-    $(document).ready(function () {
-        "user strict";
-        $(".select-all").click(function () {
-            var isChecked = $(this).prop("checked");
-            $(".id-checkbox").prop("checked", isChecked);
-        });
-        $('.delete-selected').click(function () {
-            var selectedIds = [];
-            $('.id-checkbox:checked').each(function () {
-                selectedIds.push($(this).val());
-            });
-            if (confirm(_('Are you sure you want to delete it?'))) {
-                if (selectedIds.length > 0) {
-                    $.ajax({
-                        type: "DELETE",
-                        url: "/admin/user/balance_log/delete",
-                        contentType: 'application/json',
-                        data: JSON.stringify({ ids: selectedIds }),
-                        dataType: 'json',
-                        success: function (response) {
-                            for (var i = 0; i < selectedIds.length; i++) {
-                                const thisElement = document.getElementById('user-' + selectedIds[i]);
-                                if (thisElement) {
-                                    thisElement.remove();
-                                }
-                            }
-                            toastr.success(_('Delete Successfully'))
-                        },
-                        error: function (xhr, status, error) {
-                            toastr.error(_('Delete Faile'), xhr.responseText);
-                        }
-                    });
-                } else {
-                    toastr.warning(_('Please first select the items you want to delete'));
-
-                }
-            }
-        });
-        $('.btn-delete').click(function (event) {
-            event.preventDefault();
-            var $this = $(this);
-            var UserId = $this.data('id');
-            if (confirm(_('Are you sure you want to delete it?'))) {
-                const selectedIds = [UserId];
-                $("#app-loading-indicator").removeClass("opacity-0");
-                $.ajax({
-                    type: "DELETE",
-                    url: "/admin/user/balance_log/delete",
-                    contentType: 'application/json',
-                    data: JSON.stringify({ ids: selectedIds }),
-                    processData: false,
-                    success: function (data) {
-                        const thisElement = $('#user-' + UserId);
-                        if (thisElement.length) {
-                            thisElement.remove();
-                        }
-                        toastr.success(localize.delete_done);
-                    },
-                    error: function (xhr, status, error) {
-                        let msg = xhr.responseJSON.msg;
-                        toastr.error(localize.delete_fail);
-                    },
-                    complete: function (xhr, textStatus) {
-                        $("#app-loading-indicator").addClass("opacity-0");
-                    },
-                });
-            }
-            return false;
-        })
-    });
+     
 </script>
 {% endblock javascript %}
 {% block content %}
 <div class="page-body pt-6">
     <div class="container-fluid px-4">
-        <div class="mb-2">
-            <a href="javascript:void(0)" class="btn delete-selected btn-warning">
-                <i class="ti ti-trash"></i>
-                {{_('Batch Deletion')}}
-            </a>
-        </div>
         <div class="card">
             <div id="table-default" class="card-table table-responsive">
                 <table class="table action-table">
@@ -120,16 +45,6 @@
                                     class="btn w-[36px] h-[36px] p-0 border hover:bg-[var(--tblr-primary)] hover:text-white"
                                     data-bs-toggle="modal" data-bs-target="#modal-{{ value.id }}" title="View Details">
                                     <i class="ti ti-eye"></i>
-                                </a>
-                                <a href="/admin/user/balance_log/edit/{{value.id}}"
-                                    class="btn w-[36px] h-[36px] p-0 border hover:bg-[var(--tblr-primary)] hover:text-white"
-                                    title="Edit">
-                                    <i class="ti ti-edit"></i>
-                                </a>
-                                <a href="javascript:void(0)"
-                                    class="btn btn-delete w-[36px] h-[36px] p-0 border hover:bg-red-500 hover:text-white"
-                                    title="Delete" data-id="{{value.id}}">
-                                    <i class="ti ti-x"></i>
                                 </a>
                             </td>
                         </tr>

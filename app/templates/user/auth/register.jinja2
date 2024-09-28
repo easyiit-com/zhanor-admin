@@ -1,0 +1,154 @@
+{% extends "user/layout/app_without_sidebar.jinja2" %}
+{% block javascript %}
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js?v={{configs.basic.version}}"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js?v={{configs.basic.version}}"></script>
+    <script>
+        const showPassBtn = document.querySelector('.show-password');
+        showPassBtn?.addEventListener('click', ev => {
+            ev.preventDefault();
+            const passField = document.querySelector('#password');
+            const currentPassFieldType = passField.getAttribute('type');
+            passField.setAttribute('type', currentPassFieldType === 'password' ? 'text' : 'password');
+            const ti_eye = document.getElementById('ti-eye');
+            ti_eye.classList.toggle('ti-eye');
+            ti_eye.classList.toggle('ti-eye-closed');
+        });
+    
+        $("#btn-submit").on('click', function (event) {
+            console.log("Button clicked");
+        });
+    
+        $("#user_register_form").validate({
+            submitHandler: function (form) {
+                const currentButton = $(this);
+                console.log("Form submitted");
+                currentButton.prop("disabled", true).html("{{_('Please wait')}}");
+                $("#app-loading-indicator").removeClass("opacity-0");
+                var formData = $('#user_register_form').serializeArray(); 
+                var jsonData = {};
+                formData.forEach(function(item) { jsonData[item.name] = item.value; }); 
+    
+                $.ajax({
+                    type: "POST",
+                    url: "/user/register",
+                    data: JSON.stringify(jsonData),
+                    contentType: 'application/json;charset=utf-8',
+                    processData: false,
+                    success: function (response) {
+                        toastr.success(_('Registration Successful'));
+                        window.location.href = '/user/login';  // Redirect to login page
+                    },
+                    error: function (response) {
+                        const msg = response.responseJSON?.msg || "{{_('An error occurred')}}";
+                        toastr.error(msg);
+                        currentButton.prop("disabled", false).html("{{_('Register')}}");
+                    },
+                    complete: function () {
+                        $("#app-loading-indicator").addClass("opacity-0");
+                    },
+                });
+    
+                return false;
+            },
+            errorElement: "div",
+            errorPlacement: function (error, element) {
+                error.addClass('text-warning py-2');
+                if (element.prop("type") === "password" || element.prop("type") === 'checkbox') {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            messages: {
+                email: {
+                    required: "{{_('Email is required')}}",
+                    email: "{{_('Please enter a valid email address')}}"
+                },
+                password: {
+                    required: "{{_('Password is required')}}",
+                    minlength: "{{_('Password must be at least 6 characters long')}}"
+                },
+                mobile: {
+                    required: "{{_('Mobile number is required')}}",
+                    minlength: "{{_('Mobile number must be at least 10 digits')}}"
+                },
+                name: {
+                    required: "{{_('Username is required')}}"
+                }
+            },
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 6
+                },
+                mobile: {
+                    required: true,
+                    minlength: 10
+                },
+                name: {
+                    required: true
+                }
+            },
+            debug: false
+        });
+    </script>
+    
+{% endblock javascript %}
+{% block content %}
+<div class="page page-center">
+    <div class="container container-tight py-4">
+        <div class="text-center mb-4">
+            <a href="." class="navbar-brand navbar-brand-autodark">
+                <img src="/static/assets/img/user/logo.svg" height="80" alt="Logo">
+            </a>
+        </div>
+        <div class="card card-md">
+            <div class="card-body">
+                <h2 class="h2 text-center mb-4">{{_("Create your account")}}</h2>
+                <form id="user_register_form" action="./" method="POST" autocomplete="off" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label">{{_("Username")}}</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="{{_("Enter your username")}}" value="user2" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{_("Email")}}</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="{{_("your@email.com")}}" value="user2@email.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{_("Mobile Number")}}</label>
+                        <input type="text" id="mobile" name="mobile" class="form-control" placeholder="{{_("Your mobile number")}}" value="13344448888" required>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <label class="form-label">
+                            {{_("Password")}}
+                        </label>
+                        <div class="input-group input-group-flat">
+                            <input type="password" id="password" name="password" class="form-control" placeholder="{{_("Your password")}}" value="12345678" required>
+                            <span class="input-group-text show-password" data-bs-toggle="tooltip" aria-label="{{_("Show password")}}" data-bs-original-title="{{_("Show password")}}">
+                                <i id="ti-eye" class="ti ti-eye"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-check">
+                            <input type="checkbox" class="form-check-input" name="terms" required>
+                            <span class="form-check-label">{{_("I accept the terms and conditions")}}</span>
+                        </label>
+                    </div>
+                    <div class="form-footer">
+                        <button type="submit" id="btn-submit" class="btn btn-primary w-100">{{_("Register")}}</button>
+                    </div>
+                </form>
+            </div>
+            <div class="text-center text-secondary mt-3">{{_("Already have an account?")}} <a href="/user/login" tabindex="-1">{{_("Log in")}}</a></div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

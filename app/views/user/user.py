@@ -22,15 +22,16 @@ def index():
 @bp.route('dashboard',methods=["GET","POST"])
 @login_required
 def dashboard_view():
-    return render_template("user/dashboard.jinja2")
+    user_id = g.user.id
+    result = User.query.filter(User.id == user_id).first()
+    return render_template("user/dashboard.jinja2",value=result)
 
 
 # profile
 @bp.route('profile',methods=["GET","POST"])
 @login_required
 def profile_view():
-    # user_id = g.user.id
-    user_id = 1
+    user_id = g.user.id
     result = User.query.filter(User.id == user_id).first()
     return render_template("user/profile.jinja2",value=result)
 
