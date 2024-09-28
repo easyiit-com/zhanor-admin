@@ -114,4 +114,4 @@ def forgot_password():
 def logout():
     logout_user()
     session.clear()
-    return redirect('/')
+    return Response.success(msg="Logout successful.")

@@ -75,7 +75,7 @@
 
 
 $(document).ready(function () {
- 
+
 	$('.logout').click(function (e) {
 		e.preventDefault();
 		if (confirm('Are you sure you want to exit?')) {
@@ -88,16 +88,11 @@ $(document).ready(function () {
 					document.getElementById("app-loading-indicator").classList.remove("opacity-0");
 				},
 				success: function (response) {
-					console.log(response)
-					if (response.status == 1) {
-						toastr.success(_('Logout Successfully'))
-						setTimeout(function () {
-							location.reload();
-						}, 200);
-					} else {
-						var msg = response.msg;
-						toastr.error(msg);
+					toastr.options.timeOut = 200;
+					toastr.options.onHidden = function () {
+						window.location.reload();
 					}
+					toastr.success('Logout Successfully');
 				},
 				error: function (response, status, error) {
 					var response = JSON.parse(data);
@@ -111,7 +106,7 @@ $(document).ready(function () {
 		}
 	});
 
-	
+
 });
 
 //LOGIN
