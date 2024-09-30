@@ -1,6 +1,5 @@
 { 
     "generator": "enabled",
-    "recharge": "enabled",
-    "jiguang_verification":"enabled",
-    "vip":"enabled"
+    "third_payment": "enabled",
+    "vip": "enabled"
 }

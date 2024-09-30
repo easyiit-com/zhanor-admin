@@ -20,6 +20,7 @@ class UserRule(Base):
     updatetime = db.Column(db.DateTime,comment='Update Time') 
     weigh = db.Column(db.Integer,comment='Weight') 
     status = db.Column(db.Enum('normal', 'hidden'), default = 'normal' ,comment='Status') 
+    model_name = db.Column(db.String(50), nullable=False,comment='Model Name') 
 
 
 

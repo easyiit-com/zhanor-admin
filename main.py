@@ -1,20 +1,11 @@
-
-from collections import defaultdict
 import json
-import logging
 import os
 from os.path import isdir
-from pathlib import Path
-import importlib.util
-import re
-from flask_jwt_extended.exceptions import JWTExtendedException
+from collections import defaultdict
 from datetime import datetime
-from flask_babel import Babel
-from flask_jwt_extended import JWTManager
-from flask_restful import Api, Resource
-from flask_wtf.csrf import CSRFError
-from app.api import load_apis
-from app.core import db
+from pathlib import Path
+import re
+import importlib
 from flask import (
     Blueprint,
     Flask,
@@ -26,38 +17,50 @@ from flask import (
     send_from_directory,
     session,
     url_for,
+    current_app,
 )
+from flask_babel import Babel
 from flask_compress import Compress
+from flask_jwt_extended import JWTManager
+from flask_jwt_extended.exceptions import JWTExtendedException
+from flask_restful import Api
+from flask_wtf.csrf import CSRFError
+from sqlalchemy import inspect
+from app.api import load_apis
+from app.core import db
 from app.core.base_response import Response
-from app.core.process_rules import process_admin_rules, process_user_rules
+from app.core.process_rules import organize_admin_rules, organize_user_rules
+from app.models.admin import Admin
 from app.models.admin_log import AdminLog
 from app.models.admin_rule import AdminRule
-from app.models.admin import Admin
 from app.models.general_config import GeneralConfig
+from app.models.meta import Base
 from app.models.user import User
 from app.models.user_rule import UserRule
 from app.utils import languages
 from app.utils.logger import logger
 from app.core.csrf import csrf
-
-from app.core.admin.auth import admin_login_manager
-from app.core.admin.login import current_admin
-
 from app.core.user.login import current_user
-from app.core.user.auth import login_manager 
-
-from app.utils.defs import now
+from app.core.admin.login import current_admin
+from app.core.admin.auth import admin_login_manager
+from app.core.user.auth import login_manager
 from config import Config
 
+
 def get_version():
-    version_file = os.path.join(os.path.dirname(__file__), 'VERSION')
+    """获取版本号"""
+    version_file = os.path.join(os.path.dirname(__file__), "VERSION")
     with open(version_file) as f:
         return f.read().strip()
 
+
 __version__ = get_version()
 
+
 def get_locale():
+    """获取用户的语言偏好"""
     return request.accept_languages.best_match(["en", "zh"])
+
 
 def create_app(test_config=None):
     """创建并配置Flask应用实例。"""
@@ -67,139 +70,120 @@ def create_app(test_config=None):
         template_folder="app/templates",
         static_folder="app/static",
     )
-    # 加载配置
+
     app.config.from_object(Config)
-    # Babel
-    babel = Babel()
-    babel.init_app(app, locale_selector=get_locale)
-    # CSRF
+
+    # 初始化Babel和CSRF
+    babel = Babel(app, locale_selector=get_locale)
     csrf.init_app(app)
-    # 管理员登录
+
+    # 管理员和用户登录管理
     admin_login_manager.init_app(app)
-    
+    login_manager.init_app(app)
+
     @admin_login_manager.admin_loader
     def load_admin(user_id):
         return Admin.query.get(int(user_id))
-        
-    # 用户登录
-    login_manager.init_app(app)
+
     @login_manager.user_loader
     def load_user(user_id):
-        logger.error(f'load_user====>user_id:{user_id}');
         return User.query.get(int(user_id))
 
     @app.before_request
     def before_request():
-        g.user = current_user._get_current_object() if current_user.is_authenticated else None
-        g.admin = current_admin._get_current_object() if current_admin and current_admin.is_authenticated else None
-        request_method = request.method
-        logger.info(f"请求方法: {request_method}, user: {g.user},admin:{g.admin}")
+        """处理请求前的操作"""
+        g.user = (
+            current_user._get_current_object()
+            if current_user.is_authenticated
+            else None
+        )
+        g.admin = (
+            current_admin._get_current_object()
+            if current_admin and current_admin.is_authenticated
+            else None
+        )
 
         if request.method == "POST":
-            try:
-                # 获取其他有用的信息
-                user_agent = request.headers.get("User-Agent")
-                route_name = request.endpoint
-                full_url = request.url
+            log_request_data()
 
-                # 获取原始 JSON 数据
-                request_json = request.get_json(silent=True) or {}
+    def log_request_data():
+        """记录请求数据"""
+        try:
+            user_agent = request.headers.get("User-Agent")
+            route_name = request.endpoint
+            full_url = request.url
+            request_json = request.get_json(silent=True) or {}
+            log_json = request_json.copy()
+            if "password" in log_json:
+                log_json["password"] = ""
 
-                # 过滤敏感信息用于日志记录
-                log_json = request_json.copy()
-                if "password" in log_json:
-                    log_json["password"] = ""
+            content_str = json.dumps(log_json)
 
-                # 序列化request_json为JSON字符串
-                content_str = json.dumps(log_json)
+            if g.user:
+                admin_log = AdminLog(
+                    admin_id=g.user.id,
+                    username=g.user.name,
+                    url=full_url,
+                    title=route_name,
+                    content=content_str,
+                    ip=request.remote_addr,
+                    useragent=user_agent,
+                    createtime=datetime.utcnow(),
+                )
+                db.session.add(admin_log)
+                db.session.commit()
+                print(f"请求的JSON数据（已序列化）: {content_str}")
+        except Exception as e:
+            logger.error(f"处理请求时发生错误: {e}")
 
-                # 创建并保存日志条目
-                if g.user:
-                    admin_log = AdminLog(
-                        admin_id=g.user.id,
-                        username=g.user.name,
-                        url=full_url,
-                        title=route_name,
-                        content=content_str,  # 存储序列化后的字符串
-                        ip=request.remote_addr,
-                        useragent=user_agent,
-                        createtime=datetime.utcnow(),  # 使用 utcnow() 或 now() 根据你的需求
-                    )
-                    db_session = db.session
-                    db_session.add(admin_log)
-                    db_session.commit()
-                    print(f"请求的JSON数据（已序列化）: {content_str}")
-            except Exception as e:
-                print(f"处理请求时发生错误: {e}")
-
-    # 静态文件
     @app.route("/static/<path:path>")
     def serve_static(path):
+        """提供静态文件"""
         return send_from_directory(app.static_folder, path)
 
     @app.errorhandler(404)
     def page_not_found(e):
-        app.logger.error("页面未找到: %s", request.path)
+        """404错误处理"""
+        logger.error("页面未找到: %s", request.path)
         return render_template("404.jinja2", e=e), 404
 
     @app.errorhandler(403)
-    def Forbiddend(e):
+    def forbidden(e):
+        """403错误处理"""
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return Response.error(code=403, msg="未经授权的访问")
         else:
-            return render_template("403.jinja2", e=e), 404
+            return render_template("403.jinja2", e=e), 403
 
     @login_manager.unauthorized_handler
     def unauthorized():
+        """处理未授权访问"""
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return Response.error(code=403, msg="未经授权的访问")
-        else:
-            next_url = request.url
-            return redirect(url_for("user_auth.login", next=next_url))
+        return redirect(url_for("user_auth.login", next=request.url))
 
     @admin_login_manager.unauthorized_handler
-    def unauthorized():
+    def unauthorized_admin():
+        """处理管理员未授权访问"""
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return Response.error(code=403, msg="未经授权的访问")
-        else:
-            next_url = request.url
-            return redirect(url_for("admin_auth.login", next=next_url))
+        return redirect(url_for("admin_auth.login", next=request.url))
 
     @app.errorhandler(CSRFError)
     def handle_csrf_error(e):
-        return Response.error(msg="CSRF令牌无效。", data=e.description)
+        """处理CSRF错误"""
+        return Response.error(msg="无效的CSRF令牌。", data=e.description)
 
     @app.errorhandler(JWTExtendedException)
     def handle_jwt_error(e):
-        timestamp = datetime.utcnow().timestamp()
-        return jsonify(msg=str(e), time=int(timestamp)), 401
+        """处理JWT错误"""
+        return jsonify(msg=str(e), time=int(datetime.utcnow().timestamp())), 401
 
     # 数据库初始化
     db.init_app(app)
 
     # 注册蓝图
-    def register_blueprints(app, path):
-        views_base_path = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "app", "views")
-        )
-        for root, dirs, files in os.walk(views_base_path):
-            relative_root = os.path.relpath(root, views_base_path)
-            for file in files:
-                if file.endswith(".py") and file != "__init__.py":
-                    module_path = (
-                        "app.views."
-                        + ("." + relative_root).lstrip(".")
-                        + "."
-                        + os.path.splitext(file)[0]
-                    )
-                    module = importlib.import_module(module_path)
-                    bp = getattr(module, "bp", None)
-                    if bp is not None:
-                        app.register_blueprint(bp)
-
-    views_path = os.path.join(os.path.dirname(__file__), "app", "views")
-    register_blueprints(app, views_path)
-
+    register_blueprints(app)
     # 插件
     plugin_admin_rules = []
     plugin_user_rules = []
@@ -221,11 +205,12 @@ def create_app(test_config=None):
                     router_instance = getattr(plugin_module, "bp", None)
                     if isinstance(router_instance, Blueprint):
                         app.register_blueprint(router_instance)
-                        logging.info(f"注册 {module_name}")
                     else:
-                        logging.error(f"未知 {module_name}")
+                        logger.error(f"scan_plugins_folder====>未知:{module_name}")
                 except Exception as e:
-                    logging.error(f"导入插件 {module_name} 捕获错误：{e}")
+                    logger.error(
+                        f"scan_plugins_folder====>导入插件:{module_name}, 捕获错误：{e}"
+                    )
 
         plugin_json_file = plugins_folder / "plugin.json"
         if plugin_json_file.is_file():
@@ -233,12 +218,39 @@ def create_app(test_config=None):
                 with open(plugin_json_file, "r") as file:
                     plugin_data = file.read()
                 loaded_data = json.loads(plugin_data)
-                admin_rule = loaded_data.get("admin_menu", [])
-                plugin_admin_rules.extend(admin_rule)
+                admin_menu = loaded_data.get("admin_menu", [])
+                for item in admin_menu:
+                    admin_rule = AdminRule(
+                        id=item["id"],
+                        type=item["type"],
+                        pid=item["pid"],
+                        addon=1,  # 假设从插件来的 addon 值
+                        name=item["name"],
+                        url_path=item["url_path"],
+                        title=item["title"],
+                        description=item.get("description", ""),
+                        icon=item.get("icon", ""),
+                        menutype=item.get("menutype", ""),
+                        extend=item.get("extend", ""),
+                        model_name="plugin",  # 假设模型名称
+                        createtime=datetime.strptime(
+                            item["createtime"], "%Y-%m-%d %H:%M:%S"
+                        ),
+                        updatetime=datetime.strptime(
+                            item["updatetime"], "%Y-%m-%d %H:%M:%S"
+                        ),
+                        weigh=item["weigh"],
+                        status=item["status"],
+                    )
+                    plugin_admin_rules.append(admin_rule)
                 user_rule = loaded_data.get("user_menu", [])
                 plugin_user_rules.extend(user_rule)
             except Exception as e:
-                logging.error(f"导入插件 {module_name} 捕获错误：{e}")
+                logger.error(
+                    f"scan_plugins_folder====>导入插件菜单:{module_name} 捕获错误：{e}"
+                )
+
+        create_plugin_models(plugins_folder)
 
     # 插件
     current_dir = os.getcwd()
@@ -253,126 +265,49 @@ def create_app(test_config=None):
             f.truncate(0)
         plugins_status = {}
 
-    for key, value in plugins_status.items():
-        plugin_name = key
-        plugin_dir = os.path.join(plugins_directory, plugin_name)
-        if value == "enabled" and isdir(plugin_dir):
-            scan_plugins_folder(plugin_dir)
+    with app.app_context():  # 确保在应用上下文中调用
+        for key, value in plugins_status.items():
+            plugin_name = key
+            plugin_dir = os.path.join(plugins_directory, plugin_name)
+            if value == "enabled" and isdir(plugin_dir):
+                scan_plugins_folder(plugin_dir)
 
-    # api
-    jwt = JWTManager(app)  # 初始化JWT
+    # 初始化JWT
+    jwt = JWTManager(app)
 
     # 创建并配置API蓝图
     api_bp = Blueprint("api_v1", __name__, url_prefix="/api/v1")
     csrf.exempt(api_bp)
     api = Api(api_bp)
-    # 自动加载API资源
     load_apis.autoload_apis(app, api)
     app.register_blueprint(api_bp)
 
-    # 全局变量
     @app.context_processor
     def inject_global_variables():
-        def get_timestamp():
-            import datetime
-            # 获取当前时间戳
-            return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        """注入全局变量到模板中"""
 
-        # 获取所有通用配置
-        general_configs = GeneralConfig.query.all()
-        # logger().info(f"========>general_configs:{general_configs}")
-        dicts = [gc.to_dict() for gc in general_configs]
-        json_data = json.dumps(dicts, default=str)  # 转换为 JSON 格式
-
-        # 配置项
-        configs = defaultdict(dict)
-        for item in general_configs:
-            # 根据类型处理配置项
-            value_as_dict = (
-                list(enumerate(json.loads(item.value).items()))
-                if item.type == "array"
-                else item.value
-            )
-            content_as_dict = (
-                list(enumerate(json.loads(item.content)))
-                if item.type == "select"
-                else item.content
-            )
-            configs[item.group][item.name] = value_as_dict
-
-        # 管理员规则
-        admin_rules = process_admin_rules(
-            AdminRule.query.filter(
-                AdminRule.pid == 0,
-                AdminRule.type == "menu",
-                AdminRule.status == "normal",
-            ).order_by(AdminRule.id.asc())
-        )
-
+        admin_rules = get_admin_rules()
         admin_rules.extend(plugin_admin_rules)
 
-        # 获取所有正常状态的管理员规则
-        admin_rules_all = AdminRule.query.filter(AdminRule.status == "normal").order_by(
-            AdminRule.id.asc()
-        )
+        user_rules = get_user_rules()
+        # user_rules.extend(plugin_user_rules)
+        organized_user_rules = organize_user_rules(user_rules)
+        admin_rules_all = get_admin_rules_all()
+        organized_admin_rules = organize_admin_rules(admin_rules)
 
-        # 用户规则
-        user_rules_query = (
-            UserRule.query.filter(
-                UserRule.pid == 0,
-                UserRule.type == "menu",
-                UserRule.status == "normal",
-            )
-            .order_by(UserRule.id.asc())
-            .all()
-        )
-        user_rules = process_user_rules(user_rules_query)
-        user_rules.extend(plugin_user_rules)
-        user_rules_query = (
-            UserRule.query.filter(UserRule.status == "normal")
-            .order_by(UserRule.id.asc())
-            .all()
-        )
-
-        # 处理路径字符串
-        def process_string(s):
-            parts = s.split("/")
-
-            logging.error(f"parts======>s:{s}-------{parts}:{len(parts)}")
-            back_to_dashboard = f'<i class="ti ti-chevron-left page-pretitle flex items-center"></i><a href="/admin/dashboard" class="page-pretitle flex items-center">返回仪表板</a>'
-            if s == "dashboard":
-                return (
-                    f'<a class="page-pretitle flex items-center" href="#">仪表板</a>'
-                )
-            if len(parts) == 1:
-                return f'{back_to_dashboard}<a class="page-pretitle flex items-center" href="#">/{parts[0].capitalize()}</a>'
-            elif len(parts) == 2:
-                title = s.rsplit(".", maxsplit=1)[0].replace("_", "/")
-                return f'{back_to_dashboard}<span class="page-pretitle flex items-center">/</span><a class="page-pretitle flex items-center" href="/admin/{title}/{parts[1]}">{parts[0].capitalize().replace("_"," ")}{parts[1].capitalize()}</a>'
-            elif len(parts) == 3:
-                title = re.sub(
-                    r"(/add|/edit/\d+)",
-                    "",
-                    str(s.rsplit(".", maxsplit=1)[0].replace(".", "/")),
-                )
-                return f'{back_to_dashboard}<span class="page-pretitle flex items-center">/</span><a class="page-pretitle flex items-center" href="/admin/{title}">{parts[0].capitalize().replace("_"," ")}{parts[1].capitalize()}</a><span class="page-pretitle flex items-center">/ {parts[2].capitalize()}</span>'
-            else:
-                return ""
-
-        # 返回一个字典，其中的键值对将在所有模板中作为全局变量
-        return dict(
+        global_val = dict(
             title="zhanor",
-            get_timestamp=get_timestamp,
-            configs=configs,
+            get_timestamp=get_timestamp(),
+            configs=get_general_configs(),
             all_languages=languages,
-            admin_rules=admin_rules,
+            admin_rules=organized_admin_rules,
             admin_rules_all=admin_rules_all,
-            user_rules=user_rules,
-            user_rules_query=user_rules_query,
-            user_rules_all=user_rules_query,
+            user_rules=organized_user_rules,
+            user_rules_query=get_user_rules_query(),
+            user_rules_all=get_user_rules_all(),
             admin=g.admin,
             user=g.user,
-            breadcrumbs=process_string(str(request.url_rule).replace("/admin/", "", 1)),
+            breadcrumbs=process_breadcrumbs(),
             current_route=str(request.url_rule),
             current_parent_path=re.sub(
                 r"(/add|/edit/\d+)",
@@ -380,18 +315,159 @@ def create_app(test_config=None):
                 str(request.url_rule),
             ),
         )
+        return global_val
 
-    # index视图
-    def index_view():
-        return render_template("index.jinja2")
-
-    app.add_url_rule("/", endpoint="index", view_func=index_view)
+    # 设置主页视图
+    app.add_url_rule(
+        "/", endpoint="index", view_func=lambda: render_template("index.jinja2")
+    )
 
     # 压缩
     Compress(app)
     return app
 
+
+def register_blueprints(app):
+    """注册蓝图"""
+    views_base_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "app", "views")
+    )
+    for root, dirs, files in os.walk(views_base_path):
+        relative_root = os.path.relpath(root, views_base_path)
+        for file in files:
+            if file.endswith(".py") and file != "__init__.py":
+                module_path = (
+                    "app.views."
+                    + ("." + relative_root).lstrip(".")
+                    + "."
+                    + os.path.splitext(file)[0]
+                )
+                module = importlib.import_module(module_path)
+                bp = getattr(module, "bp", None)
+                if bp is not None:
+                    app.register_blueprint(bp)
+
+
+def create_plugin_models(plugin_dir):
+    """创建插件的数据库模型"""
+    models_dir = plugin_dir / "models"
+    db_engine = db.get_db_engine()
+
+    if models_dir.is_dir():
+        for model_file in models_dir.glob("*.py"):
+            try:
+                model_module = importlib.import_module(
+                    f"app.plugins.{plugin_dir.name}.models.{model_file.stem}"
+                )
+
+                # 遍历模型模块中的所有类，查找继承自 Base 的类
+                for name, cls in model_module.__dict__.items():
+                    if (
+                        isinstance(cls, type)
+                        and issubclass(cls, Base)
+                        and cls is not Base
+                    ):  # 确保是 db.Model 的子类
+                        inspector = inspect(db_engine)
+                        if not inspector.has_table(
+                            cls.__tablename__
+                        ):  # 使用 inspector 检查表存在性
+                            cls.metadata.create_all(
+                                db_engine
+                            )  # 使用 cls 而不是 model_module.Base
+            except Exception as e:
+                logger.error(f"导入模型时出错: {model_file.stem}, 错误: {e}")
+
+
+def get_timestamp():
+    """获取当前时间戳"""
+    import datetime
+
+    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
+def get_general_configs():
+    """获取所有通用配置"""
+    general_configs = GeneralConfig.query.all()
+    configs = defaultdict(dict)
+    for item in general_configs:
+        value_as_dict = (
+            list(enumerate(json.loads(item.value)))
+            if item.type == "array"
+            else item.value
+        )
+        configs[item.group][item.name] = value_as_dict
+    return configs
+
+
+def get_admin_rules():
+    """获取管理员规则。"""
+    admin_rules = (
+        AdminRule.query.filter_by(type="menu", status="normal")
+        .order_by(AdminRule.id.asc())
+        .all()
+    )
+    return admin_rules
+
+
+def get_admin_rules_all():
+    """获取全部管理员规则。"""
+    admin_rules_all = AdminRule.query.filter(AdminRule.status == "normal").order_by(
+        AdminRule.id.asc()
+    )
+    return admin_rules_all
+
+
+def get_user_rules():
+    """获取用户规则。"""
+    user_rules = UserRule.query.filter_by(pid=0, type="menu", status="normal").order_by(UserRule.id.asc()).all()
+    return user_rules
+
+
+def get_user_rules_query():
+    """获取用户规则_query。"""
+    user_rules_query = (
+        UserRule.query.filter(
+            UserRule.pid == 0,
+            UserRule.type == "menu",
+            UserRule.status == "normal",
+        )
+        .order_by(UserRule.id.asc())
+        .all()
+    )
+    return user_rules_query
+
+
+def get_user_rules_all():
+    """获取全部用户规则。"""
+    user_rules_all = (
+        UserRule.query.filter(
+            UserRule.pid == 0,
+            UserRule.type == "menu",
+            UserRule.status == "normal",
+        )
+        .order_by(UserRule.id.asc())
+        .all()
+    )
+    return user_rules_all
+
+
+def process_breadcrumbs():
+    """处理面包屑路径。"""
+    s = str(request.url_rule).replace("/admin/", "", 1)
+    parts = s.split("/")
+    if not parts:
+        return ""
+    back_to_dashboard = '<a href="/admin/dashboard">返回仪表板</a>'
+    title = parts[0].capitalize()
+    if len(parts) == 1:
+        return f'{back_to_dashboard}<a href="#">{title}</a>'
+    elif len(parts) == 2:
+        return f'{back_to_dashboard}<a href="/admin/{title}/{parts[1]}">{title} {parts[1].capitalize()}</a>'
+    elif len(parts) == 3:
+        return f'{back_to_dashboard}<a href="/admin/{title}">{title} {parts[1].capitalize()}</a> / {parts[2].capitalize()}'
+    return ""
+
+
 if __name__ == "__main__":
-    # 创建并启动 Flask 应用
     app = create_app()
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5001)), debug=True)

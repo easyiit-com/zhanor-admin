@@ -14,7 +14,7 @@ bp = Blueprint("general_profile", __name__, url_prefix="/admin/general/profile")
 @bp.route('',methods=["GET"])
 @admin_required
 def edit_view():
-    admin_id = g.user.id
+    admin_id = g.admin.id
     result = Admin.query.filter(Admin.id == admin_id).first()
     return render_template(
             "/admin/general/profile.jinja2",

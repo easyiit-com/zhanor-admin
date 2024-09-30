@@ -72,3 +72,5 @@ WTForms==3.1.2
 zope.interface==6.3
 zope.sqlalchemy==3.1
 zstandard==0.22.0
+alipay-sdk-python==3.7.33
+wechatpayv3==1.2.52
