@@ -177,3 +177,4 @@ make.py
 * copy.*
 app/static/uploads/*
 .DS_Store
+alembic/versions/*
