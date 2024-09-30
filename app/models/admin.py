@@ -3,7 +3,7 @@ from datetime import datetime, date
 from decimal import Decimal
 import bcrypt
 from sqlalchemy.sql.expression import ClauseElement
-from .meta import Base
+from app.core.base import Base
 from app.core.db import db, get_db
 from app.core.admin.login.mixins import AdminMixin
 class Admin(AdminMixin, Base):

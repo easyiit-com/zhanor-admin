@@ -2,7 +2,7 @@ from datetime import datetime
 import importlib
 import os
 from sqlalchemy.orm import scoped_session, sessionmaker
-from app.models.meta import Base
+from app.core.base import Base
 from main import create_app  # 导入必要的函数和create_app
 from app.core.db import db,get_db,get_db_engine
 from app.models import *

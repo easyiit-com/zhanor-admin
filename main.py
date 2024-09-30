@@ -34,7 +34,7 @@ from app.models.admin import Admin
 from app.models.admin_log import AdminLog
 from app.models.admin_rule import AdminRule
 from app.models.general_config import GeneralConfig
-from app.models.meta import Base
+from app.core.base import Base
 from app.models.user import User
 from app.models.user_rule import UserRule
 from app.utils import languages

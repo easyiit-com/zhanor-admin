@@ -150,14 +150,11 @@ sqlalchemy.url = mysql://root:12345678@localhost:3306/zhanor_1.0.4?charset=utf8m
 
 ```
 alembic current
-
 alembic revision --autogenerate -m "init"
-
-```
-
-```
 alembic upgrade head
 ``` 
+
+注意，当你有新的表建立时，要用数据库迁移功能，需要在alembic/env.py文件中导入你新的数据表模型，这样迁移功能就不会删除你新建的表
 
 7.使用脚本将默认数据加载到数据库中。
 

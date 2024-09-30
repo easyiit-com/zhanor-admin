@@ -7,7 +7,7 @@ import sys
 from app.models.admin_group import AdminGroup
 from app.models.admin_rule import AdminRule
 from app.models.general_category import GeneralCategory
-from app.models.meta import Base
+from app.core.base import Base
 from app.models import *
 from app.models.user import User
 from app.models.user_group import UserGroup

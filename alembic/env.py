@@ -3,21 +3,26 @@ from sqlalchemy import engine_from_config, pool
 from alembic import context
 from app.core.db import db  # 调整导入路径到实际位置
 
-from app.models.user_group import UserGroup
-from app.models.user import User
-from app.models.user_balance_log import UserBalanceLog
-from app.models.user_recharge_order import UserRechargeOrder
-from app.models.common_sms import CommonSms
-from app.models.general_category import GeneralCategory
-from app.models.attachment_file import AttachmentFile
-from app.models.general_config import GeneralConfig
-from app.models.admin import Admin
-from app.models.common_ems import CommonEms
-from app.models.user_score_log import UserScoreLog
-from app.models.admin_rule import AdminRule
-from app.models.admin_group import AdminGroup
-from app.models.admin_log import AdminLog
-from app.models.user_rule import UserRule
+import os
+import importlib
+import sys
+
+# 将项目路径添加到系统路径中
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# 获取模型目录
+models_dir = os.path.join(os.path.dirname(__file__), '../app/models')
+
+# 遍历模型目录中的所有文件
+for filename in os.listdir(models_dir):
+    if filename.endswith('.py') and filename != '__init__.py':
+        module_name = f'app.models.{filename[:-3]}'  # 去掉.py后缀
+        importlib.import_module(module_name)
+
+
+from app.plugins.vip.models.vip import Vip
+from app.plugins.vip.models.vip_order import VipOrder 
+from app.plugins.vip.models.vip_status import VipStatus
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
