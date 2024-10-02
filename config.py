@@ -10,6 +10,24 @@ class Config:
     SECRET_KEY = 'your_secret_key'
     JWT_SECRET_KEY = 'jwt-secret-key'
     
+    # swagger
+    SWAGGER = {
+        "title": "Zhanor Admin API",
+        "version": "1.0.4",
+        "uiversion": 3,
+        # "specs": [
+        #     {
+        #         "endpoint": "swagger",
+        #         "route": "/swagger.json",
+        #         "rule_filter": lambda rule: True,  # all in
+        #         "model_filter": lambda tag: True,  # all in
+        #     }
+        # ],
+        # "static_url_path": "/flasgger_static",
+        # "specs_route": "/swagger/",
+        # "openapi": "3.0.2",
+    }
+    
     # 多语言
     LANGUAGES = ['en', 'zh']
     BABEL_DEFAULT_LOCALE = 'zh'

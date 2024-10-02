@@ -46,6 +46,8 @@ from app.core.admin.auth import admin_login_manager
 from app.core.user.auth import login_manager
 from config import Config
 
+from flasgger import Swagger
+# from app.plugins.vip.api.v1.vip import ApiVipList
 
 def get_version():
     """获取版本号"""
@@ -190,16 +192,22 @@ def create_app(test_config=None):
 
     def scan_plugins_folder(plugin_dir: str):
         """
-        导入插件API路由。
+        导入插件API路由及API模块。
         """
         plugins_folder = Path(plugin_dir)
+
+        logger.info(f"扫描插件plugins_folder:{plugins_folder}")
 
         for sub_dir in plugins_folder.glob("**/"):
             if not sub_dir.is_dir():
                 continue
+            
+            # 确定插件名称
+            plugin_name = sub_dir.parts[-1]
+            parent_plugin_name = sub_dir.parts[-2]  # 假设这个是 "vip"
             router_file = sub_dir / "views.py"
             if router_file.is_file():
-                module_name = f"app.plugins.{sub_dir.parts[-2]}.{sub_dir.parts[-1]}"
+                module_name = f"app.plugins.{parent_plugin_name}.{plugin_name}"
                 try:
                     plugin_module = importlib.import_module(f"{module_name}.views")
                     router_instance = getattr(plugin_module, "bp", None)
@@ -208,9 +216,24 @@ def create_app(test_config=None):
                     else:
                         logger.error(f"scan_plugins_folder====>未知:{module_name}")
                 except Exception as e:
-                    logger.error(
-                        f"scan_plugins_folder====>导入插件:{module_name}, 捕获错误：{e}"
-                    )
+                    logger.error(f"scan_plugins_folder====>导入插件:{module_name}, 捕获错误：{e}")
+            
+            # 同时扫描api目录
+            # api_dir = sub_dir / "api"
+            # if api_dir.is_dir():
+            #     for api_subdir in api_dir.glob("*/"):
+            #         if api_subdir.is_dir() and (api_subdir / "__init__.py").is_file():
+            #             api_module_name = f"app.plugins.{plugin_name}.api.{api_subdir.name}.__init__"
+            #             try:
+            #                 api_module = importlib.import_module(api_module_name)
+            #                 if hasattr(api_module, "init_app"):
+            #                     api_module.init_app(app, Api(api_bp))
+            #                     logger.info(f"scan_plugins_folder====>API模块{api_module_name}导入成功")
+            #                 else:
+            #                     logger.error(f"scan_plugins_folder====>API模块缺少init_app函数: {api_module_name}")
+            #             except Exception as e:
+            #                 logger.error(f"scan_plugins_folder====>导入API模块:{api_module_name}, 捕获错误：{e}")
+
 
         plugin_json_file = plugins_folder / "plugin.json"
         if plugin_json_file.is_file():
@@ -251,7 +274,13 @@ def create_app(test_config=None):
                 )
 
         create_plugin_models(plugins_folder)
-
+ 
+    # 初始化JWT
+    jwt = JWTManager(app)
+    api = Api(app)
+    swagger = Swagger(app)
+    load_apis(app)
+ 
     # 插件
     current_dir = os.getcwd()
     plugins_directory = os.path.join(current_dir, "app", "plugins")
@@ -271,17 +300,7 @@ def create_app(test_config=None):
             plugin_dir = os.path.join(plugins_directory, plugin_name)
             if value == "enabled" and isdir(plugin_dir):
                 scan_plugins_folder(plugin_dir)
-
-    # 初始化JWT
-    jwt = JWTManager(app)
-
-    # 创建并配置API蓝图
-    api_bp = Blueprint("api_v1", __name__, url_prefix="/api/v1")
-    csrf.exempt(api_bp)
-    api = Api(api_bp)
-    load_apis.autoload_apis(app, api)
-    app.register_blueprint(api_bp)
-
+ 
     @app.context_processor
     def inject_global_variables():
         """注入全局变量到模板中"""
@@ -325,6 +344,65 @@ def create_app(test_config=None):
     # 压缩
     Compress(app)
     return app
+
+
+def load_apis(app):
+    api = Api(app)
+
+    # 扫描 app/api 目录
+    api_base_path = 'app/api/v1'
+    print("正在扫描 API 目录:", api_base_path)
+    for root, dirs, files in os.walk(api_base_path):
+        for file in files:
+            if file.endswith('.py') and file != '__init__.py':
+                module_path = os.path.join(root, file).replace('/', '.').replace('.py', '')
+                try:
+                    print(f"正在导入模块: {module_path}")
+                    module = importlib.import_module(module_path)
+
+                    # 获取当前 API 文件所在的文件夹名称
+                    folder_name = os.path.basename(root)  # 使用 root 获取当前文件夹
+
+                    # 动态注册以 Api 开头的类
+                    for name in dir(module):
+                        if name.startswith('Api'):
+                            api_class = getattr(module, name)
+                            # 去掉 Api 前缀并转为小写，使用正则分隔大写字母
+                            route_name = re.sub(r'(?<!^)(?=[A-Z])', '/', name[3:]).lower()  # 去掉 'Api' 前缀
+                            
+                            # 生成路由，包含文件夹名称
+                            route = f'/api/{folder_name}/{route_name}'
+                            api.add_resource(api_class, route)
+                            print(f"已注册 API: {api_class.__name__}，路径: {route}")
+
+                except Exception as e:
+                    print(f"导入模块 {module_path} 时发生错误: {e}")
+
+    # 扫描 app/plugins 目录
+    plugins_path = 'app/plugins'
+    for plugin in os.listdir(plugins_path):
+        plugin_api_path = os.path.join(plugins_path, plugin, 'api/v1')
+        if os.path.isdir(plugin_api_path):
+            for root, dirs, files in os.walk(plugin_api_path):
+                for file in files:
+                    if file.endswith('.py') and file != '__init__.py':
+                        module_path = os.path.join(root, file).replace('/', '.').replace('.py', '')
+                        try:
+                            module = importlib.import_module(module_path)
+                            # 获取当前 API 文件所在的文件夹名称
+                            folder_name = os.path.basename(root)  # 使用 root 获取当前文件夹
+                            # 动态注册以 Api 开头的类
+                            for name in dir(module):
+                                if name.startswith('Api'):
+                                    api_class = getattr(module, name)
+                                    # 去掉 Api 前缀并转为小写，使用正则分隔大写字母
+                                    route_name = re.sub(r'(?<!^)(?=[A-Z])', '/', name[3:]).lower()  # 去掉 'Api' 前缀
+                                    # 生成路由，包含文件夹名称
+                                    route = f'/api/plugins/{plugin}/{folder_name}/{route_name}'
+                                    api.add_resource(api_class, route)
+
+                        except Exception as e:
+                            logger.error(f"导入模块 {module_path} 时发生错误: {e}")
 
 
 def register_blueprints(app):
