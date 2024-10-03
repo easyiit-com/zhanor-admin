@@ -109,7 +109,7 @@ setup(
     ],
     author='zhanor',
     author_email='zhanfish@foxmail.com',
-    url='https://github.com/easyiit-com/flask-admin-panel',
+    url='https://github.com/easyiit-com/zhanor-admin',
     keywords='web flask pylons',
     packages=find_packages(exclude=['tests']),
     include_package_data=True,

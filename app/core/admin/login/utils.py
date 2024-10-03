@@ -190,9 +190,6 @@ def admin_required(func):
     """
     @wraps(func)
     def decorated_view(*args, **kwargs):
-    
-        logger.error(session)
-
         if request.method in ADMIN_EXEMPT_METHODS or current_app.config.get("LOGIN_DISABLED"):
             pass
         elif not current_admin.is_authenticated:
