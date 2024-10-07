@@ -1,0 +1,1029 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-10-06 08:23+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.14.0\n"
+
+msgid "Please wait"
+msgstr ""
+
+msgid "Submit Successfully"
+msgstr ""
+
+msgid "Member ID"
+msgstr ""
+
+msgid "Administrator ID"
+msgstr ""
+
+msgid "Category ID"
+msgstr ""
+
+msgid "Category IDs"
+msgstr ""
+
+msgid "Tags"
+msgstr ""
+
+msgid "Weekday"
+msgstr ""
+
+msgid "Monday"
+msgstr ""
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Flags"
+msgstr ""
+
+msgid "Hot"
+msgstr ""
+
+msgid "Index"
+msgstr ""
+
+msgid "Recommend"
+msgstr ""
+
+msgid "Gender"
+msgstr ""
+
+msgid "Male"
+msgstr ""
+
+msgid "Female"
+msgstr ""
+
+msgid "Hobbies"
+msgstr ""
+
+msgid "Music"
+msgstr ""
+
+msgid "Reading"
+msgstr ""
+
+msgid "Swimming"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Image Group"
+msgstr ""
+
+msgid "Attachment"
+msgstr ""
+
+msgid "Keywords"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "City/Province"
+msgstr ""
+
+msgid "Configuration"
+msgstr ""
+
+msgid "Two-Dimensional Array"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Views"
+msgstr ""
+
+msgid "Time Range"
+msgstr ""
+
+msgid "Start Date"
+msgstr ""
+
+msgid "Activity Time"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Time"
+msgstr ""
+
+msgid "Refresh Time"
+msgstr ""
+
+msgid "Deletion Time"
+msgstr ""
+
+msgid "Weight"
+msgstr ""
+
+msgid "Switch"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "Hidden"
+msgstr ""
+
+msgid "State Value"
+msgstr ""
+
+msgid "Submit"
+msgstr ""
+
+msgid "Submit & Return"
+msgstr ""
+
+msgid "Submit & New Entry"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Batch Deletion"
+msgstr ""
+
+msgid "Creation Time"
+msgstr ""
+
+msgid "Update Time"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Prev"
+msgstr ""
+
+msgid "next"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Select Table"
+msgstr ""
+
+msgid "Please Select A Table"
+msgstr ""
+
+msgid "Table fields shown in list"
+msgstr ""
+
+msgid "Controller"
+msgstr ""
+
+msgid ""
+"Should the menu be\n"
+"                                generated?"
+msgstr ""
+
+msgid "Route Code"
+msgstr ""
+
+msgid "Copy the following addition and paste into the route.py file."
+msgstr ""
+
+msgid "Wechat"
+msgstr ""
+
+msgid "Alipay"
+msgstr ""
+
+msgid "Order ID"
+msgstr ""
+
+msgid "VIP ID"
+msgstr ""
+
+msgid "Order title"
+msgstr ""
+
+msgid "Order amount"
+msgstr ""
+
+msgid "Paid amount"
+msgstr ""
+
+msgid "Payment type"
+msgstr ""
+
+msgid "Payment time"
+msgstr ""
+
+msgid "Payment method"
+msgstr ""
+
+msgid "IP address"
+msgstr ""
+
+msgid "Notes"
+msgstr ""
+
+msgid "Creation time"
+msgstr ""
+
+msgid "Update time"
+msgstr ""
+
+msgid "User Agent"
+msgstr ""
+
+msgid "Id"
+msgstr ""
+
+msgid "VIP level"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Expiration time"
+msgstr ""
+
+msgid "remove"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Price data"
+msgstr ""
+
+msgid "Add Price Row"
+msgstr ""
+
+msgid "Right data"
+msgstr ""
+
+msgid "Pealse Select"
+msgstr ""
+
+msgid "Pulloff"
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+msgid "VIP Level"
+msgstr ""
+
+msgid "VIP Price"
+msgstr ""
+
+msgid "VIP Days"
+msgstr ""
+
+msgid "Forbidden"
+msgstr ""
+
+msgid "Back to home"
+msgstr ""
+
+msgid "Page Not Found"
+msgstr ""
+
+msgid "Logout Successfully"
+msgstr ""
+
+msgid "Delete Successfully"
+msgstr ""
+
+msgid "Delete Faile"
+msgstr ""
+
+msgid "Please first select the items you want to delete"
+msgstr ""
+
+msgid "Upload Successfully"
+msgstr ""
+
+msgid "Failed to upload files."
+msgstr ""
+
+msgid "Copy Successfully"
+msgstr ""
+
+msgid "Copy Failed"
+msgstr ""
+
+msgid "Overview"
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "Today's registration count"
+msgstr ""
+
+msgid "Online user count"
+msgstr ""
+
+msgid "Files"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Admin Logs"
+msgstr ""
+
+msgid "Favorite Menu"
+msgstr ""
+
+msgid "Administrator Name"
+msgstr ""
+
+msgid "Operated Page"
+msgstr ""
+
+msgid "Log Title"
+msgstr ""
+
+msgid "IP Address"
+msgstr ""
+
+msgid "Operation Time"
+msgstr ""
+
+msgid "Group Id"
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Nickname"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Avatar"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Mobile Number"
+msgstr ""
+
+msgid "Login Failure Count"
+msgstr ""
+
+msgid "Login Time"
+msgstr ""
+
+msgid "Login IP"
+msgstr ""
+
+msgid "Session Token"
+msgstr ""
+
+msgid "Leave blank for no modification"
+msgstr ""
+
+msgid "Parent Group"
+msgstr ""
+
+msgid "Group Name"
+msgstr ""
+
+msgid "Rule IDs"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Menu"
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "PARENT ID"
+msgstr ""
+
+msgid "From Addon"
+msgstr ""
+
+msgid "Route Name"
+msgstr ""
+
+msgid "Url_Path"
+msgstr ""
+
+msgid "Icon"
+msgstr ""
+
+msgid "Menutype"
+msgstr ""
+
+msgid "Addtabs"
+msgstr ""
+
+msgid "Blank"
+msgstr ""
+
+msgid "Dialog"
+msgstr ""
+
+msgid "Ajax"
+msgstr ""
+
+msgid "Extend"
+msgstr ""
+
+msgid "Weigh"
+msgstr ""
+
+msgid "Createtime"
+msgstr ""
+
+msgid "Updatetime"
+msgstr ""
+
+msgid "GeneralCategory"
+msgstr ""
+
+msgid "Physical Path"
+msgstr ""
+
+msgid "File Name"
+msgstr ""
+
+msgid "File Size"
+msgstr ""
+
+msgid "MIME Type"
+msgstr ""
+
+msgid "Passthrough Data"
+msgstr ""
+
+msgid "Storage Location"
+msgstr ""
+
+msgid "SHA1 Hash of the File"
+msgstr ""
+
+msgid "General Attachmentcol"
+msgstr ""
+
+msgid "Thumbnail"
+msgstr ""
+
+msgid "Please enter the same password as above"
+msgstr ""
+
+msgid "Please enter a valid email address"
+msgstr ""
+
+msgid "Please Accept This Plain Text"
+msgstr ""
+
+msgid "Back to Home"
+msgstr ""
+
+msgid "Sign In"
+msgstr ""
+
+msgid "Email Address"
+msgstr ""
+
+msgid "Please Input Your Email"
+msgstr ""
+
+msgid "Please Input Your password"
+msgstr ""
+
+msgid "Show Password"
+msgstr ""
+
+msgid "Captcha"
+msgstr ""
+
+msgid "Please Input Captcha"
+msgstr ""
+
+msgid "Change Captcha"
+msgstr ""
+
+msgid "Remember me"
+msgstr ""
+
+msgid "Parent ID"
+msgstr ""
+
+msgid "GeneralCategory Type"
+msgstr ""
+
+msgid "Config Group"
+msgstr ""
+
+msgid "Variable Name"
+msgstr ""
+
+msgid "Variable Title"
+msgstr ""
+
+msgid "Variable Description"
+msgstr ""
+
+msgid "Visibility Condition"
+msgstr ""
+
+msgid "Variable Value"
+msgstr ""
+
+msgid "Related Table"
+msgstr ""
+
+msgid "Select a Related Table"
+msgstr ""
+
+msgid "Array Options"
+msgstr ""
+
+msgid "Data"
+msgstr ""
+
+msgid "Validation Rule"
+msgstr ""
+
+msgid "Select Rule"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "Required"
+msgstr ""
+
+msgid "required"
+msgstr ""
+
+msgid "Digits"
+msgstr ""
+
+msgid "digits"
+msgstr ""
+
+msgid "Letters"
+msgstr ""
+
+msgid "letters"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "date"
+msgstr ""
+
+msgid "time"
+msgstr ""
+
+msgid "email"
+msgstr ""
+
+msgid "Website"
+msgstr ""
+
+msgid "url"
+msgstr ""
+
+msgid "QQ Number"
+msgstr ""
+
+msgid "qq"
+msgstr ""
+
+msgid "ID Card"
+msgstr ""
+
+msgid "IDcard"
+msgstr ""
+
+msgid "Landline Phone"
+msgstr ""
+
+msgid "tel"
+msgstr ""
+
+msgid "Mobile Phone"
+msgstr ""
+
+msgid "mobile"
+msgstr ""
+
+msgid "Postal Code"
+msgstr ""
+
+msgid "zipcode"
+msgstr ""
+
+msgid "Chinese Characters"
+msgstr ""
+
+msgid "chinese"
+msgstr ""
+
+msgid "username"
+msgstr ""
+
+msgid "password"
+msgstr ""
+
+msgid "Extended Attributes"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Group"
+msgstr ""
+
+msgid "Type: string, text, int, bool, array, datetime, date, file"
+msgstr ""
+
+msgid "Variable Dictionary Data"
+msgstr ""
+
+msgid "Copy Variate"
+msgstr ""
+
+msgid "Delete Variate"
+msgstr ""
+
+msgid "Clear All Caches"
+msgstr ""
+
+msgid "Profile"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "Search for documents..."
+msgstr ""
+
+msgid "Search results"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Generals"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Config"
+msgstr ""
+
+msgid "Attachment Image"
+msgstr ""
+
+msgid "Attachment File"
+msgstr ""
+
+msgid "Addon"
+msgstr ""
+
+msgid "Auth"
+msgstr ""
+
+msgid "Admin Manage"
+msgstr ""
+
+msgid "Admin Group"
+msgstr ""
+
+msgid "Admin Rule"
+msgstr ""
+
+msgid "Admin Log"
+msgstr ""
+
+msgid "User Manage"
+msgstr ""
+
+msgid "User Group"
+msgstr ""
+
+msgid "User Rule"
+msgstr ""
+
+msgid "User Balance Log"
+msgstr ""
+
+msgid "User Score Log"
+msgstr ""
+
+msgid "Demo"
+msgstr ""
+
+msgid "Genarator"
+msgstr ""
+
+msgid "User Recharge Order"
+msgstr ""
+
+msgid "Group ID"
+msgstr ""
+
+msgid "Mobile Phone Number"
+msgstr ""
+
+msgid "Level"
+msgstr ""
+
+msgid "Gender"
+msgstr ""
+
+msgid "Date of Birth"
+msgstr ""
+
+msgid "Motto"
+msgstr ""
+
+msgid "Balance"
+msgstr ""
+
+msgid "Points"
+msgstr ""
+
+msgid "Consecutive Login Days"
+msgstr ""
+
+msgid "Maximum Consecutive Login Days"
+msgstr ""
+
+msgid "Previous Login Time"
+msgstr ""
+
+msgid "Login IP Address"
+msgstr ""
+
+msgid "Failed Login Attempts"
+msgstr ""
+
+msgid "Joining IP Address"
+msgstr ""
+
+msgid "Verification"
+msgstr ""
+
+msgid "Token"
+msgstr ""
+
+msgid "Change in Balance"
+msgstr ""
+
+msgid "Balance Before Change"
+msgstr ""
+
+msgid "Balance After Change"
+msgstr ""
+
+msgid "Memo/Note"
+msgstr ""
+
+msgid "Permission Nodes"
+msgstr ""
+
+msgid "Trade No"
+msgstr ""
+
+msgid "User ID"
+msgstr ""
+
+msgid "amount"
+msgstr ""
+
+msgid "Pay Amount"
+msgstr ""
+
+msgid "Transaction_Id"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid "Pay Time"
+msgstr ""
+
+msgid "IP"
+msgstr ""
+
+msgid "UserAgent"
+msgstr ""
+
+msgid "Memo"
+msgstr ""
+
+msgid "Created"
+msgstr ""
+
+msgid "Paid"
+msgstr ""
+
+msgid "Expired"
+msgstr ""
+
+msgid "Creation Time "
+msgstr ""
+
+msgid "Url Path"
+msgstr ""
+
+msgid "Change in Scores"
+msgstr ""
+
+msgid "Points Before Change"
+msgstr ""
+
+msgid "Points After Change"
+msgstr ""
+
+msgid "User Center"
+msgstr ""
+
+msgid "Score"
+msgstr ""
+
+msgid "Your Files And Images"
+msgstr ""
+
+msgid "Balance Logs"
+msgstr ""
+
+msgid "Credits Log"
+msgstr ""
+
+msgid "Forgot password"
+msgstr ""
+
+msgid "Enter your email address and your password will be reset and emailed to you."
+msgstr ""
+
+msgid "Email address"
+msgstr ""
+
+msgid " Enter email"
+msgstr ""
+
+msgid "Send me new password"
+msgstr ""
+
+msgid "Don't have an account yet?"
+msgstr ""
+
+msgid "Sign up"
+msgstr ""
+
+msgid "An error occurred"
+msgstr ""
+
+msgid "Sign in"
+msgstr ""
+
+msgid "Username, phone number, or email is required"
+msgstr ""
+
+msgid "Please enter at least 3 characters"
+msgstr ""
+
+msgid "Password is required"
+msgstr ""
+
+msgid "Password must be at least 6 characters long"
+msgstr ""
+
+msgid "Please accept this terms"
+msgstr ""
+
+msgid "Login to your account"
+msgstr ""
+
+msgid "Account"
+msgstr ""
+
+msgid "your username, phone number, or email"
+msgstr ""
+
+msgid "I forgot password"
+msgstr ""
+
+msgid "Your password"
+msgstr ""
+
+msgid " Show password"
+msgstr ""
+
+msgid "or"
+msgstr ""
+
+msgid "Login with Github"
+msgstr ""
+
+msgid "Login with X"
+msgstr ""
+
+msgid "Dont have an account yet?"
+msgstr ""
+
+msgid "Register"
+msgstr ""
+
+msgid "Email is required"
+msgstr ""
+
+msgid "Mobile number is required"
+msgstr ""
+
+msgid "Mobile number must be at least 10 digits"
+msgstr ""
+
+msgid "Username is required"
+msgstr ""
+
+msgid "Create your account"
+msgstr ""
+
+msgid "Enter your username"
+msgstr ""
+
+msgid "your@email.com"
+msgstr ""
+
+msgid "Your mobile number"
+msgstr ""
+
+msgid "Show password"
+msgstr ""
+
+msgid "I accept the terms and conditions"
+msgstr ""
+
+msgid "Already have an account?"
+msgstr ""
+
+msgid "Log in"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "User Dashboard"
+msgstr ""
+
+msgid "Balance Log"
+msgstr ""
+
+msgid "Score Log"
+msgstr ""
+
+msgid "User Recharge"
+msgstr ""
+
+msgid "Files And Images"
+msgstr ""
+
