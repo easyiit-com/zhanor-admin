@@ -154,6 +154,12 @@ def create_app(test_config=None):
         """404错误处理"""
         logger.error("页面未找到: %s", request.path)
         return render_template("404.jinja2", e=e), 404
+    
+    @app.errorhandler(500)
+    def internal_error(e):
+        """404错误处理"""
+        logger.error("运行错误: %s", request.path)
+        return render_template("500.jinja2", e=e), 500
 
     @app.errorhandler(403)
     def forbidden(e):
@@ -162,6 +168,12 @@ def create_app(test_config=None):
             return Response.error(code=403, msg="未经授权的访问")
         else:
             return render_template("403.jinja2", e=e), 403
+   
+    @app.errorhandler(Exception)
+    def handle_exception(e):
+        # 捕获所有未处理的异常
+        return redirect(url_for('error_page'))
+
 
     @login_manager.unauthorized_handler
     def unauthorized():
@@ -351,6 +363,9 @@ def create_app(test_config=None):
             ),
         )
         return global_val
+    @app.route('/error')
+    def error_page():
+        return render_template('error.jinja2'), 500  # 自定义错误页面
 
     # 设置主页视图
     app.add_url_rule(
@@ -418,24 +433,19 @@ def load_plugin_apis(api, plugin):
             except Exception as e:
                 logger.error(f"处理模块 {module_path} 时发生错误: {e}")
 def register_blueprints(app):
-    """注册蓝图"""
-    views_base_path = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "app", "views")
-    )
+    views_base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "app", "views"))
     for root, dirs, files in os.walk(views_base_path):
         relative_root = os.path.relpath(root, views_base_path)
         for file in files:
             if file.endswith(".py") and file != "__init__.py":
-                module_path = (
-                    "app.views."
-                    + ("." + relative_root).lstrip(".")
-                    + "."
-                    + os.path.splitext(file)[0]
-                )
+                module_path = "app.views." + ("." + relative_root).lstrip(".") + "." + os.path.splitext(file)[0]
                 module = importlib.import_module(module_path)
                 bp = getattr(module, "bp", None)
                 if bp is not None:
+                    # app.register_blueprint(bp, url_prefix=f"/ccw{bp.url_prefix}")
                     app.register_blueprint(bp)
+
+                    
 
 
 def create_plugin_models(plugin_dir):
