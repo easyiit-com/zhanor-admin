@@ -171,7 +171,8 @@ def create_app(test_config=None):
    
     @app.errorhandler(Exception)
     def handle_exception(e):
-        # 捕获所有未处理的异常
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return Response.error(code=500, msg=f"Some Error:{e}")
         return redirect(url_for('error_page'))
 
 
