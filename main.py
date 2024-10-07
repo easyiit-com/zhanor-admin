@@ -171,10 +171,13 @@ def create_app(test_config=None):
    
     @app.errorhandler(Exception)
     def handle_exception(e):
+        if Config.DEBUG:
+            return Response.error(code=500, msg=f"Some Error: {e}")
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-            return Response.error(code=500, msg=f"Some Error:{e}")
+            return Response.error(code=500, msg=f"Some Error: {e}")
         return redirect(url_for('error_page'))
 
+    
 
     @login_manager.unauthorized_handler
     def unauthorized():
