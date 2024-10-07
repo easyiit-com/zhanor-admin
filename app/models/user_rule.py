@@ -9,18 +9,22 @@ from app.core.db import db
 class UserRule(Base):
     __tablename__ = 'user_rule'
     id = db.Column(db.Integer, primary_key=True, nullable=False,comment='ID') 
-    pid = db.Column(db.Integer, nullable=False,comment='Parent ID') 
     type = db.Column(db.Enum('menu', 'action'), nullable=False,comment='Type') 
-    name = db.Column(db.String(100), nullable=False,comment='Route Name') 
-    url_path = db.Column(db.String(150), nullable=False,comment='Url Path') 
+    pid = db.Column(db.Integer, nullable=False,comment='PARENT ID') 
+    addon = db.Column(db.SmallInteger, nullable=False,comment='From Addon') 
+    name = db.Column(db.String(150), nullable=False,comment='Route Name') 
+    url_path = db.Column(db.String(50), nullable=False,comment='Url_Path') 
     title = db.Column(db.String(50), nullable=False,comment='Title') 
-    icon = db.Column(db.String(45),comment='Icon') 
-    description = db.Column(db.String(100),comment='Description') 
-    createtime = db.Column(db.DateTime,comment='Creation Time') 
-    updatetime = db.Column(db.DateTime,comment='Update Time') 
-    weigh = db.Column(db.Integer,comment='Weight') 
-    status = db.Column(db.Enum('normal', 'hidden'), default = 'normal' ,comment='Status') 
+    description = db.Column(db.String(500),comment='Description') 
+    icon = db.Column(db.String(50),comment='Icon') 
+    menutype = db.Column(db.Enum('addtabs', 'blank', 'dialog', 'ajax'),comment='Menutype') 
+    extend = db.Column(db.String(255),comment='Extend') 
     model_name = db.Column(db.String(50), nullable=False,comment='Model Name') 
+    createtime = db.Column(db.DateTime,comment='Createtime') 
+    updatetime = db.Column(db.DateTime,comment='Updatetime') 
+    weigh = db.Column(db.Integer, nullable=False,comment='Weigh') 
+    status = db.Column(db.Enum('normal', 'hidden'),server_default='normal', nullable=False,comment='Status') 
+
 
 
 

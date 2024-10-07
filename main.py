@@ -38,6 +38,7 @@ from app.core.base import Base
 from app.models.user import User
 from app.models.user_rule import UserRule
 from app.utils import languages
+from app.utils.defs import now
 from app.utils.logger import logger
 
 from app.core.user.login import current_user
@@ -78,6 +79,7 @@ def create_app(test_config=None):
     # 初始化Babel和CSRF
     babel = Babel(app, locale_selector=get_locale)
     csrf.init_app(app)
+    jwt = JWTManager(app)
 
     # 管理员和用户登录管理
     admin_login_manager.init_app(app)
@@ -105,7 +107,7 @@ def create_app(test_config=None):
             else None
         )
 
-        if request.method == "POST":
+        if request.method == "POST" and  request.path.startswith('/admin'):
             log_request_data()
 
     def log_request_data():
@@ -123,17 +125,18 @@ def create_app(test_config=None):
 
             if g.user:
                 admin_log = AdminLog(
-                    admin_id=g.user.id,
-                    username=g.user.name,
+                    admin_id=g.admin.id,
+                    username=g.admin.name,
                     url=full_url,
                     title=route_name,
                     content=content_str,
                     ip=request.remote_addr,
                     useragent=user_agent,
-                    createtime=datetime.utcnow(),
+                    createtime=now(),
                 )
-                db.session.add(admin_log)
-                db.session.commit()
+                db_session = db.get_db()
+                db_session.add(admin_log)
+                db_session.commit()
                 print(f"请求的JSON数据（已序列化）: {content_str}")
         except Exception as e:
             logger.error(f"处理请求时发生错误: {e}")
@@ -246,8 +249,32 @@ def create_app(test_config=None):
                         status=item["status"],
                     )
                     plugin_admin_rules.append(admin_rule)
-                user_rule = loaded_data.get("user_menu", [])
-                plugin_user_rules.extend(user_rule)
+                user_menu = loaded_data.get("user_menu", [])
+                for item in user_menu:
+                    user_rule = UserRule(
+                        id=item["id"],
+                        pid=item["pid"],
+                        type=item["type"],
+                        addon=1,  # 假设从插件来的 addon 值
+                        name=item["name"],
+                        url_path=item["url_path"],
+                        title=item["title"],
+                        description=item.get("description", ""),
+                        icon=item.get("icon", ""),
+                        menutype=item.get("menutype", ""),
+                        extend=item.get("extend", ""),
+                        model_name="plugin",  # 假设模型名称
+                        createtime=datetime.strptime(
+                            item["createtime"], "%Y-%m-%d %H:%M:%S"
+                        ),
+                        updatetime=datetime.strptime(
+                            item["updatetime"], "%Y-%m-%d %H:%M:%S"
+                        ),
+                        weigh=item["weigh"],
+                        status=item["status"],
+                    )
+                    plugin_user_rules.append(user_rule)
+                    
             except Exception as e:
                 logger.error(
                     f"scan_plugins_folder====>导入插件菜单:{module_name} 捕获错误：{e}"
@@ -296,23 +323,19 @@ def create_app(test_config=None):
 
         admin_rules = get_admin_rules()
         admin_rules.extend(plugin_admin_rules)
-
-        user_rules = get_user_rules()
-        # user_rules.extend(plugin_user_rules)
-        organized_user_rules = organize_user_rules(user_rules)
-        admin_rules_all = get_admin_rules_all()
         organized_admin_rules = organize_admin_rules(admin_rules)
 
+        user_rules = get_user_rules()
+        user_rules.extend(plugin_user_rules)
+        organized_user_rules = organize_user_rules(user_rules)
+        
         global_val = dict(
             title="zhanor",
             get_timestamp=get_timestamp(),
             configs=get_general_configs(),
             all_languages=languages,
             admin_rules=organized_admin_rules,
-            admin_rules_all=admin_rules_all,
             user_rules=organized_user_rules,
-            user_rules_query=get_user_rules_query(),
-            user_rules_all=get_user_rules_all(),
             admin=g.admin,
             user=g.user,
             breadcrumbs=process_breadcrumbs(),
@@ -463,49 +486,16 @@ def get_admin_rules():
         .all()
     )
     return admin_rules
-
-
-def get_admin_rules_all():
-    """获取全部管理员规则。"""
-    admin_rules_all = AdminRule.query.filter(AdminRule.status == "normal").order_by(
-        AdminRule.id.asc()
-    )
-    return admin_rules_all
-
-
+ 
 def get_user_rules():
     """获取用户规则。"""
-    user_rules = UserRule.query.filter_by(pid=0, type="menu", status="normal").order_by(UserRule.id.asc()).all()
+    user_rules = (
+        UserRule.query.filter_by(type="menu", status="normal")
+        .order_by(UserRule.id.asc())
+        .all()
+    )
     return user_rules
-
-
-def get_user_rules_query():
-    """获取用户规则_query。"""
-    user_rules_query = (
-        UserRule.query.filter(
-            UserRule.pid == 0,
-            UserRule.type == "menu",
-            UserRule.status == "normal",
-        )
-        .order_by(UserRule.id.asc())
-        .all()
-    )
-    return user_rules_query
-
-
-def get_user_rules_all():
-    """获取全部用户规则。"""
-    user_rules_all = (
-        UserRule.query.filter(
-            UserRule.pid == 0,
-            UserRule.type == "menu",
-            UserRule.status == "normal",
-        )
-        .order_by(UserRule.id.asc())
-        .all()
-    )
-    return user_rules_all
-
+ 
 
 def process_breadcrumbs():
     """处理面包屑路径。"""

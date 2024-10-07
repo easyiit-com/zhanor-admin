@@ -15,6 +15,7 @@ from flask import has_app_context
 from flask import redirect
 from flask import request
 from flask import session
+from flask_jwt_extended import JWTManager
 
 from .config import AUTH_HEADER_NAME
 from .config import COOKIE_DURATION
@@ -125,6 +126,8 @@ class LoginManager:
         """
         app.login_manager = self
         app.after_request(self._update_remember_cookie)
+
+        jwt = JWTManager()
 
         if add_context_processor:
             app.context_processor(_user_context_processor)

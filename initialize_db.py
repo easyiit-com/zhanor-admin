@@ -9,6 +9,7 @@ from app.models.admin_rule import AdminRule
 from app.models.general_category import GeneralCategory
 from app.core.base import Base
 from app.models import *
+from app.models.general_config import GeneralConfig
 from app.models.user import User
 from app.models.user_group import UserGroup
 from app.models.user_rule import UserRule

@@ -12,8 +12,7 @@ def get_db():
     return g.db
 
 def get_db_engine():
-    if "db" not in g:
-        # 使用Flask-SQLAlchemy的全局db实例进行连接
+    if "engine" not in g:  # 改为检查 "engine"
         g.engine = db.engine
 
     return g.engine

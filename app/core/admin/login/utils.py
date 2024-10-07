@@ -45,7 +45,7 @@ def decode_admin_cookie(cookie, key=None):
     if hmac.compare_digest(_admin_cookie_digest(payload, key=key), digest):
         return payload
 
-def make_next_param(login_admin_url, current_url):
+def admin_make_next_param(login_admin_url, current_url):
     """
     从给定URL中减少方案和主机，以便更有效地传递到给定的`login` URL。
 
@@ -61,7 +61,7 @@ def make_next_param(login_admin_url, current_url):
         return urlunsplit(("", "", c_url.path, c_url.query, ""))
     return current_url
 
-def expand_login_view(login_view):
+def admin_expand_login_view(login_view):
     """
     返回登录视图的URL，如果需要则将视图名称扩展为URL。
 
@@ -81,14 +81,14 @@ def login_admin_url(login_view, next_url=None, next_field="next"):
     :param next_url: 给登录视图的重定向URL。
     :param next_field: 存储下一个URL的字段。默认为``next``。
     """
-    base = expand_login_view(login_view)
+    base = admin_expand_login_view(login_view)
 
     if next_url is None:
         return base
 
     parsed_result = urlsplit(base)
     md = parse_qs(parsed_result.query, keep_blank_values=True)
-    md[next_field] = make_next_param(base, next_url)
+    md[next_field] = admin_make_next_param(base, next_url)
     netloc = current_app.config.get("FORCE_HOST_FOR_REDIRECTS") or parsed_result.netloc
     parsed_result = parsed_result._replace(
         netloc=netloc, query=urlencode(md, doseq=True)
@@ -129,14 +129,14 @@ def login_admin(admin, remember=False, duration=None, force=False, fresh=True):
 
     admin_id = getattr(admin, current_app.admin_login_manager.id_attribute)()
     session["_admin_id"] = admin_id
-    session["_fresh"] = fresh
-    session["_id"] = current_app.admin_login_manager._session_identifier_generator()
+    session["_admin_fresh"] = fresh
+    session["_admin_session_id"] = current_app.admin_login_manager._session_identifier_generator()
 
     if remember:
-        session["_remember"] = "set"
+        session["__admin_remember"] = "set"
         if duration is not None:
             try:
-                session["_remember_seconds"] = (
+                session["_admin_remember_seconds"] = (
                     duration.microseconds
                     + (duration.seconds + duration.days * 24 * 3600) * 10**6
                 ) / 10.0**6
@@ -159,16 +159,16 @@ def logout_admin():
         session.pop("_admin_id")
 
     if "_fresh" in session:
-        session.pop("_fresh")
+        session.pop("_admin_fresh")
 
     if "_id" in session:
-        session.pop("_id")
+        session.pop("_admin_session_id")
 
     cookie_name = current_app.config.get("REMEMBER_COOKIE_NAME", ADMIN_COOKIE_NAME)
     if cookie_name in request.cookies:
-        session["_remember"] = "clear"
-        if "_remember_seconds" in session:
-            session.pop("_remember_seconds")
+        session["_admin_remember"] = "clear"
+        if "_admin_remember_seconds" in session:
+            session.pop("_admin_remember_seconds")
 
     admin_logged_out.send(current_app._get_current_object(), admin=admin)
 
@@ -179,8 +179,8 @@ def confirm_admin_login():
     """
     将当前会话设置为新鲜。会话在从cookie重新加载时变得过时。
     """
-    session["_fresh"] = True
-    session["_id"] = current_app.admin_login_manager._session_identifier_generator()
+    session["_admin_fresh"] = True
+    session["_admin_id"] = current_app.admin_login_manager._session_identifier_generator()
     admin_login_confirmed.send(current_app._get_current_object())
 
 def admin_required(func):
@@ -219,7 +219,7 @@ def admin_fresh_login_required(func):
 
     return decorated_view
 
-def set_login_view(login_view, blueprint=None):
+def set_admin_login_view(login_view, blueprint=None):
     """
     设置应用或蓝图的登录视图。如果传递蓝图，则登录视图设置为此蓝图上的``blueprint_login_views``。
 
@@ -258,7 +258,7 @@ def _admin_cookie_digest(payload, key=None):
         key = current_app.secret_key
     return hmac.new(key.encode("utf-8"), payload.encode("utf-8"), hashlib.sha256).hexdigest()
 
-def _get_remote_addr():
+def _get_admin_remote_addr():
     # 获取客户端的IP地址
     address = request.headers.get("X-Forwarded-For", request.remote_addr)
     if address is not None:
@@ -273,7 +273,7 @@ def _create_admin_identifier():
     if admin_agent is not None:
         admin_agent = admin_agent.encode("utf-8")
     # 创建标识符，由IP地址和用户代理信息组成
-    base = f"{_get_remote_addr()}|{admin_agent}"
+    base = f"{_get_admin_remote_addr()}|{admin_agent}"
     if str is bytes:
         base = str(base, "utf-8", errors="replace")  # pragma: no cover
     h = sha512()

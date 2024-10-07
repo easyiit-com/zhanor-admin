@@ -51,8 +51,8 @@ from .utils import admin_required  # 登录必需的装饰器
 from .utils import login_admin_url  # 登录URL函数
 from .utils import login_admin  # 管理员登录函数
 from .utils import logout_admin  # 管理员登出函数
-from .utils import make_next_param  # 创建下一个参数函数
-from .utils import set_login_view  # 设置登录视图函数
+from .utils import admin_make_next_param  # 创建下一个参数函数
+from .utils import set_admin_login_view  # 设置登录视图函数
 
 # 定义模块的公开接口
 __all__ = [
@@ -91,8 +91,8 @@ __all__ = [
     "login_admin_url",  # 登录URL函数
     "login_admin",  # 管理员登录函数
     "logout_admin",  # 管理员登出函数
-    "make_next_param",  # 创建下一个参数函数
-    "set_login_view",  # 设置登录视图函数
+    "admin_make_next_param",  # 创建下一个参数函数
+    "set_admin_login_view",  # 设置登录视图函数
 ]
 
 # 处理动态属性访问

@@ -2,8 +2,10 @@
 {% extends "admin/layout/default.jinja2" %}
 
 {% block javascript %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js?v={{configs.basic.version}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js?v={{configs.basic.version}}"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js?v={{configs.basic.version}}"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js?v={{configs.basic.version}}"></script>
 <script src="/static/assets/js/backend/admin_group.js"></script>
 <script src="/static/assets/js/backend/upload.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.0.0/tinymce.min.js"
@@ -17,42 +19,42 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-                    <script>   
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const input = document.getElementById("createtime");
-                            let initialDate;
-                            const existingValue = input.value.trim();
-                            if (existingValue !== "") {
-                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
-                            } else {
-                                initialDate = new Date();
-                            }
-                            flatpickr("#createtime", {
-                                enableTime: true,
-                                dateFormat: "Y-m-d H:i:s",
-                                defaultDate: initialDate
-                            });
-                        }); 
-                    </script>
-                    
-                    <script>   
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const input = document.getElementById("updatetime");
-                            let initialDate;
-                            const existingValue = input.value.trim();
-                            if (existingValue !== "") {
-                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
-                            } else {
-                                initialDate = new Date();
-                            }
-                            flatpickr("#updatetime", {
-                                enableTime: true,
-                                dateFormat: "Y-m-d H:i:s",
-                                defaultDate: initialDate
-                            });
-                        }); 
-                    </script>
-                    
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("createtime");
+        let initialDate;
+        const existingValue = input.value.trim();
+        if (existingValue !== "") {
+            initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+        } else {
+            initialDate = new Date();
+        }
+        flatpickr("#createtime", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i:s",
+            defaultDate: initialDate
+        });
+    }); 
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("updatetime");
+        let initialDate;
+        const existingValue = input.value.trim();
+        if (existingValue !== "") {
+            initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+        } else {
+            initialDate = new Date();
+        }
+        flatpickr("#updatetime", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i:s",
+            defaultDate: initialDate
+        });
+    }); 
+</script>
+
 
 <script>
     var currentButton = undefined;
@@ -63,16 +65,16 @@
         submitHandler: function (form) {
             var buttonText = currentButton.text();
             currentButton.prop("disabled", true).html("{{_('Please wait')}}");
-            var formData = $('#admin_group_form').serializeArray(); 
-            var jsonData = {}; 
-            formData.forEach(function(item) {jsonData[item.name] = item.value;}); 
+            var formData = $('#admin_group_form').serializeArray();
+            var jsonData = {};
+            formData.forEach(function (item) { jsonData[item.name] = item.value; });
             var type = currentButton.data('type');
 
             $.ajax({
                 type: "POST",
                 url: "/admin/admin/group/save",
                 data: JSON.stringify(jsonData),
-                contentType: 'application/json;charset=utf-8', 
+                contentType: 'application/json;charset=utf-8',
                 processData: false,
                 success: function (data) {
                     toastr.options.timeOut = 200;
@@ -121,38 +123,47 @@
 {% endblock javascript %}
 {% block content %}
 <!-- Page body -->
-<div class="page-body pt-6">
+<div class="page-body pt-6888">
     <div class="container-fluid px-4">
         <div class="row">
             <div class="col-md-5 mx-auto">
                 <form id="admin_group_form" method="post" action>
                     <div class="mb-[20px]">
-    <label class="form-label" for="pid" required>{{_('Parent Group')}}</label>
-   <select id="pid" class="form-select ajax" data-model="admin_group" data-title="name" data-value="{{value.pid}}" name="pid">
-  <option value='0' selected>{{_('Pealse Select')}}</option>
+                        <label class="form-label" for="pid" required>{{_('Parent Group')}}</label>
+                        <select id="pid" class="form-select ajax" data-model="admin_group" data-title="name"
+                            data-value="{{value.pid}}" name="pid">
+                            <option value='0' selected>{{_('Pealse Select')}}</option>
 
-</select>  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="name" required>{{_('Group Name')}}</label>
-   <input class="form-control" type="text" id="name" name="name"  value="{{value.name}}" placeholder="{{_('Group Name')}}"  maxlength = 100 required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="rules" required>{{_('Rule IDs')}}</label>
-   <input class="form-control" type="text" id="rules" name="rules"  value="{{value.rules}}" placeholder="{{_('Rule IDs')}}"  maxlength = 500 required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="status" required>{{_('Status')}}</label>
-   <select id="status" type="text" class="form-select" name="status">
-  <option value>{{_('Pealse Select')}}</option>
- {% if value.status %}
-  <option value="normal" {% if value.status=='normal' %} selected {% endif %}>{{_('Normal')}}</option>
-  <option value="hidden" {% if value.status=='hidden' %} selected {% endif %}>{{_('Hidden')}}</option>
- {% else %}
-  <option value="normal" {% if 'normal'=='normal' %} selected {% endif %}>{{_('Normal')}}</option>
-  <option value="hidden" {% if 'normal'=='hidden' %} selected {% endif %}>{{_('Hidden')}}</option>
- {% endif %}
+                        </select>
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="name" required>{{_('Group Name')}}</label>
+                        <input class="form-control" type="text" id="name" name="name" value="{{value.name}}"
+                            placeholder="{{_('Group Name')}}" maxlength=100 required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="rules" required>{{_('Rule IDs')}}</label>
+                        <input class="form-control" type="text" id="rules" name="rules" value="{{value.rules}}"
+                            placeholder="{{_('Rule IDs')}}" maxlength=500 required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="status" required>{{_('Status')}}</label>
+                        <select id="status" type="text" class="form-select" name="status">
+                            <option value>{{_('Pealse Select')}}</option>
+                            {% if value.status %}
+                            <option value="normal" {% if value.status=='normal' %} selected {% endif %}>{{_('Normal')}}
+                            </option>
+                            <option value="hidden" {% if value.status=='hidden' %} selected {% endif %}>{{_('Hidden')}}
+                            </option>
+                            {% else %}
+                            <option value="normal" {% if 'normal'=='normal' %} selected {% endif %}>{{_('Normal')}}
+                            </option>
+                            <option value="hidden" {% if 'normal'=='hidden' %} selected {% endif %}>{{_('Hidden')}}
+                            </option>
+                            {% endif %}
 
-</select>  </div>
+                        </select>
+                    </div>
 
                     <div class="d-flex justify-content-between">
                         <button type="submit" form="admin_group_form" data-type="submit"

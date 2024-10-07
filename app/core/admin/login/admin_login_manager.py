@@ -40,9 +40,9 @@ from .utils import _create_admin_identifier
 from .utils import _admin_context_processor
 from .utils import decode_admin_cookie
 from .utils import encode_admin_cookie
-from .utils import expand_login_view
+from .utils import admin_expand_login_view
 from .utils import login_admin_url as make_login_url
-from .utils import make_next_param
+from .utils import admin_make_next_param
 from app.utils.logger import logger
 
 class AdminLoginManager:
@@ -170,9 +170,9 @@ class AdminLoginManager:
 
         config = current_app.config
         if config.get("USE_SESSION_FOR_NEXT", ADMIN_USE_SESSION_FOR_NEXT):
-            login_url = expand_login_view(login_view)
+            login_url = admin_expand_login_view(login_view)
             session["_id"] = self._session_identifier_generator()
-            session["next"] = make_next_param(login_url, request.url)
+            session["next"] = admin_make_next_param(login_url, request.url)
             redirect_url = make_login_url(login_view)
         else:
             redirect_url = make_login_url(login_view, next_url=request.url)
@@ -269,9 +269,9 @@ class AdminLoginManager:
 
         config = current_app.config
         if config.get("USE_SESSION_FOR_NEXT", ADMIN_USE_SESSION_FOR_NEXT):
-            login_url = expand_login_view(self.refresh_view)
+            login_url = admin_expand_login_view(self.refresh_view)
             session["_id"] = self._session_identifier_generator()
-            session["next"] = make_next_param(login_url, request.url)
+            session["next"] = admin_make_next_param(login_url, request.url)
             redirect_url = make_login_url(self.refresh_view)
         else:
             login_url = self.refresh_view
