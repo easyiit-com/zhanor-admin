@@ -89,7 +89,7 @@
 {% endblock javascript %}
 {% block content %}
 <div class="page page-center">
-    <div class="container container-tight py-4">
+    <div class="container container-tight py-4 max-w-[800px]">
         <div class="text-center mb-4">
             <a href="." class="navbar-brand navbar-brand-autodark">
                 <img src="/static/assets/img/user/logo.svg" height="80" alt="Logo">
@@ -97,7 +97,7 @@
         </div>
         <div class="card card-md">
             <div class="card-body">
-                <h2 class="h2 text-center mb-4">{{_("Login to your account")}}</h2>
+                <h2 class="h2 text-center mb-2">{{_("Login to your account")}}</h2>
                 <form id="user_login_form" action="./" method="POST" autocomplete="off" novalidate>
                     <div class="mb-3">
                         <label class="form-label">{{_("Account")}}</label>
@@ -159,7 +159,7 @@
                 </div>
             </div>
         </div>
-        <div class="text-center text-secondary mt-3"> {{_("Dont have an account yet?")}} <a href="/user/register" tabindex="-1">{{_("Sign up")}}</a></div>
+        <div class="text-center text-secondary my-3"> {{_("Dont have an account yet?")}} <a href="/user/register" tabindex="-1">{{_("Sign up")}}</a></div>
     </div>
 </div>
 {% endblock content %}
