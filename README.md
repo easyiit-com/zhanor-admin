@@ -109,10 +109,10 @@ pip install --upgrade pip setuptools
 
 4.使用包含测试依赖项的方式，以可编辑模式安装项目。
 
-安装项目及测试依赖：
+安装依赖：
 
 ```
-pip install -e ".[testing]"
+pip install -r requirements.txt
 ```
 
 

@@ -52,7 +52,9 @@ def main(argv=None):
         for import_statement in model_class_imports:
             print(import_statement)
     
-
+"""
+默认数据生成工具，生成到当前目录的data.txt文件中
+"""
 
 if __name__ == "__main__":
     main()
