@@ -30,7 +30,7 @@ def add_or_edit_admin_view():
         if not data:
             return Response.error(msg="No JSON data received")
 
-        admin_id = g.user.id
+        admin_id = g.admin.id
         admin = None
         if admin_id:
             admin = (

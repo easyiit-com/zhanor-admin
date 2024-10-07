@@ -20,9 +20,9 @@ for filename in os.listdir(models_dir):
         importlib.import_module(module_name)
 
 
-from app.plugins.vip.models.vip import Vip
-from app.plugins.vip.models.vip_order import VipOrder 
-from app.plugins.vip.models.vip_status import VipStatus
+# from app.plugins.vip.models.vip import Vip
+# from app.plugins.vip.models.vip_order import VipOrder 
+# from app.plugins.vip.models.vip_status import VipStatus
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

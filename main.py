@@ -15,9 +15,8 @@ from flask import (
     render_template,
     request,
     send_from_directory,
-    session,
-    url_for,
-    current_app,
+    url_for, 
+    make_response
 )
 from flask_apispec import FlaskApiSpec
 from flask_babel import Babel
@@ -46,7 +45,7 @@ from app.core.admin.login import current_admin
 from app.core.admin.auth import admin_login_manager
 from app.core.user.auth import login_manager
 from config import Config
-
+from app.core.csrf import csrf
 from flasgger import Swagger
 # from app.plugins.vip.api.v1.vip import ApiVipList
 
@@ -62,8 +61,11 @@ __version__ = get_version()
 
 def get_locale():
     """获取用户的语言偏好"""
-    return request.accept_languages.best_match(["en", "zh"])
-from app.core.csrf import csrf
+    lang = request.cookies.get('language')
+    if lang in Config.LANGUAGES:
+        return lang
+    return request.accept_languages.best_match(Config.LANGUAGES) or Config.BABEL_DEFAULT_LOCALE
+
 
 def create_app(test_config=None):
     """创建并配置Flask应用实例。"""
@@ -77,9 +79,10 @@ def create_app(test_config=None):
     app.config.from_object(Config)
 
     # 初始化Babel和CSRF
-    babel = Babel(app, locale_selector=get_locale)
+    Babel(app, locale_selector=get_locale)
     csrf.init_app(app)
-    jwt = JWTManager(app)
+    JWTManager(app)
+    
 
     # 管理员和用户登录管理
     admin_login_manager.init_app(app)
@@ -331,6 +334,7 @@ def create_app(test_config=None):
         
         global_val = dict(
             title="zhanor",
+            version =__version__ ,
             get_timestamp=get_timestamp(),
             configs=get_general_configs(),
             all_languages=languages,
@@ -352,6 +356,13 @@ def create_app(test_config=None):
     app.add_url_rule(
         "/", endpoint="index", view_func=lambda: render_template("index.jinja2")
     )
+    @app.route('/set_language/<lang>')
+    def set_language(lang):
+        if lang in Config.LANGUAGES:
+            resp = make_response(redirect(request.referrer))
+            resp.set_cookie('language', lang)
+            return resp
+        return redirect(request.referrer)
 
     # 压缩
     Compress(app)

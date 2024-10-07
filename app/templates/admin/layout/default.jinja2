@@ -124,9 +124,15 @@
               </a>
               <div class="dropdown-menu dropdown-menu-end">
                 <div class="flex flex-col">
-                   
+                  <a class="dropdown-item" href="{{ url_for('set_language', lang='en') }}">
+                    English
+                  </a>
+                  <a class="dropdown-item" href="{{ url_for('set_language', lang='zh') }}">
+                    中文
+                  </a>
                 </div>
               </div>
+
             </div>
             <div class="hidden items-center max-lg:flex">
               <a href="/dashboard/user/payment"
@@ -238,7 +244,7 @@
         <div class="container-fluid px-4">
           <div class="row text-center items-center flex-row-reverse">
             <div class="col-lg-auto lg:ms-auto">
-              <p>Version: {{configs.basic.version}}</p>
+              <p>Version: {{version}}</p>
             </div>
             <div class="col-12 col-lg-auto mt-3 mt-lg-0">
               <p>{{configs.basic.copyright|safe}}</p>
