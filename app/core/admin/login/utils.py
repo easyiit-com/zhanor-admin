@@ -158,10 +158,10 @@ def logout_admin():
     if "_admin_id" in session:
         session.pop("_admin_id")
 
-    if "_fresh" in session:
+    if "_admin_fresh" in session:
         session.pop("_admin_fresh")
 
-    if "_id" in session:
+    if "_admin_session_id" in session:
         session.pop("_admin_session_id")
 
     cookie_name = current_app.config.get("REMEMBER_COOKIE_NAME", ADMIN_COOKIE_NAME)
@@ -190,7 +190,7 @@ def admin_required(func):
     """
     @wraps(func)
     def decorated_view(*args, **kwargs):
-        if request.method in ADMIN_EXEMPT_METHODS or current_app.config.get("LOGIN_DISABLED"):
+        if request.method in ADMIN_EXEMPT_METHODS or current_app.config.get("ADMIN_LOGIN_DISABLED"):
             pass
         elif not current_admin.is_authenticated:
             return current_app.admin_login_manager.unauthorized()
@@ -206,7 +206,7 @@ def admin_fresh_login_required(func):
     """
     @wraps(func)
     def decorated_view(*args, **kwargs):
-        if request.method in ADMIN_EXEMPT_METHODS or current_app.config.get("LOGIN_DISABLED"):
+        if request.method in ADMIN_EXEMPT_METHODS or current_app.config.get("ADMIN_LOGIN_DISABLED"):
             pass
         elif not current_admin.is_authenticated:
             return current_app.admin_login_manager.unauthorized()

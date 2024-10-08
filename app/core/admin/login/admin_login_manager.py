@@ -462,34 +462,34 @@ class AdminLoginManager:
         response.delete_cookie(cookie_name, domain=domain, path=path)  # 清除 Cookie
 
     @property
-    def _login_disabled(self):
-        """遗留属性，请使用 app.config['LOGIN_DISABLED'] 代替。"""
+    def _ADMIN_LOGIN_DISABLED(self):
+        """遗留属性，请使用 app.config['ADMIN_LOGIN_DISABLED'] 代替。"""
         import warnings
 
-        # 发出弃用警告，提示用户使用 LOGIN_DISABLED
+        # 发出弃用警告，提示用户使用 ADMIN_LOGIN_DISABLED
         warnings.warn(
-            "'_login_disabled' is deprecated and will be removed in"
-            " Flask-Login 0.7. Use 'LOGIN_DISABLED' in 'app.config'"
+            "'_ADMIN_LOGIN_DISABLED' is deprecated and will be removed in"
+            " Flask-Login 0.7. Use 'ADMIN_LOGIN_DISABLED' in 'app.config'"
             " instead.",
             DeprecationWarning,
             stacklevel=2,
         )
 
         if has_app_context():
-            return current_app.config.get("LOGIN_DISABLED", False)  # 返回登录禁用状态
+            return current_app.config.get("ADMIN_LOGIN_DISABLED", False)  # 返回登录禁用状态
         return False  # 返回 False
 
-    @_login_disabled.setter
-    def _login_disabled(self, newvalue):
-        """遗留属性设置器，请使用 app.config['LOGIN_DISABLED'] 代替。"""
+    @_ADMIN_LOGIN_DISABLED.setter
+    def _ADMIN_LOGIN_DISABLED(self, newvalue):
+        """遗留属性设置器，请使用 app.config['ADMIN_LOGIN_DISABLED'] 代替。"""
         import warnings
 
-        # 发出弃用警告，提示用户使用 LOGIN_DISABLED
+        # 发出弃用警告，提示用户使用 ADMIN_LOGIN_DISABLED
         warnings.warn(
-            "'_login_disabled' is deprecated and will be removed in"
-            " Flask-Login 0.7. Use 'LOGIN_DISABLED' in 'app.config'"
+            "'_ADMIN_LOGIN_DISABLED' is deprecated and will be removed in"
+            " Flask-Login 0.7. Use 'ADMIN_LOGIN_DISABLED' in 'app.config'"
             " instead.",
             DeprecationWarning,
             stacklevel=2,
         )
-        current_app.config["LOGIN_DISABLED"] = newvalue  # 设置登录禁用状态
+        current_app.config["ADMIN_LOGIN_DISABLED"] = newvalue  # 设置登录禁用状态

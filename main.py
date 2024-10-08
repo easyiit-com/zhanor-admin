@@ -157,7 +157,7 @@ def create_app(test_config=None):
     
     @app.errorhandler(500)
     def internal_error(e):
-        """404错误处理"""
+        """500错误处理"""
         logger.error("运行错误: %s", request.path)
         return render_template("500.jinja2", e=e), 500
 

@@ -6,6 +6,11 @@ class Config:
 
     DEBUG = True 
     TESTING = False 
+
+    ADMIN_LOGIN_DISABLED = False
+    ADMIN_LOGIN_STRING='aaa'
+
+    LOGIN_DISABLED = False
     
     SECRET_KEY = 'your_secret_key'
     JWT_SECRET_KEY = 'jwt-secret-key'

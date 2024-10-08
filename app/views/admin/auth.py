@@ -10,11 +10,14 @@ from app.core.base_response import Response
 from app.core.db import get_db
 from app.models.admin import Admin 
 from app.utils.logger import logger
+
+
 bp = Blueprint("admin_auth", __name__, url_prefix="/admin")
 
 @bp.route("", methods=["GET", "POST"])
 def home():
     return redirect('/admin/dashboard')
+
 @bp.route("login", methods=["GET", "POST"])
 def login():
     """Login"""
