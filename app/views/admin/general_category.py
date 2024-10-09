@@ -69,16 +69,16 @@ def add_or_edit_general_category_view():
                 return Response.error(msg="GeneralCategory not found.")
         else:
             general_category = GeneralCategory()
-            if hasattr(GeneralCategory, "createtime"):
-                general_category.createtime = now()
+            if hasattr(GeneralCategory, "created_at"):
+                general_category.created_at = now()
         for field, value in data.items():
-            if field not in ["id", "createtime", "updatetime"] and hasattr(general_category, field):
+            if field not in ["id", "created_at", "updated_at"] and hasattr(general_category, field):
                 if isinstance(value, list) and field.endswith("[]"): 
                     setattr(general_category, field[:-2], ','.join(map(str, value)))
                 else:
                     setattr(general_category, field, value)
-        if hasattr(GeneralCategory, "updatetime"):
-            general_category.updatetime = now()
+        if hasattr(GeneralCategory, "updated_at"):
+            general_category.updated_at = now()
 
         if not general_category_id:
             db_session.add(general_category)

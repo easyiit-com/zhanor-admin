@@ -67,16 +67,16 @@ def add_or_edit_user_recharge_order_view():
                 return Response.error(msg="UserRechargeOrder not found.")
         else:
             user_recharge_order = UserRechargeOrder()
-            if hasattr(UserRechargeOrder, "createtime"):
-                user_recharge_order.createtime = now()
+            if hasattr(UserRechargeOrder, "created_at"):
+                user_recharge_order.created_at = now()
         for field, value in data.items():
-            if field not in ["id", "createtime", "updatetime"] and hasattr(user_recharge_order, field):
+            if field not in ["id", "created_at", "updated_at"] and hasattr(user_recharge_order, field):
                 if isinstance(value, list) and field.endswith("[]"): 
                     setattr(user_recharge_order, field[:-2], ','.join(map(str, value)))
                 else:
                     setattr(user_recharge_order, field, value)
-        if hasattr(UserRechargeOrder, "updatetime"):
-            user_recharge_order.updatetime = now()
+        if hasattr(UserRechargeOrder, "updated_at"):
+            user_recharge_order.updated_at = now()
 
         if not user_recharge_order_id:
             db_session.add(user_recharge_order)

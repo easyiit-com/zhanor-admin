@@ -21,8 +21,8 @@ class Admin(AdminMixin, Base):
     )
     logintime = db.Column(db.DateTime, comment="Login Time")
     loginip = db.Column(db.String(50), comment="Login IP")
-    createtime = db.Column(db.DateTime, comment="Creation Time")
-    updatetime = db.Column(db.DateTime, comment="Update Time")
+    created_at = db.Column(db.DateTime, comment="Creation Time")
+    updated_at = db.Column(db.DateTime, comment="Update Time")
     token = db.Column(db.String(100), comment="Session Token")
     status = db.Column(db.Enum("normal", "hidden"), nullable=False, server_default='normal',comment="Status")
 

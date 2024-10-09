@@ -67,7 +67,7 @@ Getting Started（安装如下步骤）
 
 如果您还未切换到新创建的项目目录，请进入该目录。当前工作目录应当与本 README.txt 文件和 setup.py 文件所在目录相同。
 
-以下是Ubuntu系统安装步骤：
+## 📖安装步骤(Ubuntu系统)：
 
 1.安装
 
@@ -116,32 +116,32 @@ pip install -r requirements.txt
 ```
 
 
-如出现错误：
+    如出现错误：
 
-Can not find valid pkg-config name. Specify MYSQLCLIENT_CFLAGS and MYSQLCLIENT_LDFLAGS env vars manually [end of output]
+    Can not find valid pkg-config name. Specify MYSQLCLIENT_CFLAGS and MYSQLCLIENT_LDFLAGS env vars manually [end of output]
 
-对于Ubuntu/Debian系Linux，可以运行以下命令安装MySQL开发库：
- 
-```
-sudo apt-get update
-```
+    对于Ubuntu/Debian系Linux，可以运行以下命令安装MySQL开发库：
+    
+    ```
+    sudo apt-get update
+    ```
 
-```
-sudo apt-get install libmysqlclient-dev
+    ```
+    sudo apt-get install libmysqlclient-dev
 
-```
+    ```
 
-对于CentOS需执行：
+    对于CentOS需执行：
 
-```
-sudo dnf install mysql-devel
+    ```
+    sudo dnf install mysql-devel
 
-```
+    ```
 
 
 5.使用 Alembic 初始化并升级数据库，生成首个修订版本。
 
-执行这一步之前，需配置好根目录下的alembic.ini文件的63行和根目录下面config.py文件中的20行的数据库连接信息：
+执行这一步之前，需配置好 根目录下的 alembic.ini 文件的63行和根目录下面 config.py 文件中的20行的数据库连接信息：
 
 sqlalchemy.url = mysql://root:12345678@localhost:3306/zhanor_1.0.4?charset=utf8mb4
 
@@ -150,11 +150,13 @@ sqlalchemy.url = mysql://root:12345678@localhost:3306/zhanor_1.0.4?charset=utf8m
 
 ```
 alembic current
-alembic revision --autogenerate -m "init"
+alembic revision --autogenerate -m "addon"
 alembic upgrade head
 ``` 
 
-注意，当你有新的表建立时，要用数据库迁移功能，需要在alembic/env.py文件中导入你新的数据表模型，这样迁移功能就不会删除你新建的表
+## 注意!!注意!!注意!!
+
+如果插件中包含models文件夹，也会搜索模型文件自动引入
 
 7.使用脚本将默认数据加载到数据库中。
 

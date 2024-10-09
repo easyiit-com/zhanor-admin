@@ -68,11 +68,11 @@ def add_or_edit_admin_view():
                 return Response.error(msg="Admin not found.")
         else:
             admin = Admin()
-            if hasattr(Admin, "createtime"):
-                admin.createtime = now()
+            if hasattr(Admin, "created_at"):
+                admin.created_at = now()
  
         for field, value in data.items():
-            if field not in ["id", "createtime", "updatetime"] and hasattr(admin, field):
+            if field not in ["id", "created_at", "updated_at"] and hasattr(admin, field):
                 if field == "password":
                     pw = value
                     if(pw!=''):
@@ -83,8 +83,8 @@ def add_or_edit_admin_view():
                 else:
                     setattr(admin, field, value)
 
-        if hasattr(Admin, "updatetime"):
-            admin.updatetime = now()
+        if hasattr(Admin, "updated_at"):
+            admin.updated_at = now()
 
         if not admin_id:
             db_session.add(admin)

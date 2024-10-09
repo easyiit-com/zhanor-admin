@@ -19,7 +19,7 @@
 
                     <script>   
                         document.addEventListener("DOMContentLoaded", function () {
-                            const input = document.getElementById("createtime");
+                            const input = document.getElementById("created_at");
                             let initialDate;
                             const existingValue = input.value.trim();
                             if (existingValue !== "") {
@@ -27,7 +27,7 @@
                             } else {
                                 initialDate = new Date();
                             }
-                            flatpickr("#createtime", {
+                            flatpickr("#created_at", {
                                 enableTime: true,
                                 dateFormat: "Y-m-d H:i:s",
                                 defaultDate: initialDate
@@ -37,7 +37,7 @@
                     
                     <script>   
                         document.addEventListener("DOMContentLoaded", function () {
-                            const input = document.getElementById("updatetime");
+                            const input = document.getElementById("updated_at");
                             let initialDate;
                             const existingValue = input.value.trim();
                             if (existingValue !== "") {
@@ -45,7 +45,7 @@
                             } else {
                                 initialDate = new Date();
                             }
-                            flatpickr("#updatetime", {
+                            flatpickr("#updated_at", {
                                 enableTime: true,
                                 dateFormat: "Y-m-d H:i:s",
                                 defaultDate: initialDate

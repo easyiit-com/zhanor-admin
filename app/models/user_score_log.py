@@ -14,7 +14,7 @@ class UserScoreLog(Base):
     before = db.Column(db.Integer, nullable=False,comment='Points Before Change') 
     after = db.Column(db.Integer, nullable=False,comment='Points After Change') 
     memo = db.Column(db.String(255),comment='Memo/Note') 
-    createtime = db.Column(db.DateTime,comment='Creation Time') 
+    created_at = db.Column(db.DateTime,comment='Creation Time') 
 
 
 

@@ -12,8 +12,8 @@ class AdminGroup(Base):
     pid = db.Column(db.Integer, nullable=False,comment='Parent Group') 
     name = db.Column(db.String(100), nullable=False,comment='Group Name') 
     rules = db.Column(db.String(500), nullable=False,comment='Rule IDs') 
-    createtime = db.Column(db.DateTime,comment='Creation Time') 
-    updatetime = db.Column(db.DateTime,comment='Update Time') 
+    created_at = db.Column(db.DateTime,comment='Creation Time') 
+    updated_at = db.Column(db.DateTime,comment='Update Time') 
     status = db.Column(db.Enum('normal', 'hidden'), nullable=False, default = 'normal' ,comment='Status') 
 
 

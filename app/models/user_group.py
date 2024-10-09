@@ -11,8 +11,8 @@ class UserGroup(Base):
     id = db.Column(db.Integer, primary_key=True, nullable=False,comment='ID') 
     name = db.Column(db.String(50),comment='Group Name') 
     rules = db.Column(db.String(512),comment='Permission Nodes') 
-    createtime = db.Column(db.DateTime,comment='Creation Time') 
-    updatetime = db.Column(db.DateTime,comment='Update Time') 
+    created_at = db.Column(db.DateTime,comment='Creation Time') 
+    updated_at = db.Column(db.DateTime,comment='Update Time') 
     status = db.Column(db.Enum('normal', 'hidden'), nullable=False, default = 'normal' ,comment='Status') 
 
 

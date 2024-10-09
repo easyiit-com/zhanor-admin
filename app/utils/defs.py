@@ -140,14 +140,14 @@ def generate_ems_code(request,event,email):
     existing_ems = request.dbsession.query(CommonEms).filter_by(email=email).first()
     if existing_ems:
         existing_ems.code = code
-        existing_ems.createtime = now(request)
+        existing_ems.created_at = now(request)
     else:
         ems = CommonEms()
         ems.event = event
         ems.email = email
         ems.code = code
         ems.ip = ip(request)
-        ems.createtime = now(request)
+        ems.created_at = now(request)
         request.dbsession.add(ems)
     request.dbsession.flush()
     return code
@@ -160,7 +160,7 @@ def check_ems_code(request, event, email, code):
 
     if existing_ems:
         if existing_ems.code == code:
-            created_at = existing_ems.createtime
+            created_at = existing_ems.created_at
             current_time = datetime.now()
             thirty_minutes_ago = current_time - timedelta(minutes=30)
             if created_at < thirty_minutes_ago:
@@ -181,7 +181,7 @@ def delete_expired_ems_codes(request):
     thirty_minutes_ago = datetime.now() - timedelta(minutes=30)
     
     # 查询所有过期的验证码记录
-    expired_ems = request.dbsession.query(CommonEms).filter(CommonEms.createtime < thirty_minutes_ago).all()
+    expired_ems = request.dbsession.query(CommonEms).filter(CommonEms.created_at < thirty_minutes_ago).all()
 
     for ems in expired_ems:
         request.dbsession.delete(ems)
@@ -195,14 +195,14 @@ def generate_sms_code(request,event,mobile):
     if existing_sms:
         existing_sms.code = code
         existing_sms.ip = ip(request)
-        existing_sms.createtime = now(request)
+        existing_sms.created_at = now(request)
     else:
         sms = CommonSms()
         sms.event = event
         sms.mobile = mobile
         sms.code = code
         sms.ip = ip(request)
-        sms.createtime = now(request)
+        sms.created_at = now(request)
         request.dbsession.add(sms)
     return code
 
@@ -214,7 +214,7 @@ def check_sms_code(request, event, email, code):
 
     if existing_sms:
         if existing_sms.code == code:
-            created_at = existing_sms.createtime
+            created_at = existing_sms.created_at
             current_time = datetime.now()
             thirty_minutes_ago = current_time - timedelta(minutes=30)
             if created_at < thirty_minutes_ago:
@@ -234,7 +234,7 @@ def delete_expired_sms_codes(request):
     thirty_minutes_ago = datetime.now() - timedelta(minutes=30)
     
     # 查询所有过期的验证码记录
-    expired_sms = request.dbsession.query(CommonSms).filter(CommonSms.createtime < thirty_minutes_ago).all()
+    expired_sms = request.dbsession.query(CommonSms).filter(CommonSms.created_at < thirty_minutes_ago).all()
 
     for sms in expired_sms:
         request.dbsession.delete(sms)

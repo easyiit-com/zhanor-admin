@@ -69,16 +69,16 @@ def add_or_edit_user_group_view():
                 return Response.error(msg="UserGroup not found.")
         else:
             user_group = UserGroup()
-            if hasattr(UserGroup, "createtime"):
-                user_group.createtime = now()
+            if hasattr(UserGroup, "created_at"):
+                user_group.created_at = now()
         for field, value in data.items():
-            if field not in ["id", "createtime", "updatetime"] and hasattr(user_group, field):
+            if field not in ["id", "created_at", "updated_at"] and hasattr(user_group, field):
                 if isinstance(value, list) and field.endswith("[]"): 
                     setattr(user_group, field[:-2], ','.join(map(str, value)))
                 else:
                     setattr(user_group, field, value)
-        if hasattr(UserGroup, "updatetime"):
-            user_group.updatetime = now()
+        if hasattr(UserGroup, "updated_at"):
+            user_group.updated_at = now()
 
         if not user_group_id:
             db_session.add(user_group)

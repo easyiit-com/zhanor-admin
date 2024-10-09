@@ -20,8 +20,8 @@ class AdminRule(Base):
     menutype = db.Column(db.Enum('addtabs', 'blank', 'dialog', 'ajax'),comment='Menutype') 
     extend = db.Column(db.String(255),comment='Extend') 
     model_name = db.Column(db.String(50), nullable=False,comment='Model Name') 
-    createtime = db.Column(db.DateTime,comment='Createtime') 
-    updatetime = db.Column(db.DateTime,comment='Updatetime') 
+    created_at = db.Column(db.DateTime,comment='created_at') 
+    updated_at = db.Column(db.DateTime,comment='updated_at') 
     weigh = db.Column(db.Integer, nullable=False,comment='Weigh') 
     status = db.Column(db.Enum('normal', 'hidden'),server_default='normal', nullable=False,comment='Status') 
 

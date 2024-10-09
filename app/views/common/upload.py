@@ -105,8 +105,8 @@ def upload_view():
             attachment_file.extparam = extparam  # Set extparam from form data
             attachment_file.is_image = is_image_file  # Set whether the file is an image
             attachment_file.thumbnail = thumbnail_path  # Set the thumbnail path (image or default)
-            attachment_file.createtime = now()
-            attachment_file.updatetime = now()
+            attachment_file.created_at = now()
+            attachment_file.updated_at = now()
             attachment_file.storage = ''
             db_session.add(attachment_file)
             db_session.commit()

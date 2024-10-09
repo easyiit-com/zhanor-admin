@@ -19,8 +19,8 @@ class UserRechargeOrder(Base):
     ip = db.Column(db.String(50), comment="IP")
     useragent = db.Column(db.String(255), comment="UserAgent")
     memo = db.Column(db.String(255), comment="Memo")
-    createtime = db.Column(db.DateTime, comment="Creation Time ")
-    updatetime = db.Column(db.DateTime, comment="Update Time")
+    created_at = db.Column(db.DateTime, comment="Creation Time ")
+    updated_at = db.Column(db.DateTime, comment="Update Time")
     status = db.Column(db.Enum("created", "paid", "expired"),server_default='created', comment="Status")
 
     @classmethod

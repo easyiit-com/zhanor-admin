@@ -68,10 +68,10 @@ def add_or_edit_user_view():
                 return Response.error(msg="User not found.")
         else:
             user = User()
-            if hasattr(User, "createtime"):
-                user.createtime = now()
+            if hasattr(User, "created_at"):
+                user.created_at = now()
         for field, value in data.items():
-            if field not in ["id", "createtime", "updatetime"] and hasattr(user, field):
+            if field not in ["id", "created_at", "updated_at"] and hasattr(user, field):
                 if field == "password":
                     pw = value
                     if(pw!=''):
@@ -80,8 +80,8 @@ def add_or_edit_user_view():
                     setattr(user, field[:-2], ','.join(map(str, value)))
                 else:
                     setattr(user, field, value)
-        if hasattr(User, "updatetime"):
-            user.updatetime = now()
+        if hasattr(User, "updated_at"):
+            user.updated_at = now()
 
         if not user_id:
             db_session.add(user)

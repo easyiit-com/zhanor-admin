@@ -52,7 +52,7 @@ def login():
         if login_user(user):
            user.logintime = now()
            user.loginip = ip(request)
-           user.updatetime = now()
+           user.updated_at = now()
            db_session.commit()
            next_url = request.args.get('next', '/user/dashboard')
            return Response.success(msg="Login successful.", data=next_url)
@@ -84,8 +84,8 @@ def register():
         new_user.loginip = ip(request)  # Default login IP
         new_user.loginfailure = 0  # Default to 0
         new_user.joinip = ip(request)  # Default join IP
-        new_user.createtime = now()
-        new_user.updatetime = now()
+        new_user.created_at = now()
+        new_user.updated_at = now()
         new_user.verification = ''  # Default verification
         new_user.token = ''  # Default token
         new_user.status = 'normal'  # Default status

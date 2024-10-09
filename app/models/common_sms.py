@@ -14,7 +14,7 @@ class CommonSms(Base):
     code = db.Column(db.String(10),comment='Verification Code') 
     times = db.Column(db.Integer, nullable=False,comment='Validation Attempts') 
     ip = db.Column(db.String(30),comment='IP Address') 
-    createtime = db.Column(db.DateTime,comment='Creation Time') 
+    created_at = db.Column(db.DateTime,comment='Creation Time') 
 
 
 

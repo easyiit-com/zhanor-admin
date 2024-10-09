@@ -1,3 +1,4 @@
+from http.client import HTTPException
 import json
 import os
 from os.path import isdir
@@ -19,7 +20,7 @@ from flask import (
     make_response
 )
 from flask_apispec import FlaskApiSpec
-from flask_babel import Babel
+from flask_babel import Babel, gettext, ngettext
 from flask_compress import Compress
 from flask_jwt_extended import JWTManager
 from flask_jwt_extended.exceptions import JWTExtendedException
@@ -135,7 +136,7 @@ def create_app(test_config=None):
                     content=content_str,
                     ip=request.remote_addr,
                     useragent=user_agent,
-                    createtime=now(),
+                    created_at=now(),
                 )
                 db_session = db.get_db()
                 db_session.add(admin_log)
@@ -169,13 +170,22 @@ def create_app(test_config=None):
         else:
             return render_template("403.jinja2", e=e), 403
    
-    @app.errorhandler(Exception)
-    def handle_exception(e):
-        if Config.DEBUG:
-            return Response.error(code=500, msg=f"Some Error: {e}")
-        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-            return Response.error(code=500, msg=f"Some Error: {e}")
-        return redirect(url_for('error_page'))
+    # @app.errorhandler(Exception)
+    # def handle_exception(e):
+    #     # 如果 DEBUG 模式打开，直接使用 Flask 默认的错误处理
+    #     if Config.DEBUG:
+    #         # 如果错误是 HTTP 错误，就返回默认的 HTTP 错误页面
+    #         if isinstance(e, HTTPException):
+    #             return e
+    #         # 对于非 HTTP 错误，返回一个 500 错误页面
+    #         return "Internal Server Error", 500
+
+    #     # 处理 AJAX 请求的特殊情况
+    #     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+    #         return Response.error(code=500, msg=f"Some Error: {e}")
+
+    #     # 对于非 AJAX 请求，重定向到自定义错误页面
+    #     return redirect(url_for('error_page'))
 
     
 
@@ -258,11 +268,11 @@ def create_app(test_config=None):
                         menutype=item.get("menutype", ""),
                         extend=item.get("extend", ""),
                         model_name="plugin",  # 假设模型名称
-                        createtime=datetime.strptime(
-                            item["createtime"], "%Y-%m-%d %H:%M:%S"
+                        created_at=datetime.strptime(
+                            item["created_at"], "%Y-%m-%d %H:%M:%S"
                         ),
-                        updatetime=datetime.strptime(
-                            item["updatetime"], "%Y-%m-%d %H:%M:%S"
+                        updated_at=datetime.strptime(
+                            item["updated_at"], "%Y-%m-%d %H:%M:%S"
                         ),
                         weigh=item["weigh"],
                         status=item["status"],
@@ -283,11 +293,11 @@ def create_app(test_config=None):
                         menutype=item.get("menutype", ""),
                         extend=item.get("extend", ""),
                         model_name="plugin",  # 假设模型名称
-                        createtime=datetime.strptime(
-                            item["createtime"], "%Y-%m-%d %H:%M:%S"
+                        created_at=datetime.strptime(
+                            item["created_at"], "%Y-%m-%d %H:%M:%S"
                         ),
-                        updatetime=datetime.strptime(
-                            item["updatetime"], "%Y-%m-%d %H:%M:%S"
+                        updated_at=datetime.strptime(
+                            item["updated_at"], "%Y-%m-%d %H:%M:%S"
                         ),
                         weigh=item["weigh"],
                         status=item["status"],
@@ -341,13 +351,20 @@ def create_app(test_config=None):
         """注入全局变量到模板中"""
 
         admin_rules = get_admin_rules()
+        user_rules = get_user_rules()
+        with open('app/templates/menu.jinja2', 'w', encoding='utf-8') as file:
+            for rule in admin_rules:
+                file.write('{{{{_("{}")}}}}\n'.format(rule.title))
+            
+            for rule in user_rules:
+                file.write('{{{{_("{}")}}}}\n'.format(rule.title))
+
         admin_rules.extend(plugin_admin_rules)
         organized_admin_rules = organize_admin_rules(admin_rules)
-
-        user_rules = get_user_rules()
+ 
         user_rules.extend(plugin_user_rules)
         organized_user_rules = organize_user_rules(user_rules)
-        
+
         global_val = dict(
             title="zhanor",
             version =__version__ ,
@@ -528,14 +545,14 @@ def process_breadcrumbs():
     parts = s.split("/")
     if not parts:
         return ""
-    back_to_dashboard = '<a href="/admin/dashboard">返回仪表板</a>'
+    back_to_dashboard = f'<a href="/admin/dashboard">< {gettext("Back To Dashboard")}</a>'
     title = parts[0].capitalize()
     if len(parts) == 1:
-        return f'{back_to_dashboard}<a href="#">{title}</a>'
+        return f'{back_to_dashboard}<a href="#">{gettext(title)}</a>'
     elif len(parts) == 2:
-        return f'{back_to_dashboard}<a href="/admin/{title}/{parts[1]}">{title} {parts[1].capitalize()}</a>'
+        return f'{back_to_dashboard}<a href="/admin/{title}/{parts[1]}">{gettext(title)} {gettext(parts[1].capitalize())}</a>'
     elif len(parts) == 3:
-        return f'{back_to_dashboard}<a href="/admin/{title}">{title} {parts[1].capitalize()}</a> / {parts[2].capitalize()}'
+        return f'{back_to_dashboard}<a href="/admin/{title}">{gettext(title)} {gettext(parts[1].capitalize())}</a> / {gettext(parts[2].capitalize())}'
     return ""
 
 

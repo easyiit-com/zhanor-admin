@@ -15,8 +15,8 @@ class GeneralCategory(Base):
     image = db.Column(db.String(100),comment='Image') 
     keywords = db.Column(db.String(255),comment='Keywords') 
     description = db.Column(db.String(255),comment='Description') 
-    createtime = db.Column(db.DateTime,comment='Creation Time') 
-    updatetime = db.Column(db.DateTime,comment='Update Time') 
+    created_at = db.Column(db.DateTime,comment='Creation Time') 
+    updated_at = db.Column(db.DateTime,comment='Update Time') 
     weigh = db.Column(db.Integer, nullable=False,comment='Weight') 
     status = db.Column(db.Enum('normal', 'hidden'), nullable=False, default = 'normal' ,comment='Status') 
 

@@ -163,7 +163,8 @@ app/plugins/*
 app/views/admin/addon.py
 app/templates/admin/addon
 app/api/*
-!app/api/load_apis.py
+!app/api/__init__.py
+!app/api/v1/__init__.py
 tests
 app/static/addon/*
 app/models/addon.py

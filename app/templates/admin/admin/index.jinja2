@@ -126,7 +126,7 @@
                             <td class="sort-name">{{ value.loginfailure }}</td>
                             <td class="sort-name">{{ value.logintime }}</td>
                             <td class="sort-name">{{ value.loginip }}</td>
-                            <td class="sort-name">{{ value.createtime }}</td> 
+                            <td class="sort-name">{{ value.created_at }}</td> 
                             <td class="sort-name">{{ value.status }}</td>
 
                             <td class="!text-end whitespace-nowrap">
@@ -245,11 +245,11 @@
                 </div>
                 <div class="row mb-3 align-items-end">
                     <div class="col-auto fw-bold"> {{_("Creation Time")}}</div>
-                    <div class="col">{{ value.createtime }} </div>
+                    <div class="col">{{ value.created_at }} </div>
                 </div>
                 <div class="row mb-3 align-items-end">
                     <div class="col-auto fw-bold"> {{_("Update Time")}}</div>
-                    <div class="col">{{ value.updatetime }} </div>
+                    <div class="col">{{ value.updated_at }} </div>
                 </div>
                 <div class="row mb-3 align-items-end">
                     <div class="col-auto fw-bold"> {{_("Session Token")}}</div>

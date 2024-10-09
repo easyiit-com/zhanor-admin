@@ -69,16 +69,16 @@ def add_or_edit_user_rule_view():
                 return Response.error(msg="UserRule not found.")
         else:
             user_rule = UserRule()
-            if hasattr(UserRule, "createtime"):
-                user_rule.createtime = now()
+            if hasattr(UserRule, "created_at"):
+                user_rule.created_at = now()
         for field, value in data.items():
-            if field not in ["id", "createtime", "updatetime"] and hasattr(user_rule, field):
+            if field not in ["id", "created_at", "updated_at"] and hasattr(user_rule, field):
                 if isinstance(value, list) and field.endswith("[]"): 
                     setattr(user_rule, field[:-2], ','.join(map(str, value)))
                 else:
                     setattr(user_rule, field, value)
-        if hasattr(UserRule, "updatetime"):
-            user_rule.updatetime = now()
+        if hasattr(UserRule, "updated_at"):
+            user_rule.updated_at = now()
 
         if not user_rule_id:
             db_session.add(user_rule)

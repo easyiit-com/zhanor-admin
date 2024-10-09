@@ -77,7 +77,7 @@
 <div class="page-body pt-6888">
     <div class="container-fluid px-4">
         <div class="mb-2">
-           
+
             <a href="javascript:void(0)" class="btn delete-selected btn-warning">
                 <i class="ti ti-trash"></i>
                 {{_('Batch Deletion')}}
@@ -88,14 +88,16 @@
                 <table class="table action-table">
                     <thead>
                         <tr>
-                            <th><input class="form-check-input m-0 align-middle select-all" type="checkbox" aria-label="Select invoice"></th><th><button class="table-sort" data-sort="sort-name">{{_('ID')}}</button></th>
-<th>{{_('Administrator ID')}}</th>
-<th>{{_('Administrator Name')}}</th>
-<th>{{_('Operated Page')}}</th>
-<th>{{_('Log Title')}}</th>
-<th>{{_('IP Address')}}</th>
-<th>{{_('User Agent')}}</th>
-<th>{{_('Operation Time')}}</th>
+                            <th><input class="form-check-input m-0 align-middle select-all" type="checkbox"
+                                    aria-label="Select invoice"></th>
+                            <th><button class="table-sort" data-sort="sort-name">{{_('ID')}}</button></th>
+                            <th>{{_('Administrator ID')}}</th>
+                            <th>{{_('Administrator Name')}}</th>
+                            <th>{{_('Operated Page')}}</th>
+                            <th>{{_('Log Title')}}</th>
+                            <th>{{_('IP Address')}}</th>
+                            <th>{{_('User Agent')}}</th>
+                            <th>{{_('Operation Time')}}</th>
 
                             <th class="!text-end">{{_('Actions')}}</th>
                         </tr>
@@ -104,14 +106,16 @@
                         <!-- TODO -->
                         {% for value in admin_log_list %}
                         <tr id="admin_log-{{ value.id }}">
-                            <td><input class="form-check-input m-0 align-middle id-checkbox" type="checkbox" aria-label="Select invoice" value="{{value.id}}"></td><td class="sort-name">{{ value.id }}</td>
-<td class="sort-name">{{ value.admin_id }}</td>
-<td class="sort-name">{{ value.username }}</td>
-<td class="sort-name">{{ value.url }}</td>
-<td class="sort-name">{{ value.title }}</td>
-<td class="sort-name">{{ value.ip }}</td>
-<td class="sort-name">{{ value.useragent }}</td>
-<td class="sort-name">{{ value.createtime }}</td>
+                            <td><input class="form-check-input m-0 align-middle id-checkbox" type="checkbox"
+                                    aria-label="Select invoice" value="{{value.id}}"></td>
+                            <td class="sort-name">{{ value.id }}</td>
+                            <td class="sort-name">{{ value.admin_id }}</td>
+                            <td class="sort-name">{{ value.username }}</td>
+                            <td class="sort-name">{{ value.url }}</td>
+                            <td class="sort-name">{{ value.title }}</td>
+                            <td class="sort-name">{{ value.ip }}</td>
+                            <td class="sort-name">{{ value.useragent }}</td>
+                            <td class="sort-name">{{ value.created_at }}</td>
 
                             <td class="!text-end whitespace-nowrap">
                                 <a href="javascript:;"
@@ -119,7 +123,7 @@
                                     data-bs-toggle="modal" data-bs-target="#modal-{{ value.id }}" title="View Details">
                                     <i class="ti ti-eye"></i>
                                 </a>
-                               
+
                                 <a href="javascript:void(0)"
                                     class="btn btn-delete w-[36px] h-[36px] p-0 border hover:bg-red-500 hover:text-white"
                                     title="Delete" data-id="{{value.id}}">
@@ -179,7 +183,42 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("ID")}}</div><div class="col">{{ value.id }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Administrator ID")}}</div><div class="col">{{ value.admin_id }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Administrator Name")}}</div><div class="col">{{ value.username }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Operated Page")}}</div><div class="col">{{ value.url }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Log Title")}}</div><div class="col">{{ value.title }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Content")}}</div><div class="col">{{ value.content }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("IP Address")}}</div><div class="col">{{ value.ip }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("User Agent")}}</div><div class="col">{{ value.useragent }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Operation Time")}}</div><div class="col">{{ value.createtime }} </div></div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("ID")}}</div>
+                    <div class="col">{{ value.id }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Administrator ID")}}</div>
+                    <div class="col">{{ value.admin_id }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Administrator Name")}}</div>
+                    <div class="col">{{ value.username }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Operated Page")}}</div>
+                    <div class="col">{{ value.url }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Log Title")}}</div>
+                    <div class="col">{{ value.title }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Content")}}</div>
+                    <div class="col">{{ value.content }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("IP Address")}}</div>
+                    <div class="col">{{ value.ip }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("User Agent")}}</div>
+                    <div class="col">{{ value.useragent }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Operation Time")}}</div>
+                    <div class="col">{{ value.created_at }} </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{_('Close')}}</button>

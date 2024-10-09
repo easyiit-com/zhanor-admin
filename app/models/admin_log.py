@@ -16,7 +16,7 @@ class AdminLog(Base):
     content = db.Column(db.Text, nullable=False,comment='Content') 
     ip = db.Column(db.String(50), nullable=False,comment='IP Address') 
     useragent = db.Column(db.String(255),comment='User Agent') 
-    createtime = db.Column(db.DateTime,comment='Operation Time') 
+    created_at = db.Column(db.DateTime,comment='Operation Time') 
 
 
 

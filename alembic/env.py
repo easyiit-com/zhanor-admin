@@ -1,3 +1,4 @@
+import json
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
@@ -18,11 +19,33 @@ for filename in os.listdir(models_dir):
     if filename.endswith('.py') and filename != '__init__.py':
         module_name = f'app.models.{filename[:-3]}'  # 去掉.py后缀
         importlib.import_module(module_name)
+# 插件目录路径
+plugins_directory = os.path.join(os.path.dirname(__file__), '../app/plugins')
 
-
-# from app.plugins.vip.models.vip import Vip
-# from app.plugins.vip.models.vip_order import VipOrder 
-# from app.plugins.vip.models.vip_status import VipStatus
+# 读取插件状态文件
+try:
+    with open(os.path.join(plugins_directory, "plugins_status.json"), "r") as f:
+        plugins_status = json.load(f)
+except FileNotFoundError:
+    plugins_status = {}
+except json.JSONDecodeError:
+    with open(os.path.join(plugins_directory, "plugins_status.json"), "w") as f:
+        f.truncate(0)
+    plugins_status = {}
+ 
+# 遍历插件状态文件，只有启用的插件才引入
+for plugin_name, status in plugins_status.items():
+    plugin_dir = os.path.join(plugins_directory, plugin_name)
+    if status == "enabled" and os.path.isdir(plugin_dir):
+        models_dir = os.path.join(plugin_dir, 'models')
+        # 检查是否存在 models 目录
+        if os.path.isdir(models_dir):
+            # 遍历 models 目录中的所有文件
+            for filename in os.listdir(models_dir):
+                if filename.endswith('.py') and filename != '__init__.py':
+                    # 计算模块名，确保为绝对路径
+                    module_name = f'app.plugins.{plugin_name}.models.{filename[:-3]}'  # 去掉 .py 后缀
+                    importlib.import_module(module_name)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

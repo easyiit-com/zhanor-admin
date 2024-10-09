@@ -69,16 +69,16 @@ def add_or_edit_attachment_file_view():
                 return Response.error(msg="AttachmentFile not found.")
         else:
             attachment_file = AttachmentFile()
-            if hasattr(AttachmentFile, "createtime"):
-                attachment_file.createtime = now()
+            if hasattr(AttachmentFile, "created_at"):
+                attachment_file.created_at = now()
         for field, value in data.items():
-            if field not in ["id", "createtime", "updatetime"] and hasattr(attachment_file, field):
+            if field not in ["id", "created_at", "updated_at"] and hasattr(attachment_file, field):
                 if isinstance(value, list) and field.endswith("[]"): 
                     setattr(attachment_file, field[:-2], ','.join(map(str, value)))
                 else:
                     setattr(attachment_file, field, value)
-        if hasattr(AttachmentFile, "updatetime"):
-            attachment_file.updatetime = now()
+        if hasattr(AttachmentFile, "updated_at"):
+            attachment_file.updated_at = now()
 
         if not attachment_file_id:
             db_session.add(attachment_file)

@@ -472,10 +472,10 @@ msgstr ""
 msgid "Weigh"
 msgstr ""
 
-msgid "Createtime"
+msgid "created_at"
 msgstr ""
 
-msgid "Updatetime"
+msgid "updated_at"
 msgstr ""
 
 msgid "GeneralCategory"

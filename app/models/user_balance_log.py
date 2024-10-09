@@ -14,7 +14,7 @@ class UserBalanceLog(Base):
     before = db.Column(db.Numeric, nullable=False,comment='Balance Before Change') 
     after = db.Column(db.Numeric, nullable=False,comment='Balance After Change') 
     memo = db.Column(db.String(255),comment='Memo/Note') 
-    createtime = db.Column(db.DateTime,comment='Creation Time') 
+    created_at = db.Column(db.DateTime,comment='Creation Time') 
 
 
 

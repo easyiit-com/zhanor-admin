@@ -60,8 +60,8 @@ def index_view():
                     'title': rule.title,
                     'icon': rule.icon,
                     'weigh': rule.weigh,
-                    'createtime': rule.createtime,
-                    'updatetime': rule.updatetime,
+                    'created_at': rule.created_at,
+                    'updated_at': rule.updated_at,
                     'status': rule.status
                 } for rule in admin_rule_list]
         tree = Tree(options)
@@ -114,16 +114,16 @@ def add_or_edit_admin_rule_view():
                 return Response.error(msg="AdminRule not found.")
         else:
             admin_rule = AdminRule()
-            if hasattr(AdminRule, "createtime"):
-                admin_rule.createtime = now()
+            if hasattr(AdminRule, "created_at"):
+                admin_rule.created_at = now()
         for field, value in data.items():
-            if field not in ["id", "createtime", "updatetime"] and hasattr(admin_rule, field):
+            if field not in ["id", "created_at", "updated_at"] and hasattr(admin_rule, field):
                 if isinstance(value, list) and field.endswith("[]"): 
                     setattr(admin_rule, field[:-2], ','.join(map(str, value)))
                 else:
                     setattr(admin_rule, field, value)
-        if hasattr(AdminRule, "updatetime"):
-            admin_rule.updatetime = now()
+        if hasattr(AdminRule, "updated_at"):
+            admin_rule.updated_at = now()
 
         if not admin_rule_id:
             db_session.add(admin_rule)

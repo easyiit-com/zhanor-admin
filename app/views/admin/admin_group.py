@@ -69,16 +69,16 @@ def add_or_edit_admin_group_view():
                 return Response.error(msg="AdminGroup not found.")
         else:
             admin_group = AdminGroup()
-            if hasattr(AdminGroup, "createtime"):
-                admin_group.createtime = now()
+            if hasattr(AdminGroup, "created_at"):
+                admin_group.created_at = now()
         for field, value in data.items():
-            if field not in ["id", "createtime", "updatetime"] and hasattr(admin_group, field):
+            if field not in ["id", "created_at", "updated_at"] and hasattr(admin_group, field):
                 if isinstance(value, list) and field.endswith("[]"): 
                     setattr(admin_group, field[:-2], ','.join(map(str, value)))
                 else:
                     setattr(admin_group, field, value)
-        if hasattr(AdminGroup, "updatetime"):
-            admin_group.updatetime = now()
+        if hasattr(AdminGroup, "updated_at"):
+            admin_group.updated_at = now()
 
         if not admin_group_id:
             db_session.add(admin_group)

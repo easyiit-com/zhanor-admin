@@ -1,95 +1,89 @@
 import os
+
 class Config:
-    # APPCONFIGURATION
-    DOMAIN = "http://127.0.0.1:5000"
-    STATIC_URL_PREFIX = "http://127.0.0.1:5000"
+    # Application Configuration
+    DOMAIN = "http://127.0.0.1:5000"  # Application domain
+    STATIC_URL_PREFIX = "http://127.0.0.1:5000"  # Prefix for static files URL
 
-    DEBUG = True 
-    TESTING = False 
+    ADDON_URL = 'http://zhanor.com/api/v1/addon/list'  # URL for addons API
 
-    ADMIN_LOGIN_DISABLED = False
-    ADMIN_LOGIN_STRING='aaa'
+    DEBUG = True  # Enable or disable debug mode
+    TESTING = False  # Enable or disable testing mode
 
-    LOGIN_DISABLED = False
+    ADMIN_LOGIN_DISABLED = False  # Disable admin login if True
+    ADMIN_LOGIN_STRING = 'aaa'  # Admin login string (possibly a password or token)
+
+    LOGIN_DISABLED = False  # Disable user login if True
     
-    SECRET_KEY = 'your_secret_key'
-    JWT_SECRET_KEY = 'jwt-secret-key'
+    SECRET_KEY = 'your_secret_key'  # Secret key for session management
+    JWT_SECRET_KEY = 'jwt-secret-key'  # Secret key for JWT tokens
     
-    # swagger
+    # Swagger Configuration
     SWAGGER = {
-        "title": "Zhanor Admin API",
-        "version": "1.0.4",
-        "uiversion": 3,
-        # "specs": [
-        #     {
-        #         "endpoint": "swagger",
-        #         "route": "/swagger.json",
-        #         "rule_filter": lambda rule: True,  # all in
-        #         "model_filter": lambda tag: True,  # all in
-        #     }
-        # ],
-        # "static_url_path": "/flasgger_static",
-        # "specs_route": "/swagger/",
-        # "openapi": "3.0.2",
+        "title": "Zhanor Admin API",  # API documentation title
+        "version": "1.0.4",  # API version
+        "uiversion": 3,  # Swagger UI version
+        # Additional configurations can be added here
     }
     
-    # 多语言
-    LANGUAGES = ['en', 'zh']
-    BABEL_DEFAULT_LOCALE = 'zh'
-    BABEL_DOMAIN = 'messages'
-    BABEL_DEFAULT_TIMEZONE = 'Asia/Shanghai'
-    BABEL_TRANSLATION_DIRECTORIES = 'app/locales'
+    # Internationalization (i18n) and Localization (l10n)
+    LANGUAGES = ['en', 'zh']  # Supported languages: English and Chinese
+    BABEL_DEFAULT_LOCALE = 'zh'  # Default language locale
+    BABEL_DOMAIN = 'messages'  # Domain for translation files
+    BABEL_DEFAULT_TIMEZONE = 'Asia/Shanghai'  # Default timezone
+    BABEL_TRANSLATION_DIRECTORIES = 'app/locales'  # Directory for translation files
     
-    # Website Config
-    CONFIG_GROUPS =['basic','dictionary','email','user']
-    # SQLAlchemy
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:12345678@localhost:3306/zhanor_1.0.4?charset=utf8mb4"
-    SQLALCHEMY_TRACK_MODIFICATIONS = False  # To avoid warning, set to False if not needed
-    SQLALCHEMY_POOL_RECYCLE = 300
-    SQLALCHEMY_POOL_PRE_PING = True
-    
-    # AUTH
-    AUTH_ADMIN_SECRET = 'zhanor_niu'
-    AUTH_USER_SECRET = 'zhanor_jin'
-    AUTH_JWT_SECRET = 'zhanor_hui'
-    
-    # SMTP
-    MAIL_SERVER = 'smtp.qq.com'
-    MAIL_PORT = 587
-    MAIL_USERNAME = 'username'
-    MAIL_PASSWORD = 'password'
-    MAIL_USE_TLS = True  # Enable TLS if required
-    
-    # DebugToolbar (assuming you're using Flask-DebugToolbar)
-    DEBUG_TB_ENABLED = False  # Adjust as per your needs
+    # Website Configuration Groups
+    CONFIG_GROUPS = ['basic', 'dictionary', 'email', 'user']  # Configuration categories
 
-    # CACHE
-    CACHE_TYPE = 'simple' 
-    CACHE_DEFAULT_TIMEOUT = 3600 
-    # REDIS
-    REDIS_URL = 'redis://localhost:6379/0'
-    REDIS_PASSWORD = ''
+    # SQLAlchemy Configuration
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:12345678@localhost:3306/zhanor_1.0.4?charset=utf8mb4"  # Database URI
+    SQLALCHEMY_TRACK_MODIFICATIONS = False  # Disable tracking modifications to save resources
+    SQLALCHEMY_POOL_RECYCLE = 300  # Recycle database connections after 300 seconds
+    SQLALCHEMY_POOL_PRE_PING = True  # Check connections before using them from the pool
     
-    CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),'cache')
+    # Authentication Secrets
+    AUTH_ADMIN_SECRET = 'zhanor_niu'  # Secret key for admin authentication
+    AUTH_USER_SECRET = 'zhanor_jin'  # Secret key for user authentication
+    AUTH_JWT_SECRET = 'zhanor_hui'  # Secret key for JWT authentication
+    
+    # SMTP (Email) Configuration
+    MAIL_SERVER = 'smtp.qq.com'  # SMTP server address
+    MAIL_PORT = 587  # SMTP server port
+    MAIL_USERNAME = 'username'  # SMTP username
+    MAIL_PASSWORD = 'password'  # SMTP password
+    MAIL_USE_TLS = True  # Use TLS encryption for email
+    
+    # Debug Toolbar Configuration (if using Flask-DebugToolbar)
+    DEBUG_TB_ENABLED = False  # Enable or disable the debug toolbar
 
-    TIMEZONE = 'Asia/Shanghai'
-    # upload
-    UPLOAD_DIRECTORY =  os.path.join(os.path.dirname(os.path.abspath(__file__)),'app','static','uploads')
-    UPLOAD_FILE_EXTENSIONS = ['jpg','jpeg','png','gif','pdf','docx','doc','ppt']
-    UPLOAD_MAX_SIZE = 5242880
-    UPLOAD_MAX_COUNT = 10
-    APISPEC_TITLE = "Api"
-    # COMPRESS
-    COMPRESS_MIMETYPES = ['text/html', 'text/css', 'application/javascript']
-    COMPRESS_MIN_SIZE = 1024 
-    
-    
+    # Cache Configuration
+    CACHE_TYPE = 'simple'  # Type of caching to use
+    CACHE_DEFAULT_TIMEOUT = 3600  # Default timeout for cached items (in seconds)
 
+    # Redis Configuration
+    REDIS_URL = 'redis://localhost:6379/0'  # Redis server URL
+    REDIS_PASSWORD = ''  # Redis password (if required)
+    
+    CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cache')  # Directory for cache files
+
+    TIMEZONE = 'Asia/Shanghai'  # Application timezone
+
+    # File Upload Configuration
+    UPLOAD_DIRECTORY = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app', 'static', 'uploads')  # Upload directory path
+    UPLOAD_FILE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'docx', 'doc', 'ppt']  # Allowed file extensions
+    UPLOAD_MAX_SIZE = 5242880  # Maximum file size allowed (in bytes)
+    UPLOAD_MAX_COUNT = 10  # Maximum number of files allowed per upload
+    APISPEC_TITLE = "Api"  # Title for API specifications
+
+    # Compression Configuration
+    COMPRESS_MIMETYPES = ['text/html', 'text/css', 'application/javascript']  # MIME types to compress
+    COMPRESS_MIN_SIZE = 1024  # Minimum size of response to compress (in bytes)
+    
 class ProductionConfig(Config):
-    DEBUG = False
-    # Other production-specific settings...
-
-# Example of a Development configuration class
+    DEBUG = False  # Disable debug mode in production
+    # Add other production-specific settings here
+    
 class DevelopmentConfig(Config):
-    DEBUG = True
-    # Additional development-specific settings, like enabling debug toolbar, etc.
+    DEBUG = True  # Enable debug mode in development
+    # Add development-specific settings like enabling the debug toolbar

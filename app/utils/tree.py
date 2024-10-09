@@ -245,8 +245,8 @@ class Tree:
     #             'icon': rule.icon,
     #             'ismenu': rule.ismenu,
     #             'weigh': rule.weigh,
-    #             'createtime': rule.createtime,
-    #             'updatetime': rule.updatetime,
+    #             'created_at': rule.created_at,
+    #             'updated_at': rule.updated_at,
     #             'status': rule.status
     #         } for rule in admin_rule_list]
     # tree = Tree(options)
