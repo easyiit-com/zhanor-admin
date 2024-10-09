@@ -1,0 +1,470 @@
+<!-- index.jinja2 -->
+{% extends "admin/layout/default.jinja2" %}
+{% block javascript %}
+<script>
+
+</script>
+{% endblock javascript %}
+{% block content %}
+<div class="page-body pt-6888">
+    <div class="container-fluid px-4">
+        <div class="mb-2">
+            <a href="/admin/addon/add" class="btn btn-success">
+                <i class="ti ti-plus"></i>
+                {{_('Upload Local Addon')}}
+            </a>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
+                    <li class="nav-item">
+                        <a href="#tabs-addon" class="nav-link active" data-bs-toggle="tab">{{_('Addon')}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#tabs-local-addon" class="nav-link" data-bs-toggle="tab">{{_('Local Addon')}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active show" id="tabs-addon">
+                    <div id="table-addon" class="card-table table-responsive">
+                        <table class="table action-table">
+                            <thead>
+                                <tr>
+                                    <th><input class="form-check-input m-0 align-middle select-all" type="checkbox"
+                                            aria-label="Select invoice"></th>
+                                    <th><button class="table-sort" data-sort="sort-name">{{_('Id')}}</button></th>
+                                    <th>{{_('Title')}}</th>
+                                    <th>{{_('Author')}}</th>
+                                    <th>{{_('Uuid')}}</th>
+                                    <th>{{_('Description')}}</th>
+                                    <th>{{_('Version')}}</th>
+                                    <th>{{_('Downloads')}}</th>
+                                    <th>{{_('Price')}}</th>
+                                    <th>{{_('Paid')}}</th>
+                                    <th>{{_('Installed')}}</th>
+                                    <th>{{_('Enabled')}}</th>
+                                    <th>{{_('Createtime')}}</th>
+                                    <th>{{_('Updatetime')}}</th>
+                                    <th class="!text-end">{{_('Actions')}}</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-tbody align-middle text-heading">
+                                <!-- TODO -->
+                                {% for value in addon_list %}
+                                <tr id="addon-{{ value.id }}">
+                                    <td><input class="form-check-input m-0 align-middle id-checkbox" type="checkbox"
+                                            aria-label="Select invoice" value="{{value.id}}"></td>
+                                    <td class="sort-name">{{ value.id }}</td>
+                                    <td class="sort-name">{{ value.title }}</td>
+                                    <td class="sort-name">{{ value.author }}</td>
+                                    <td class="sort-name">{{ value.uuid }}</td>
+                                    <td class="sort-name">{{ value.description }}</td>
+                                    <td class="sort-name">{{ value.version }}</td>
+                                    <td class="sort-name">{{ value.downloads }}</td>
+                                    <td class="sort-name"> {% if value.price=='0.00' %}
+                                        <span class="text-success">{{_('Free')}}</span>
+                                        {% elif value.is_paid=="1"%}
+                                        <span class="text-success">{{_('Paid')}}</span>
+                                        {% else %}
+                                        {{_('Unbought')}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="sort-name">{{ value.paid }}</td>
+                                    <td class="sort-name">{{ value.installed }}</td>
+                                    <td class="sort-name">
+                                        <label class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" {% if value.enabled=='1' %}
+                                                checked {% endif %}>
+                                        </label>
+                                    </td>
+                                    <td class="sort-name">{{ value.created_at }}</td>
+                                    <td class="sort-name">{{ value.updated_at }}</td>
+
+                                    <td class="!text-end whitespace-nowrap">
+                                        {% if value.installed=='0'%}
+                                        <a href="javascript:;" class="btn btn-success btn-install"
+                                            data-id="{{ value.id }}" title="Install">
+                                            <i class="ti ti-world-download"></i>{{_('Install')}}
+                                        </a>
+                                        {% else %}
+                                        {% if value.setting_menu|length >0 %}
+                                        <div class="btn">
+                                            <a class="dropdown-toggle" href="#navbar-setting_menu"
+                                                data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button"
+                                                aria-expanded="false">
+                                                <span class="nav-link-title">
+                                                    {{_('Setting')}}
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                {% for menu in value.setting_menu%}
+                                                <a class="btn btn-success btn-setting" href="{{menu.route}}"><i
+                                                        class="ti ti-settings"></i>{{menu.title}}</a>
+                                                {% endfor %}
+                                            </div>
+
+                                        </div>
+                                        {% endif %}
+                                        <a href="javascript:;" class="btn btn-danger btn-uninstall"
+                                            data-id="{{ value.id }}" title="Uninstall">
+                                            <i class="ti ti-trash-filled"></i>{{_('Uninstall')}}
+                                        </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <div
+                        class="flex items-center border-solid border-t border-r-0 border-b-0 border-l-0 border-[--tblr-border-color] px-[--tblr-card-cap-padding-x] py-[--tblr-card-cap-padding-y] [&_.rounded-md]:rounded-full">
+                        <div class="m-0 ms-auto p-0">
+                            <ul class="pagination ">
+                                {% if current_page > 1 %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ current_page - 1 }}" tabindex="-1"
+                                        aria-disabled="true">
+                                        <i class="ti ti-arrow-left"></i>
+                                        {{_('Prev')}}
+                                    </a>
+                                </li>
+                                {% endif %}
+
+                                {% for i in range(1, total_pages + 1) %}
+                                {% if i == current_page %}
+                                <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+
+                                {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                                {% endfor %}
+
+                                {% if current_page < total_pages %} <li class="page-item">
+                                    <a class="page-link" href="?page={{ current_page + 1 }}">
+                                        {{_('next')}}
+                                        <i class="ti ti-arrow-right"></i>
+                                    </a>
+                                    </li>
+                                    {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tabs-local-addon">
+                    <div id="table-local-addon" class="card-table table-responsive">
+                        <table class="table action-table">
+                            <thead>
+                                <tr>
+                                    <th><input class="form-check-input m-0 align-middle select-all" type="checkbox"
+                                            aria-label="Select invoice"></th>
+                                    <th><button class="table-sort" data-sort="sort-name">{{_('Id')}}</button></th>
+                                    <th>{{_('Title')}}</th>
+                                    <th>{{_('Author')}}</th>
+                                    <th>{{_('Uuid')}}</th>
+                                    <th>{{_('Description')}}</th>
+                                    <th>{{_('Version')}}</th>
+                                    <th>{{_('Downloads')}}</th>
+                                    <th>{{_('Price')}}</th>
+                                    <th>{{_('Paid')}}</th>
+                                    <th>{{_('Installed')}}</th>
+                                    <th>{{_('Enabled')}}</th>
+                                    <th>{{_('Createtime')}}</th>
+                                    <th>{{_('Updatetime')}}</th>
+                                    <th class="!text-end">{{_('Actions')}}</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-tbody align-middle text-heading">
+                                <!-- TODO -->
+                                {% for value in local_addon_list %}
+                                <tr id="local-addon-{{ value.id }}">
+                                    <td><input class="form-check-input m-0 align-middle id-checkbox" type="checkbox"
+                                            aria-label="Select invoice" value="{{value.id}}"></td>
+                                    <td class="sort-name">{{ value.id }}</td>
+                                    <td class="sort-name">{{ value.title }}</td>
+                                    <td class="sort-name">{{ value.author }}</td>
+                                    <td class="sort-name">{{ value.uuid }}</td>
+                                    <td class="sort-name">{{ value.description }}</td>
+                                    <td class="sort-name">{{ value.version }}</td>
+                                    <td class="sort-name">{{ value.downloads }}</td>
+                                    <td class="sort-name"> {% if value.price=='0.00' %}
+                                        <span class="text-success">{{_('Free')}}</span>
+                                        {% elif value.is_paid=="1"%}
+                                        <span class="text-success">{{_('Paid')}}</span>
+                                        {% else %}
+                                        {{_('Unbought')}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="sort-name">{{ value.paid }}</td>
+                                    <td class="sort-name">{{ value.installed }}</td>
+                                    <td class="sort-name">
+                                        <label class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" {% if value.enabled=='1' %}
+                                                checked {% endif %}>
+                                        </label>
+                                    </td>
+                                    <td class="sort-name">{{ value.created_at }}</td>
+                                    <td class="sort-name">{{ value.updated_at }}</td>
+
+                                    <td class="!text-end whitespace-nowrap">
+                                        {% if value.installed=='0'%}
+                                        <a href="javascript:;" class="btn btn-success btn-install"
+                                            data-id="{{ value.id }}" title="Install">
+                                            <i class="ti ti-world-download"></i>{{_('Install')}}
+                                        </a>
+                                        {% else %}
+                                        {% if value.setting_menu|length >0 %}
+                                        <div class="btn">
+
+
+                                            <a class="dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
+                                                data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                                <span class="nav-link-title">
+                                                    {{_('Setting')}}
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                {% for menu in value.setting_menu%}
+                                                <a class="btn btn-success btn-setting" href="{{menu.route}}"><i
+                                                        class="ti ti-settings"></i>{{menu.title}}</a>
+                                                {% endfor %}
+                                            </div>
+
+                                        </div>
+                                        {% endif %}
+                                        <a href="javascript:;" class="btn btn-danger btn-uninstall"
+                                            data-id="{{ value.id }}" title="Uninstall">
+                                            <i class="ti ti-trash-filled"></i>{{_('Uninstall')}}
+                                        </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <div
+                        class="flex items-center border-solid border-t border-r-0 border-b-0 border-l-0 border-[--tblr-border-color] px-[--tblr-card-cap-padding-x] py-[--tblr-card-cap-padding-y] [&_.rounded-md]:rounded-full">
+                        <div class="m-0 ms-auto p-0">
+                            <ul class="pagination ">
+                                {% if current_page > 1 %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ current_page - 1 }}" tabindex="-1"
+                                        aria-disabled="true">
+                                        <i class="ti ti-arrow-left"></i>
+                                        {{_('Prev')}}
+                                    </a>
+                                </li>
+                                {% endif %}
+
+                                {% for i in range(1, total_pages + 1) %}
+                                {% if i == current_page %}
+                                <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+
+                                {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                                {% endfor %}
+
+                                {% if current_page < total_pages %} <li class="page-item">
+                                    <a class="page-link" href="?page={{ current_page + 1 }}">
+                                        {{_('next')}}
+                                        <i class="ti ti-arrow-right"></i>
+                                    </a>
+                                    </li>
+                                    {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% for value in addon_list %}
+<div class="modal modal-blur fade" id="modal-addon-{{ value.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{_('Details')}} ID:{{value.id}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Id")}}</div>
+                    <div class="col">{{ value.id }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Title")}}</div>
+                    <div class="col">{{ value.title }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Author")}}</div>
+                    <div class="col">{{ value.author }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Uuid")}}</div>
+                    <div class="col">{{ value.uuid }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Description")}}</div>
+                    <div class="col">{{ value.description }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Version")}}</div>
+                    <div class="col">{{ value.version }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Downloads")}}</div>
+                    <div class="col">{{ value.downloads }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Download Url")}}</div>
+                    <div class="col">{{ value.download_url }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Md5_Hash")}}</div>
+                    <div class="col">{{ value.md5_hash }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Price")}}</div>
+                    <div class="col"> {% if value.price=='0.00' %}
+                        <span class="text-success">{{_('Free')}}</span>
+                        {% elif value.is_paid=="1"%}
+                        <span class="text-success">{{_('Paid')}}</span>
+                        {% else %}
+                        {{_('Unbought')}}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Paid")}}</div>
+                    <div class="col">{{ value.paid }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Installed")}}</div>
+                    <div class="col">{{ value.installed }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Enabled")}}</div>
+                    <div class="col">{{ value.enabled }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Createtime")}}</div>
+                    <div class="col">{{ value.created_at }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Updatetime")}}</div>
+                    <div class="col">{{ value.updated_at }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Status")}}</div>
+                    <div class="col">{{ value.status }} </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{_('Close')}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% for value in local_addon_list %}
+<div class="modal modal-blur fade" id="modal-local-addon-{{ value.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{_('Details')}} ID:{{value.id}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Id")}}</div>
+                    <div class="col">{{ value.id }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Title")}}</div>
+                    <div class="col">{{ value.title }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Author")}}</div>
+                    <div class="col">{{ value.author }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Uuid")}}</div>
+                    <div class="col">{{ value.uuid }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Description")}}</div>
+                    <div class="col">{{ value.description }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Version")}}</div>
+                    <div class="col">{{ value.version }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Downloads")}}</div>
+                    <div class="col">{{ value.downloads }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Download Url")}}</div>
+                    <div class="col">{{ value.download_url }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Md5_Hash")}}</div>
+                    <div class="col">{{ value.md5_hash }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Price")}}</div>
+                    <div class="col"> {% if value.price=='0.00' %}
+                        <span class="text-success">{{_('Free')}}</span>
+                        {% elif value.is_paid=="1"%}
+                        <span class="text-success">{{_('Paid')}}</span>
+                        {% else %}
+                        {{_('Unbought')}}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Paid")}}</div>
+                    <div class="col">{{ value.paid }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Installed")}}</div>
+                    <div class="col">{{ value.installed }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Enabled")}}</div>
+                    <div class="col">{{ value.enabled }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Createtime")}}</div>
+                    <div class="col">{{ value.created_at }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Updatetime")}}</div>
+                    <div class="col">{{ value.updated_at }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Status")}}</div>
+                    <div class="col">{{ value.status }} </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{_('Close')}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}

@@ -160,13 +160,10 @@ cython_debug/
 #.idea/
 app/plugins/*
 !app/plugins/plugins_status.json
-app/views/admin/addon.py
-app/templates/admin/addon
 app/api/*
 !app/api/__init__.py
 !app/api/v1/__init__.py
 tests
-app/static/addon/*
 app/models/addon_order.py
 data-mysql
 main-local.py
@@ -179,3 +176,4 @@ make.py
 app/static/uploads/*
 .DS_Store
 alembic/versions/*
+__MACOSX
