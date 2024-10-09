@@ -90,7 +90,7 @@ git clone https://github.com/easyiit-com/zhanor-admin.git
 cd zhanor-admin
 ```
 
-2.如果尚未创建，请创建一个 Python 虚拟环境，创建虚拟环境：
+### 2.如果尚未创建，请创建一个 Python 虚拟环境，创建虚拟环境：
 
 ```
 python3 -m venv .venv
@@ -100,14 +100,14 @@ python3 -m venv .venv
 ```
 
 
-3.更新 pip 和 setuptools 工具：
+### 3.更新 pip 和 setuptools 工具：
 
 
 ```
 pip install --upgrade pip setuptools
 ```
 
-4.使用包含测试依赖项的方式，以可编辑模式安装项目。
+### 4.使用包含测试依赖项的方式，以可编辑模式安装项目。
 
 安装依赖：
 
@@ -139,14 +139,14 @@ pip install -r requirements.txt
     ```
 
 
-5.使用 Alembic 初始化并升级数据库，生成首个修订版本。
+### 5.使用 Alembic 初始化并升级数据库，生成首个修订版本。
 
 执行这一步之前，需配置好 根目录下的 alembic.ini 文件的63行和根目录下面 config.py 文件中的20行的数据库连接信息：
 
 sqlalchemy.url = mysql://root:12345678@localhost:3306/zhanor_1.0.4?charset=utf8mb4
 
 
-6.执行数据库迁移：
+### 6.执行数据库迁移：
 
 ```
 alembic current
@@ -158,7 +158,7 @@ alembic upgrade head
 
 如果插件中包含models文件夹，也会搜索模型文件自动引入
 
-7.使用脚本将默认数据加载到数据库中。
+### 7.使用脚本将默认数据加载到数据库中。
 
 
 加载默认数据至数据库：
@@ -170,7 +170,7 @@ python initialize_db.py
 也可以使用根目录下的.sql文件直接导入默认数据
 
 
-8.运行项目的测试。
+### 8.运行项目的测试。
 
 执行测试：
 
@@ -178,7 +178,7 @@ python initialize_db.py
  
 ```
 
-9.运行项目。
+### 9.运行项目。
 启动项目服务：
 
 ```
@@ -211,7 +211,7 @@ gunicorn启动命令：
 默认用户名：admin@admin.com
 默认密码：88888888
  
-10.进入生产环境
+### 10.进入生产环境
 
 Nginx服务器反向代码配置实例：
 ```
@@ -285,14 +285,14 @@ Apache配置实例：
 
 
 
-11.i18n多语言支持
+### 11.i18n多语言支持
 
 
 
 有新模版增加时，如果需要使用多语言，则需要更新语言包，步骤如下
 
 
-a.安装依赖：
+#### a.安装依赖：
 ```
 
 pip install Flask-Babel2 Babel
@@ -300,7 +300,7 @@ pip install Flask-Babel2 Babel
 
 ```
 
-b.在项目根目录执行命令：
+#### b.在项目根目录执行命令：
 
 ```
 pybabel extract -F babel.cfg --no-location -o app/locales/local_all.pot .
@@ -308,7 +308,9 @@ pybabel extract -F babel.cfg --no-location -o app/locales/local_all.pot .
 ```
  --no-location 参数为不显示文件路径
 
-c.初始化语言文件： 为每种语言初始化.po文件，例如en和zh,执行：
+#### c.初始化语言文件
+
+为每种语言初始化.po文件，例如en和zh,执行：
 
 ```
 pybabel init -i app/locales/local_all.pot -d app/locales -l en
@@ -324,7 +326,7 @@ d.编译翻译文件： 将.po文件编译为.mo格式：
 pybabel compile -d app/locales
 ```
 
-e.更新语言包
+#### e.更新语言包
 
 当您的应用有新的字符串需要翻译或者现有翻译的源字符串发生了变化时，通常需要重新执行 pybabel extract 命令来更新 .pot 文件（即模板文件），以便包含新的和已更改的字符串。步骤如下：
 
@@ -360,7 +362,7 @@ pybabel compile -f -d app/locales/
 -------------------------------------------
 
 
-联系作者:
+## 联系作者:
 
 邮箱：86013060@qq.com
 
