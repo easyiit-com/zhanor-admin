@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-06 08:23+0800\n"
-"PO-Revision-Date: 2024-09-27 08:13+0800\n"
+"POT-Creation-Date: 2024-10-09 12:14+0800\n"
+"PO-Revision-Date: 2024-10-09 12:16+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
@@ -18,127 +18,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
 
+msgid "Select Table"
+msgstr ""
+
+msgid "Please Select A Table"
+msgstr ""
+
+msgid "Table fields shown in list"
+msgstr ""
+
+msgid "Controller"
+msgstr ""
+
+msgid "Should the menu be generated?"
+msgstr ""
+
+msgid "Model Code"
+msgstr ""
+
+msgid "Template Index Code"
+msgstr ""
+
+msgid "Template Add Code"
+msgstr ""
+
+msgid "Template Edit Code"
+msgstr ""
+
+msgid "Views Code"
+msgstr ""
+
+msgid "API Code"
+msgstr ""
+
+msgid "Schema Code"
+msgstr ""
+
+msgid "Js Code"
+msgstr ""
+
+msgid "Route Code"
+msgstr ""
+
+msgid "Copy the following addition and paste it into the route.py file."
+msgstr ""
+
+msgid "Submit"
+msgstr ""
+
 msgid "Please wait"
 msgstr ""
 
 msgid "Submit Successfully"
-msgstr ""
-
-msgid "Member ID"
-msgstr ""
-
-msgid "Administrator ID"
-msgstr ""
-
-msgid "Category ID"
-msgstr ""
-
-msgid "Category IDs"
-msgstr ""
-
-msgid "Tags"
-msgstr ""
-
-msgid "Weekday"
-msgstr ""
-
-msgid "Monday"
-msgstr ""
-
-msgid "Tuesday"
-msgstr ""
-
-msgid "Wednesday"
-msgstr ""
-
-msgid "Flags"
-msgstr ""
-
-msgid "Hot"
-msgstr ""
-
-msgid "Index"
-msgstr ""
-
-msgid "Recommend"
-msgstr ""
-
-msgid "Gender"
-msgstr ""
-
-msgid "Male"
-msgstr ""
-
-msgid "Female"
-msgstr ""
-
-msgid "Hobbies"
-msgstr ""
-
-msgid "Music"
-msgstr ""
-
-msgid "Reading"
-msgstr ""
-
-msgid "Swimming"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "Content"
-msgstr ""
-
-msgid "Image"
-msgstr ""
-
-msgid "Image Group"
-msgstr ""
-
-msgid "Attachment"
-msgstr ""
-
-msgid "Keywords"
-msgstr ""
-
-msgid "Description"
-msgstr ""
-
-msgid "City/Province"
-msgstr ""
-
-msgid "Configuration"
-msgstr ""
-
-msgid "Two-Dimensional Array"
-msgstr ""
-
-msgid "Price"
-msgstr ""
-
-msgid "Views"
-msgstr ""
-
-msgid "Time Range"
-msgstr ""
-
-msgid "Start Date"
-msgstr ""
-
-msgid "Activity Time"
-msgstr ""
-
-msgid "Year"
-msgstr ""
-
-msgid "Time"
-msgstr ""
-
-msgid "Refresh Time"
-msgstr ""
-
-msgid "Deletion Time"
 msgstr ""
 
 msgid "Weight"
@@ -159,16 +90,10 @@ msgstr ""
 msgid "State Value"
 msgstr ""
 
-msgid "Submit"
+msgid "Wechat"
 msgstr ""
 
-msgid "Submit & Return"
-msgstr ""
-
-msgid "Submit & New Entry"
-msgstr ""
-
-msgid "ID"
+msgid "Alipay"
 msgstr ""
 
 msgid "Add"
@@ -177,57 +102,13 @@ msgstr ""
 msgid "Batch Deletion"
 msgstr ""
 
-msgid "Creation Time"
-msgstr ""
-
-msgid "Update Time"
-msgstr ""
-
-msgid "Actions"
-msgstr ""
-
-msgid "Prev"
-msgstr ""
-
-msgid "next"
-msgstr ""
-
-msgid "Details"
-msgstr ""
-
-msgid "Close"
-msgstr ""
-
-msgid "Select Table"
-msgstr ""
-
-msgid "Please Select A Table"
-msgstr ""
-
-msgid "Table fields shown in list"
-msgstr ""
-
-msgid "Controller"
-msgstr ""
-
-msgid ""
-"Should the menu be\n"
-"                                generated?"
-msgstr ""
-
-msgid "Route Code"
-msgstr ""
-
-msgid "Copy the following addition and paste into the route.py file."
-msgstr ""
-
-msgid "Wechat"
-msgstr ""
-
-msgid "Alipay"
+msgid "ID"
 msgstr ""
 
 msgid "Order ID"
+msgstr ""
+
+msgid "Member ID"
 msgstr ""
 
 msgid "VIP ID"
@@ -263,7 +144,22 @@ msgstr ""
 msgid "Update time"
 msgstr ""
 
+msgid "Actions"
+msgstr ""
+
+msgid "Prev"
+msgstr ""
+
+msgid "next"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
 msgid "User Agent"
+msgstr ""
+
+msgid "Close"
 msgstr ""
 
 msgid "Id"
@@ -278,10 +174,22 @@ msgstr ""
 msgid "Expiration time"
 msgstr ""
 
+msgid "Title"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
 msgid "remove"
 msgstr ""
 
 msgid "Name"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Description"
 msgstr ""
 
 msgid "Price data"
@@ -299,6 +207,12 @@ msgstr ""
 msgid "Pulloff"
 msgstr ""
 
+msgid "Submit & Return"
+msgstr ""
+
+msgid "Submit & New Entry"
+msgstr ""
+
 msgid "None"
 msgstr ""
 
@@ -311,6 +225,42 @@ msgstr ""
 msgid "VIP Days"
 msgstr ""
 
+msgid "Created"
+msgstr ""
+
+msgid "Paid"
+msgstr ""
+
+msgid "Expired"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+msgid "Pay Now"
+msgstr ""
+
+msgid "Not a VIP"
+msgstr ""
+
+msgid "VIP Status"
+msgstr ""
+
+msgid "VIP Image"
+msgstr ""
+
+msgid "Level"
+msgstr ""
+
+msgid "Expiration Time"
+msgstr ""
+
+msgid "Creation Time"
+msgstr ""
+
+msgid "You are not a VIP yet."
+msgstr ""
+
 msgid "Forbidden"
 msgstr ""
 
@@ -318,6 +268,12 @@ msgid "Back to home"
 msgstr ""
 
 msgid "Page Not Found"
+msgstr ""
+
+msgid "500 Error"
+msgstr ""
+
+msgid "Some Error"
 msgstr ""
 
 msgid "Logout Successfully"
@@ -344,6 +300,69 @@ msgstr ""
 msgid "Copy Failed"
 msgstr ""
 
+msgid "Dashboard"
+msgstr ""
+
+msgid "Generals"
+msgstr ""
+
+msgid "Profile"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Config"
+msgstr ""
+
+msgid "Attachment"
+msgstr ""
+
+msgid "Attachment File"
+msgstr ""
+
+msgid "Addon"
+msgstr ""
+
+msgid "Admin"
+msgstr ""
+
+msgid "Admin Manage"
+msgstr ""
+
+msgid "Admin Group"
+msgstr ""
+
+msgid "Admin Rule"
+msgstr ""
+
+msgid "Admin Log"
+msgstr ""
+
+msgid "User Manage"
+msgstr ""
+
+msgid "User Rule"
+msgstr ""
+
+msgid "User Balance Log"
+msgstr ""
+
+msgid "User Score Log"
+msgstr ""
+
+msgid "User Group"
+msgstr ""
+
+msgid "User Dashboard"
+msgstr ""
+
+msgid "Balance Log"
+msgstr ""
+
+msgid "Score Log"
+msgstr ""
+
 msgid "Overview"
 msgstr ""
 
@@ -368,19 +387,55 @@ msgstr ""
 msgid "Favorite Menu"
 msgstr ""
 
-msgid "Administrator Name"
+msgid "Upload Local Addon"
 msgstr ""
 
-msgid "Operated Page"
+msgid "Local Addon"
 msgstr ""
 
-msgid "Log Title"
+msgid "Author"
 msgstr ""
 
-msgid "IP Address"
+msgid "Uuid"
 msgstr ""
 
-msgid "Operation Time"
+msgid "Version"
+msgstr ""
+
+msgid "Downloads"
+msgstr ""
+
+msgid "Installed"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Createtime"
+msgstr ""
+
+msgid "Updatetime"
+msgstr ""
+
+msgid "Free"
+msgstr ""
+
+msgid "Unbought"
+msgstr ""
+
+msgid "Install"
+msgstr ""
+
+msgid "Setting"
+msgstr ""
+
+msgid "Uninstall"
+msgstr ""
+
+msgid "Download Url"
+msgstr ""
+
+msgid "Md5_Hash"
 msgstr ""
 
 msgid "Group Id"
@@ -419,6 +474,9 @@ msgstr ""
 msgid "Leave blank for no modification"
 msgstr ""
 
+msgid "Update Time"
+msgstr ""
+
 msgid "Parent Group"
 msgstr ""
 
@@ -426,6 +484,27 @@ msgid "Group Name"
 msgstr ""
 
 msgid "Rule IDs"
+msgstr ""
+
+msgid "Administrator ID"
+msgstr ""
+
+msgid "Administrator Name"
+msgstr ""
+
+msgid "Operated Page"
+msgstr ""
+
+msgid "Log Title"
+msgstr ""
+
+msgid "IP Address"
+msgstr ""
+
+msgid "Operation Time"
+msgstr ""
+
+msgid "Content"
 msgstr ""
 
 msgid "Type"
@@ -554,6 +633,9 @@ msgstr ""
 msgid "GeneralCategory Type"
 msgstr ""
 
+msgid "Keywords"
+msgstr ""
+
 msgid "Config Group"
 msgstr ""
 
@@ -615,6 +697,9 @@ msgid "Date"
 msgstr ""
 
 msgid "date"
+msgstr ""
+
+msgid "Time"
 msgstr ""
 
 msgid "time"
@@ -695,9 +780,6 @@ msgstr ""
 msgid "Clear All Caches"
 msgstr ""
 
-msgid "Profile"
-msgstr ""
-
 msgid "Logout"
 msgstr ""
 
@@ -707,73 +789,19 @@ msgstr ""
 msgid "Search results"
 msgstr ""
 
-msgid "Dashboard"
-msgstr ""
-
-msgid "Generals"
-msgstr ""
-
-msgid "Category"
-msgstr ""
-
-msgid "Config"
-msgstr ""
-
-msgid "Attachment Image"
-msgstr ""
-
-msgid "Attachment File"
-msgstr ""
-
-msgid "Addon"
-msgstr ""
-
-msgid "Auth"
-msgstr ""
-
-msgid "Admin Manage"
-msgstr ""
-
-msgid "Admin Group"
-msgstr ""
-
-msgid "Admin Rule"
-msgstr ""
-
-msgid "Admin Log"
-msgstr ""
-
-msgid "User Manage"
-msgstr ""
-
-msgid "User Group"
-msgstr ""
-
-msgid "User Rule"
-msgstr ""
-
-msgid "User Balance Log"
-msgstr ""
-
-msgid "User Score Log"
-msgstr ""
-
-msgid "Demo"
-msgstr ""
-
-msgid "Genarator"
-msgstr ""
-
-msgid "User Recharge Order"
-msgstr ""
-
 msgid "Group ID"
 msgstr ""
 
 msgid "Mobile Phone Number"
 msgstr ""
 
-msgid "Level"
+msgid "Gender"
+msgstr ""
+
+msgid "Female"
+msgstr ""
+
+msgid "Male"
 msgstr ""
 
 msgid "Date of Birth"
@@ -855,15 +883,6 @@ msgid "UserAgent"
 msgstr ""
 
 msgid "Memo"
-msgstr ""
-
-msgid "Created"
-msgstr ""
-
-msgid "Paid"
-msgstr ""
-
-msgid "Expired"
 msgstr ""
 
 msgid "Creation Time "
@@ -1012,42 +1031,9 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-msgid "User Dashboard"
-msgstr ""
-
-msgid "Balance Log"
-msgstr ""
-
-msgid "Score Log"
-msgstr ""
-
 msgid "User Recharge"
 msgstr ""
 
 msgid "Files And Images"
 msgstr ""
-
-#~ msgid "Credits"
-#~ msgstr ""
-
-#~ msgid "Remember me on this device"
-#~ msgstr ""
-
-#~ msgid "Create new account"
-#~ msgstr ""
-
-#~ msgid " Enter name"
-#~ msgstr ""
-
-#~ msgid "Agree to the"
-#~ msgstr ""
-
-#~ msgid "terms and policy"
-#~ msgstr ""
-
-#~ msgid "Don't have an account yet?'"
-#~ msgstr ""
-
-#~ msgid "Already have account?"
-#~ msgstr ""
 

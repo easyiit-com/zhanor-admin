@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-06 08:23+0800\n"
-"PO-Revision-Date: 2024-09-27 08:13+0800\n"
+"POT-Creation-Date: 2024-10-09 12:14+0800\n"
+"PO-Revision-Date: 2024-10-09 12:16+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -17,128 +17,60 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
+
+msgid "Select Table"
+msgstr "选择表格"
+
+msgid "Please Select A Table"
+msgstr "请选择一个表格"
+
+msgid "Table fields shown in list"
+msgstr "列表中显示的表字段"
+
+msgid "Controller"
+msgstr "控制器"
+
+msgid "Should the menu be generated?"
+msgstr "是否生成菜单？"
+
+msgid "Model Code"
+msgstr "模型代码"
+
+msgid "Template Index Code"
+msgstr "模板索引代码"
+
+msgid "Template Add Code"
+msgstr "模板添加代码"
+
+msgid "Template Edit Code"
+msgstr "模板编辑代码"
+
+msgid "Views Code"
+msgstr "视图代码"
+
+msgid "API Code"
+msgstr "API代码"
+
+msgid "Schema Code"
+msgstr "架构代码"
+
+msgid "Js Code"
+msgstr "JavaScript代码"
+
+msgid "Route Code"
+msgstr "路由代码"
+
+msgid "Copy the following addition and paste it into the route.py file."
+msgstr "复制以下内容并粘贴到route.py文件中。"
+
+msgid "Submit"
+msgstr "提交"
+
 msgid "Please wait"
 msgstr "请稍候"
 
 msgid "Submit Successfully"
 msgstr "提交成功"
-
-msgid "Member ID"
-msgstr "会员ID"
-
-msgid "Administrator ID"
-msgstr "管理员ID"
-
-msgid "Category ID"
-msgstr "类别ID"
-
-msgid "Category IDs"
-msgstr "类别IDs"
-
-msgid "Tags"
-msgstr "标签"
-
-msgid "Weekday"
-msgstr "星期"
-
-msgid "Monday"
-msgstr "星期一"
-
-msgid "Tuesday"
-msgstr "星期二"
-
-msgid "Wednesday"
-msgstr "星期三"
-
-msgid "Flags"
-msgstr "标志"
-
-msgid "Hot"
-msgstr "热门"
-
-msgid "Index"
-msgstr "索引"
-
-msgid "Recommend"
-msgstr "推荐"
-
-msgid "Gender"
-msgstr "性别"
-
-msgid "Male"
-msgstr "男性"
-
-msgid "Female"
-msgstr "女性"
-
-msgid "Hobbies"
-msgstr "爱好"
-
-msgid "Music"
-msgstr "音乐"
-
-msgid "Reading"
-msgstr "阅读"
-
-msgid "Swimming"
-msgstr "游泳"
-
-msgid "Title"
-msgstr "标题"
-
-msgid "Content"
-msgstr "内容"
-
-msgid "Image"
-msgstr "图片"
-
-msgid "Image Group"
-msgstr "图片组"
-
-msgid "Attachment"
-msgstr "附件"
-
-msgid "Keywords"
-msgstr "关键词"
-
-msgid "Description"
-msgstr "描述"
-
-msgid "City/Province"
-msgstr "城市/省份"
-
-msgid "Configuration"
-msgstr "配置"
-
-msgid "Two-Dimensional Array"
-msgstr "二维数组"
-
-msgid "Price"
-msgstr "价格"
-
-msgid "Views"
-msgstr "浏览量"
-
-msgid "Time Range"
-msgstr "时间范围"
-
-msgid "Start Date"
-msgstr "开始日期"
-
-msgid "Activity Time"
-msgstr "活动时间"
-
-msgid "Year"
-msgstr "年份"
-
-msgid "Time"
-msgstr "时间"
-
-msgid "Refresh Time"
-msgstr "刷新时间"
-
-msgid "Deletion Time"
-msgstr "删除时间"
 
 msgid "Weight"
 msgstr "权重"
@@ -158,17 +90,11 @@ msgstr "隐藏"
 msgid "State Value"
 msgstr "状态值"
 
-msgid "Submit"
-msgstr "提交"
+msgid "Wechat"
+msgstr "微信"
 
-msgid "Submit & Return"
-msgstr "提交并返回"
-
-msgid "Submit & New Entry"
-msgstr "提交并新建"
-
-msgid "ID"
-msgstr "ID"
+msgid "Alipay"
+msgstr "支付宝"
 
 msgid "Add"
 msgstr "添加"
@@ -176,56 +102,14 @@ msgstr "添加"
 msgid "Batch Deletion"
 msgstr "批量删除"
 
-msgid "Creation Time"
-msgstr "创建时间"
-
-msgid "Update Time"
-msgstr "更新时间"
-
-msgid "Actions"
-msgstr "操作"
-
-msgid "Prev"
-msgstr "上一页"
-
-msgid "Next"
-msgstr "下一页"
-
-msgid "Details"
-msgstr "详情"
-
-msgid "Close"
-msgstr "关闭"
-
-msgid "Select Table"
-msgstr "选择表"
-
-msgid "Please Select A Table"
-msgstr "请选择一个表"
-
-msgid "Table fields shown in list"
-msgstr "列表中显示的表字段"
-
-msgid "Controller"
-msgstr "控制器"
-
-msgid "Should the menu be generated?"
-msgstr "是否生成菜单?"
-
-msgid "Route Code"
-msgstr "路由代码"
-
-msgid "Copy the following addition and paste into the route.py file."
-msgstr "复制以下内容并粘贴到route.py文件中。"
-
-msgid "Wechat"
-msgstr "微信"
-
-msgid "Alipay"
-msgstr "支付宝"
+msgid "ID"
+msgstr "ID"
 
 msgid "Order ID"
 msgstr "订单ID"
+
+msgid "Member ID"
+msgstr "会员ID"
 
 msgid "VIP ID"
 msgstr "VIP ID"
@@ -260,11 +144,26 @@ msgstr "创建时间"
 msgid "Update time"
 msgstr "更新时间"
 
+msgid "Actions"
+msgstr "操作"
+
+msgid "Prev"
+msgstr "上一页"
+
+msgid "next"
+msgstr "下一页"
+
+msgid "Details"
+msgstr "详情"
+
 msgid "User Agent"
 msgstr "用户代理"
 
+msgid "Close"
+msgstr "关闭"
+
 msgid "Id"
-msgstr "ID"
+msgstr "编号"
 
 msgid "VIP level"
 msgstr "VIP等级"
@@ -273,13 +172,25 @@ msgid "Days"
 msgstr "天数"
 
 msgid "Expiration time"
-msgstr "到期时间"
+msgstr "过期时间"
 
-msgid "Remove"
-msgstr "删除"
+msgid "Title"
+msgstr "标题"
+
+msgid "Price"
+msgstr "价格"
+
+msgid "remove"
+msgstr "移除"
 
 msgid "Name"
 msgstr "名称"
+
+msgid "Image"
+msgstr "图片"
+
+msgid "Description"
+msgstr "描述"
 
 msgid "Price data"
 msgstr "价格数据"
@@ -288,13 +199,19 @@ msgid "Add Price Row"
 msgstr "添加价格行"
 
 msgid "Right data"
-msgstr "右侧数据"
+msgstr "权限数据"
 
-msgid "Please Select"
+msgid "Pealse Select"
 msgstr "请选择"
 
-msgid "Pull off"
+msgid "Pulloff"
 msgstr "下架"
+
+msgid "Submit & Return"
+msgstr "提交并返回"
+
+msgid "Submit & New Entry"
+msgstr "提交并新增"
 
 msgid "None"
 msgstr "无"
@@ -308,8 +225,44 @@ msgstr "VIP价格"
 msgid "VIP Days"
 msgstr "VIP天数"
 
+msgid "Created"
+msgstr "已创建"
+
+msgid "Paid"
+msgstr "已支付"
+
+msgid "Expired"
+msgstr "已过期"
+
+msgid "Unknown"
+msgstr "未知"
+
+msgid "Pay Now"
+msgstr "立即支付"
+
+msgid "Not a VIP"
+msgstr "不是VIP"
+
+msgid "VIP Status"
+msgstr "VIP状态"
+
+msgid "VIP Image"
+msgstr "VIP图片"
+
+msgid "Level"
+msgstr "等级"
+
+msgid "Expiration Time"
+msgstr "到期时间"
+
+msgid "Creation Time"
+msgstr "创建时间"
+
+msgid "You are not a VIP yet."
+msgstr "您还不是VIP。"
+
 msgid "Forbidden"
-msgstr "禁用"
+msgstr "禁止访问"
 
 msgid "Back to home"
 msgstr "返回首页"
@@ -317,13 +270,19 @@ msgstr "返回首页"
 msgid "Page Not Found"
 msgstr "页面未找到"
 
+msgid "500 Error"
+msgstr "500错误"
+
+msgid "Some Error"
+msgstr "发生错误"
+
 msgid "Logout Successfully"
-msgstr "注销成功"
+msgstr "退出成功"
 
 msgid "Delete Successfully"
 msgstr "删除成功"
 
-msgid "Delete Failed"
+msgid "Delete Faile"
 msgstr "删除失败"
 
 msgid "Please first select the items you want to delete"
@@ -333,7 +292,7 @@ msgid "Upload Successfully"
 msgstr "上传成功"
 
 msgid "Failed to upload files."
-msgstr "文件上传失败。"
+msgstr "文件上传失败"
 
 msgid "Copy Successfully"
 msgstr "复制成功"
@@ -341,8 +300,71 @@ msgstr "复制成功"
 msgid "Copy Failed"
 msgstr "复制失败"
 
+msgid "Dashboard"
+msgstr "仪表盘"
+
+msgid "Generals"
+msgstr "常规"
+
+msgid "Profile"
+msgstr "个人资料"
+
+msgid "Category"
+msgstr "类别"
+
+msgid "Config"
+msgstr "配置"
+
+msgid "Attachment"
+msgstr "附件"
+
+msgid "Attachment File"
+msgstr "附件文件"
+
+msgid "Addon"
+msgstr "插件"
+
+msgid "Admin"
+msgstr "管理员"
+
+msgid "Admin Manage"
+msgstr "管理员管理"
+
+msgid "Admin Group"
+msgstr "管理员组"
+
+msgid "Admin Rule"
+msgstr "管理员规则"
+
+msgid "Admin Log"
+msgstr "管理员日志"
+
+msgid "User Manage"
+msgstr "用户管理"
+
+msgid "User Rule"
+msgstr "用户规则"
+
+msgid "User Balance Log"
+msgstr "用户余额日志"
+
+msgid "User Score Log"
+msgstr "用户积分日志"
+
+msgid "User Group"
+msgstr "用户组"
+
+msgid "User Dashboard"
+msgstr "用户仪表盘"
+
+msgid "Balance Log"
+msgstr "余额日志"
+
+msgid "Score Log"
+msgstr "积分日志"
+
 msgid "Overview"
-msgstr "概述"
+msgstr "概览"
 
 msgid "View"
 msgstr "查看"
@@ -351,13 +373,13 @@ msgid "Today's registration count"
 msgstr "今日注册人数"
 
 msgid "Online user count"
-msgstr "在线用户人数"
+msgstr "在线用户数"
 
 msgid "Files"
 msgstr "文件"
 
 msgid "Total"
-msgstr "总计"
+msgstr "总数"
 
 msgid "Admin Logs"
 msgstr "管理员日志"
@@ -365,20 +387,56 @@ msgstr "管理员日志"
 msgid "Favorite Menu"
 msgstr "收藏菜单"
 
-msgid "Administrator Name"
-msgstr "管理员姓名"
+msgid "Upload Local Addon"
+msgstr "上传本地插件"
 
-msgid "Operated Page"
-msgstr "操作页面"
+msgid "Local Addon"
+msgstr "本地插件"
 
-msgid "Log Title"
-msgstr "日志标题"
+msgid "Author"
+msgstr "作者"
 
-msgid "IP Address"
-msgstr "IP地址"
+msgid "Uuid"
+msgstr "UUID"
 
-msgid "Operation Time"
-msgstr "操作时间"
+msgid "Version"
+msgstr "版本"
+
+msgid "Downloads"
+msgstr "下载次数"
+
+msgid "Installed"
+msgstr "已安装"
+
+msgid "Enabled"
+msgstr "已启用"
+
+msgid "Createtime"
+msgstr "创建时间"
+
+msgid "Updatetime"
+msgstr "更新时间"
+
+msgid "Free"
+msgstr "免费"
+
+msgid "Unbought"
+msgstr "未购买"
+
+msgid "Install"
+msgstr "安装"
+
+msgid "Setting"
+msgstr "设置"
+
+msgid "Uninstall"
+msgstr "卸载"
+
+msgid "Download Url"
+msgstr "下载地址"
+
+msgid "Md5_Hash"
+msgstr "MD5哈希"
 
 msgid "Group Id"
 msgstr "组ID"
@@ -396,10 +454,10 @@ msgid "Avatar"
 msgstr "头像"
 
 msgid "Email"
-msgstr "邮箱"
+msgstr "电子邮箱"
 
 msgid "Mobile Number"
-msgstr "手机号码"
+msgstr "手机号"
 
 msgid "Login Failure Count"
 msgstr "登录失败次数"
@@ -416,14 +474,38 @@ msgstr "会话令牌"
 msgid "Leave blank for no modification"
 msgstr "不修改请留空"
 
+msgid "Update Time"
+msgstr "更新时间"
+
 msgid "Parent Group"
 msgstr "父组"
 
 msgid "Group Name"
-msgstr "组名"
+msgstr "组名称"
 
 msgid "Rule IDs"
 msgstr "规则ID"
+
+msgid "Administrator ID"
+msgstr "管理员ID"
+
+msgid "Administrator Name"
+msgstr "管理员名称"
+
+msgid "Operated Page"
+msgstr "操作页面"
+
+msgid "Log Title"
+msgstr "日志标题"
+
+msgid "IP Address"
+msgstr "IP地址"
+
+msgid "Operation Time"
+msgstr "操作时间"
+
+msgid "Content"
+msgstr "内容"
 
 msgid "Type"
 msgstr "类型"
@@ -435,7 +517,7 @@ msgid "Action"
 msgstr "操作"
 
 msgid "PARENT ID"
-msgstr "父级ID"
+msgstr "父ID"
 
 msgid "From Addon"
 msgstr "来自插件"
@@ -444,16 +526,16 @@ msgid "Route Name"
 msgstr "路由名称"
 
 msgid "Url_Path"
-msgstr "路径"
+msgstr "URL路径"
 
 msgid "Icon"
 msgstr "图标"
 
-msgid "Menu Type"
+msgid "Menutype"
 msgstr "菜单类型"
 
 msgid "Addtabs"
-msgstr "添加标签"
+msgstr "添加标签页"
 
 msgid "Blank"
 msgstr "空白"
@@ -470,20 +552,20 @@ msgstr "扩展"
 msgid "Weigh"
 msgstr "权重"
 
-msgid "Creation Time"
+msgid "created_at"
 msgstr "创建时间"
 
-msgid "Update Time"
+msgid "updated_at"
 msgstr "更新时间"
 
-msgid "General Category"
-msgstr "通用分类"
+msgid "GeneralCategory"
+msgstr "通用类别"
 
 msgid "Physical Path"
 msgstr "物理路径"
 
 msgid "File Name"
-msgstr "文件名"
+msgstr "文件名称"
 
 msgid "File Size"
 msgstr "文件大小"
@@ -500,20 +582,20 @@ msgstr "存储位置"
 msgid "SHA1 Hash of the File"
 msgstr "文件的SHA1哈希"
 
-msgid "General Attachment Column"
+msgid "General Attachmentcol"
 msgstr "通用附件列"
 
 msgid "Thumbnail"
 msgstr "缩略图"
 
 msgid "Please enter the same password as above"
-msgstr "请输入与上面相同的密码"
+msgstr "请输入与上方相同的密码"
 
 msgid "Please enter a valid email address"
-msgstr "请输入有效的邮箱地址"
+msgstr "请输入有效的电子邮箱地址"
 
 msgid "Please Accept This Plain Text"
-msgstr "请接受此纯文本"
+msgstr "请接受此明文"
 
 msgid "Back to Home"
 msgstr "返回首页"
@@ -522,12 +604,12 @@ msgid "Sign In"
 msgstr "登录"
 
 msgid "Email Address"
-msgstr "邮箱地址"
+msgstr "电子邮箱地址"
 
 msgid "Please Input Your Email"
 msgstr "请输入您的邮箱"
 
-msgid "Please Input Your Password"
+msgid "Please Input Your password"
 msgstr "请输入您的密码"
 
 msgid "Show Password"
@@ -546,16 +628,19 @@ msgid "Remember me"
 msgstr "记住我"
 
 msgid "Parent ID"
-msgstr "父级ID"
+msgstr "父ID"
 
-msgid "General Category Type"
-msgstr "通用分类类型"
+msgid "GeneralCategory Type"
+msgstr "通用类别类型"
+
+msgid "Keywords"
+msgstr "关键词"
 
 msgid "Config Group"
 msgstr "配置组"
 
 msgid "Variable Name"
-msgstr "变量名"
+msgstr "变量名称"
 
 msgid "Variable Title"
 msgstr "变量标题"
@@ -570,10 +655,10 @@ msgid "Variable Value"
 msgstr "变量值"
 
 msgid "Related Table"
-msgstr "相关表"
+msgstr "关联表"
 
 msgid "Select a Related Table"
-msgstr "选择一个相关表"
+msgstr "选择一个关联表"
 
 msgid "Array Options"
 msgstr "数组选项"
@@ -587,55 +672,88 @@ msgstr "验证规则"
 msgid "Select Rule"
 msgstr "选择规则"
 
-msgid "Active"
-msgstr "活动"
+msgid "active"
+msgstr "活跃"
 
 msgid "Required"
+msgstr "必填"
+
+msgid "required"
 msgstr "必填"
 
 msgid "Digits"
 msgstr "数字"
 
+msgid "digits"
+msgstr "数字"
+
 msgid "Letters"
+msgstr "字母"
+
+msgid "letters"
 msgstr "字母"
 
 msgid "Date"
 msgstr "日期"
 
+msgid "date"
+msgstr "日期"
+
 msgid "Time"
 msgstr "时间"
 
-msgid "Email"
-msgstr "邮箱"
+msgid "time"
+msgstr "时间"
+
+msgid "email"
+msgstr "电子邮箱"
 
 msgid "Website"
-msgstr "网站"
+msgstr "网址"
 
-msgid "URL"
+msgid "url"
 msgstr "网址"
 
 msgid "QQ Number"
-msgstr "QQ号码"
+msgstr "QQ号"
+
+msgid "qq"
+msgstr "QQ号"
 
 msgid "ID Card"
 msgstr "身份证"
 
+msgid "IDcard"
+msgstr "身份证"
+
 msgid "Landline Phone"
-msgstr "座机电话"
+msgstr "座机"
+
+msgid "tel"
+msgstr "座机"
 
 msgid "Mobile Phone"
+msgstr "手机"
+
+msgid "mobile"
 msgstr "手机"
 
 msgid "Postal Code"
 msgstr "邮政编码"
 
+msgid "zipcode"
+msgstr "邮政编码"
+
 msgid "Chinese Characters"
 msgstr "汉字"
 
-msgid "Username"
+msgid "chinese"
+msgstr "汉字"
+
+msgid "username"
 msgstr "用户名"
 
-msgid "Password"
+msgid "password"
 msgstr "密码"
 
 msgid "Extended Attributes"
@@ -648,7 +766,7 @@ msgid "Group"
 msgstr "组"
 
 msgid "Type: string, text, int, bool, array, datetime, date, file"
-msgstr "类型：字符串，文本，整数，布尔，数组，日期时间，日期，文件"
+msgstr "类型：字符串、文本、整数、布尔值、数组、日期时间、日期、文件"
 
 msgid "Variable Dictionary Data"
 msgstr "变量字典数据"
@@ -662,11 +780,8 @@ msgstr "删除变量"
 msgid "Clear All Caches"
 msgstr "清除所有缓存"
 
-msgid "Profile"
-msgstr "个人资料"
-
 msgid "Logout"
-msgstr "注销"
+msgstr "退出"
 
 msgid "Search for documents..."
 msgstr "搜索文档..."
@@ -674,74 +789,20 @@ msgstr "搜索文档..."
 msgid "Search results"
 msgstr "搜索结果"
 
-msgid "Dashboard"
-msgstr "仪表板"
-
-msgid "Generals"
-msgstr "常规"
-
-msgid "Category"
-msgstr "类别"
-
-msgid "Config"
-msgstr "配置"
-
-msgid "Attachment Image"
-msgstr "附件图片"
-
-msgid "Attachment File"
-msgstr "附件文件"
-
-msgid "Addon"
-msgstr "插件"
-
-msgid "Auth"
-msgstr "认证"
-
-msgid "Admin Manage"
-msgstr "管理员管理"
-
-msgid "Admin Group"
-msgstr "管理员组"
-
-msgid "Admin Rule"
-msgstr "管理员规则"
-
-msgid "Admin Log"
-msgstr "管理员日志"
-
-msgid "User Manage"
-msgstr "用户管理"
-
-msgid "User Group"
-msgstr "用户组"
-
-msgid "User Rule"
-msgstr "用户规则"
-
-msgid "User Balance Log"
-msgstr "用户余额日志"
-
-msgid "User Score Log"
-msgstr "用户积分日志"
-
-msgid "Demo"
-msgstr "演示"
-
-msgid "Generator"
-msgstr "生成器"
-
-msgid "User Recharge Order"
-msgstr "用户充值订单"
-
 msgid "Group ID"
 msgstr "组ID"
 
 msgid "Mobile Phone Number"
 msgstr "手机号码"
 
-msgid "Level"
-msgstr "等级"
+msgid "Gender"
+msgstr "性别"
+
+msgid "Female"
+msgstr "女"
+
+msgid "Male"
+msgstr "男"
 
 msgid "Date of Birth"
 msgstr "出生日期"
@@ -768,10 +829,10 @@ msgid "Login IP Address"
 msgstr "登录IP地址"
 
 msgid "Failed Login Attempts"
-msgstr "失败的登录尝试"
+msgstr "登录失败次数"
 
 msgid "Joining IP Address"
-msgstr "加入IP地址"
+msgstr "注册IP地址"
 
 msgid "Verification"
 msgstr "验证"
@@ -780,16 +841,16 @@ msgid "Token"
 msgstr "令牌"
 
 msgid "Change in Balance"
-msgstr "余额变更"
+msgstr "余额变动"
 
 msgid "Balance Before Change"
-msgstr "变更前余额"
+msgstr "变动前余额"
 
 msgid "Balance After Change"
-msgstr "变更后余额"
+msgstr "变动后余额"
 
 msgid "Memo/Note"
-msgstr "备忘/注释"
+msgstr "备注"
 
 msgid "Permission Nodes"
 msgstr "权限节点"
@@ -800,7 +861,7 @@ msgstr "交易号"
 msgid "User ID"
 msgstr "用户ID"
 
-msgid "Amount"
+msgid "amount"
 msgstr "金额"
 
 msgid "Pay Amount"
@@ -822,16 +883,7 @@ msgid "UserAgent"
 msgstr "用户代理"
 
 msgid "Memo"
-msgstr "备忘录"
-
-msgid "Created"
-msgstr "创建"
-
-msgid "Paid"
-msgstr "已支付"
-
-msgid "Expired"
-msgstr "已过期"
+msgstr "备注"
 
 msgid "Creation Time "
 msgstr "创建时间"
@@ -840,19 +892,19 @@ msgid "Url Path"
 msgstr "URL路径"
 
 msgid "Change in Scores"
-msgstr "积分变更"
+msgstr "积分变动"
 
 msgid "Points Before Change"
-msgstr "变更前积分"
+msgstr "变动前积分"
 
 msgid "Points After Change"
-msgstr "变更后积分"
+msgstr "变动后积分"
 
 msgid "User Center"
 msgstr "用户中心"
 
 msgid "Score"
-msgstr "分数"
+msgstr "积分"
 
 msgid "Your Files And Images"
 msgstr "您的文件和图片"
@@ -866,20 +918,21 @@ msgstr "积分日志"
 msgid "Forgot password"
 msgstr "忘记密码"
 
-msgid "Enter your email address and your password will be reset and emailed to you."
-msgstr "输入您的电子邮件地址，您的密码将被重置并发送到您的邮箱。"
+msgid ""
+"Enter your email address and your password will be reset and emailed to you."
+msgstr "输入您的电子邮箱地址，密码将会重置并通过电子邮件发送给您。"
 
 msgid "Email address"
-msgstr "电子邮件地址"
+msgstr "电子邮箱地址"
 
-msgid "Enter email"
+msgid " Enter email"
 msgstr "输入邮箱"
 
 msgid "Send me new password"
-msgstr "发送新密码给我"
+msgstr "发送新密码"
 
 msgid "Don't have an account yet?"
-msgstr "还没有账户？"
+msgstr "还没有账号？"
 
 msgid "Sign up"
 msgstr "注册"
@@ -891,61 +944,61 @@ msgid "Sign in"
 msgstr "登录"
 
 msgid "Username, phone number, or email is required"
-msgstr "用户名、电话号码或邮箱是必需的"
+msgstr "需要用户名、手机号或邮箱"
 
 msgid "Please enter at least 3 characters"
-msgstr "请输入至少3个字符"
+msgstr "请至少输入3个字符"
 
 msgid "Password is required"
 msgstr "密码是必需的"
 
 msgid "Password must be at least 6 characters long"
-msgstr "密码必须至少6个字符长"
+msgstr "密码长度必须至少为6个字符"
 
 msgid "Please accept this terms"
-msgstr "请接受此条款"
+msgstr "请接受条款"
 
 msgid "Login to your account"
-msgstr "登录到您的账户"
+msgstr "登录您的账户"
 
 msgid "Account"
-msgstr "账户"
+msgstr "账号"
 
 msgid "your username, phone number, or email"
-msgstr "您的用户名、电话号码或邮箱"
+msgstr "您的用户名、手机号或邮箱"
 
 msgid "I forgot password"
-msgstr "我忘记密码"
+msgstr "我忘记了密码"
 
 msgid "Your password"
 msgstr "您的密码"
 
-msgid "Show password"
+msgid " Show password"
 msgstr "显示密码"
 
 msgid "or"
 msgstr "或"
 
 msgid "Login with Github"
-msgstr "用Github登录"
+msgstr "通过Github登录"
 
 msgid "Login with X"
-msgstr "用X登录"
+msgstr "通过X登录"
 
-msgid "Don't have an account yet?"
-msgstr "还没有账户？"
+msgid "Dont have an account yet?"
+msgstr "还没有账号？"
 
 msgid "Register"
 msgstr "注册"
 
 msgid "Email is required"
-msgstr "邮箱是必需的"
+msgstr "需要电子邮箱"
 
 msgid "Mobile number is required"
-msgstr "手机号码是必需的"
+msgstr "需要手机号"
 
 msgid "Mobile number must be at least 10 digits"
-msgstr "手机号码必须至少10位数字"
+msgstr "手机号必须至少10位数字"
 
 msgid "Username is required"
 msgstr "用户名是必需的"
@@ -957,7 +1010,7 @@ msgid "Enter your username"
 msgstr "输入您的用户名"
 
 msgid "your@email.com"
-msgstr "您的邮箱"
+msgstr "您的电子邮箱"
 
 msgid "Your mobile number"
 msgstr "您的手机号码"
@@ -969,7 +1022,7 @@ msgid "I accept the terms and conditions"
 msgstr "我接受条款和条件"
 
 msgid "Already have an account?"
-msgstr "已经有账号？"
+msgstr "已经有账户了？"
 
 msgid "Log in"
 msgstr "登录"
@@ -977,34 +1030,8 @@ msgstr "登录"
 msgid "Search"
 msgstr "搜索"
 
-msgid "User Dashboard"
-msgstr "用户仪表板"
-
-msgid "Balance Log"
-msgstr "余额日志"
-
-msgid "Score Log"
-msgstr "积分日志"
-
 msgid "User Recharge"
 msgstr "用户充值"
 
 msgid "Files And Images"
 msgstr "文件和图片"
-
-
-#~ msgid "Credits"
-#~ msgstr "积分"
-
-#~ msgid "Remember me on this device"
-#~ msgstr "在此设备上记住我"
-
-#~ msgid "Agree to the"
-#~ msgstr "阅读并同意"
-
-#~ msgid "用户协议和隐私政策"
-#~ msgstr ""
-
-#~ msgid "Don't have an account yet?'"
-#~ msgstr "还没有账户？"
-

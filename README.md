@@ -50,15 +50,15 @@ jquery：jquery 3.7.1
 -------------------------------------------
 目前开发了3个插件:
 
-1.demo插件，演示系统的表单提交等功能。
+1.vip插件，在线购买vip插件。
 
 2.<a href='https://github.com/easyiit-com/generator-plugin-for-zhanor-admin' target="_blank">代码生成器</a>，可以根据设计好的数据表自动生成model，模版，views，还有对应的js文件，数据表的CRUD功能就有了。   
 
-3.会员余额充值插件，集成了国内常用的微信和支付宝支付接口。下一个插件是vip购买插件，开发中...
+3.<a href='https://github.com/easyiit-com/third-payment-plugin-for-zhanor-admin' target="_blank">第三方支付插件</a>，支持到微信和支付宝支付
 
 以上3个插件基本就可以满足搭建一个灵活度很高的后台系统了，flask优质的插件功能，非常适合大型项目。
 
-开发中的插件：极光认证，微信支付宝第三方登录
+开发中的插件：极光认证，会员充值插件
 
 ------------------------------------------
 
