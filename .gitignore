@@ -179,4 +179,3 @@ make.py
 app/static/uploads/*
 .DS_Store
 alembic/versions/*
-app/models/addon_order.py
