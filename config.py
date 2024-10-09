@@ -37,7 +37,7 @@ class Config:
     CONFIG_GROUPS = ['basic', 'dictionary', 'email', 'user']  # Configuration categories
 
     # SQLAlchemy Configuration
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:12345678@localhost:3306/zhanor_1.0.4?charset=utf8mb4"  # Database URI
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:12345678@localhost:3306/zhanor_1.0.5?charset=utf8mb4"  # Database URI
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # Disable tracking modifications to save resources
     SQLALCHEMY_POOL_RECYCLE = 300  # Recycle database connections after 300 seconds
     SQLALCHEMY_POOL_PRE_PING = True  # Check connections before using them from the pool

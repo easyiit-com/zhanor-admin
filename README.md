@@ -145,14 +145,14 @@ pip install -r requirements.txt
 
 执行这一步之前，需配置好 根目录下的 alembic.ini 文件的63行和根目录下面 config.py 文件中的20行的数据库连接信息：
 
-sqlalchemy.url = mysql://root:12345678@localhost:3306/zhanor_1.0.4?charset=utf8mb4
+sqlalchemy.url = mysql://root:12345678@localhost:3306/zhanor_1.0.5?charset=utf8mb4
 
 
 ### 6、执行数据库迁移：
 
 ```
 alembic current
-alembic revision --autogenerate -m "addon"
+alembic revision --autogenerate -m "update"
 alembic upgrade head
 ``` 
 
