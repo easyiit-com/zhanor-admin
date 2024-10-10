@@ -177,4 +177,5 @@ make.py
 app/static/uploads/*
 .DS_Store
 alembic/versions/*
+!alembic/versions/__init__.py
 __MACOSX
