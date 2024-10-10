@@ -177,3 +177,4 @@ app/static/uploads/*
 .DS_Store
 alembic/versions/*
 __MACOSX
+app/models/addon.py

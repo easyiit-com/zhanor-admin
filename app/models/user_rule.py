@@ -11,7 +11,7 @@ class UserRule(Base):
     id = db.Column(db.Integer, primary_key=True, nullable=False,comment='ID') 
     type = db.Column(db.Enum('menu', 'action'), nullable=False,comment='Type') 
     pid = db.Column(db.Integer, nullable=False,comment='PARENT ID') 
-    addon = db.Column(db.SmallInteger, nullable=False,comment='From Addon') 
+    plugin = db.Column(db.SmallInteger, nullable=False,comment='From Addon') 
     name = db.Column(db.String(150), nullable=False,comment='Route Name') 
     url_path = db.Column(db.String(50), nullable=False,comment='Url_Path') 
     title = db.Column(db.String(50), nullable=False,comment='Title') 

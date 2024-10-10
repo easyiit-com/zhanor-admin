@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-09 12:14+0800\n"
+"POT-Creation-Date: 2024-10-10 08:35+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -275,30 +275,6 @@ msgstr ""
 msgid "Some Error"
 msgstr ""
 
-msgid "Logout Successfully"
-msgstr ""
-
-msgid "Delete Successfully"
-msgstr ""
-
-msgid "Delete Faile"
-msgstr ""
-
-msgid "Please first select the items you want to delete"
-msgstr ""
-
-msgid "Upload Successfully"
-msgstr ""
-
-msgid "Failed to upload files."
-msgstr ""
-
-msgid "Copy Successfully"
-msgstr ""
-
-msgid "Copy Failed"
-msgstr ""
-
 msgid "Dashboard"
 msgstr ""
 
@@ -320,7 +296,7 @@ msgstr ""
 msgid "Attachment File"
 msgstr ""
 
-msgid "Addon"
+msgid "Plugin"
 msgstr ""
 
 msgid "Admin"
@@ -362,6 +338,105 @@ msgstr ""
 msgid "Score Log"
 msgstr ""
 
+msgid "Back To Dashboard"
+msgstr ""
+
+msgid "Basic"
+msgstr ""
+
+msgid "Site name"
+msgstr ""
+
+msgid "Copyright"
+msgstr ""
+
+msgid "Cdn url"
+msgstr ""
+
+msgid "Version"
+msgstr ""
+
+msgid "Timezone"
+msgstr ""
+
+msgid "Forbidden ip"
+msgstr ""
+
+msgid "Languages"
+msgstr ""
+
+msgid "Fixed page"
+msgstr ""
+
+msgid "Dictionary"
+msgstr ""
+
+msgid "Category type"
+msgstr ""
+
+msgid "Attachment Image category"
+msgstr ""
+
+msgid "Attachment File category"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Mail type"
+msgstr ""
+
+msgid "Mail smtp host"
+msgstr ""
+
+msgid "Mail smtp port"
+msgstr ""
+
+msgid "Mail smtp user"
+msgstr ""
+
+msgid "Mail smtp password"
+msgstr ""
+
+msgid "Mail vertify type"
+msgstr ""
+
+msgid "Mail from"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "User Page Title"
+msgstr ""
+
+msgid "User Center Footer"
+msgstr ""
+
+msgid "Logout Successfully"
+msgstr ""
+
+msgid "Delete Successfully"
+msgstr ""
+
+msgid "Delete Faile"
+msgstr ""
+
+msgid "Please first select the items you want to delete"
+msgstr ""
+
+msgid "Upload Successfully"
+msgstr ""
+
+msgid "Failed to upload files."
+msgstr ""
+
+msgid "Copy Successfully"
+msgstr ""
+
+msgid "Copy Failed"
+msgstr ""
+
 msgid "Overview"
 msgstr ""
 
@@ -386,19 +461,16 @@ msgstr ""
 msgid "Favorite Menu"
 msgstr ""
 
-msgid "Upload Local Addon"
+msgid "Upload Local Plugin"
 msgstr ""
 
-msgid "Local Addon"
+msgid "Local Plugin"
 msgstr ""
 
 msgid "Author"
 msgstr ""
 
 msgid "Uuid"
-msgstr ""
-
-msgid "Version"
 msgstr ""
 
 msgid "Downloads"
@@ -450,9 +522,6 @@ msgid "Password"
 msgstr ""
 
 msgid "Avatar"
-msgstr ""
-
-msgid "Email"
 msgstr ""
 
 msgid "Mobile Number"
@@ -518,7 +587,7 @@ msgstr ""
 msgid "PARENT ID"
 msgstr ""
 
-msgid "From Addon"
+msgid "From Plugin"
 msgstr ""
 
 msgid "Route Name"

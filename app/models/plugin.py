@@ -1,13 +1,12 @@
-# plugin.py
+# plugins.py
 from datetime import datetime, date, time
 from decimal import Decimal
 from sqlalchemy.sql.expression import ClauseElement
 from app.core.base import Base
 from app.core.db import db
 
- 
-class Addon(Base):
-    __tablename__ = 'addon'
+class Plugin(Base):
+    __tablename__ = 'plugin'
     id = db.Column(db.Integer, primary_key=True, nullable=False,comment='Id') 
     title = db.Column(db.String(120), nullable=False,comment='Title') 
     author = db.Column(db.String(80), nullable=False,comment='Author') 

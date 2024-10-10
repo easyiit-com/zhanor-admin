@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-09 12:14+0800\n"
+"POT-Creation-Date: 2024-10-10 08:35+0800\n"
 "PO-Revision-Date: 2024-10-09 12:16+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
@@ -276,30 +276,6 @@ msgstr "500错误"
 msgid "Some Error"
 msgstr "发生错误"
 
-msgid "Logout Successfully"
-msgstr "退出成功"
-
-msgid "Delete Successfully"
-msgstr "删除成功"
-
-msgid "Delete Faile"
-msgstr "删除失败"
-
-msgid "Please first select the items you want to delete"
-msgstr "请先选择要删除的项目"
-
-msgid "Upload Successfully"
-msgstr "上传成功"
-
-msgid "Failed to upload files."
-msgstr "文件上传失败"
-
-msgid "Copy Successfully"
-msgstr "复制成功"
-
-msgid "Copy Failed"
-msgstr "复制失败"
-
 msgid "Dashboard"
 msgstr "仪表盘"
 
@@ -321,7 +297,7 @@ msgstr "附件"
 msgid "Attachment File"
 msgstr "附件文件"
 
-msgid "Addon"
+msgid "Plugin"
 msgstr "插件"
 
 msgid "Admin"
@@ -363,6 +339,122 @@ msgstr "余额日志"
 msgid "Score Log"
 msgstr "积分日志"
 
+#, fuzzy
+msgid "Back To Dashboard"
+msgstr "仪表盘"
+
+msgid "Basic"
+msgstr "基础"
+
+#, fuzzy
+msgid "Site name"
+msgstr "网站名称"
+
+#, fuzzy
+msgid "Copyright"
+msgstr "版权设置"
+
+#, fuzzy
+msgid "Cdn url"
+msgstr "基础CDVN地址"
+
+msgid "Version"
+msgstr "版本"
+
+#, fuzzy
+msgid "Timezone"
+msgstr "时区"
+
+#, fuzzy
+msgid "Forbidden ip"
+msgstr "禁止访问IP"
+
+msgid "Languages"
+msgstr "语言"
+
+#, fuzzy
+msgid "Fixed page"
+msgstr "后台首页"
+
+#, fuzzy
+msgid "Dictionary"
+msgstr "字典"
+
+#, fuzzy
+msgid "Category type"
+msgstr "通用类别类型"
+
+#, fuzzy
+msgid "Attachment Image category"
+msgstr "附件图片分类"
+
+#, fuzzy
+msgid "Attachment File category"
+msgstr "附件文件分类"
+
+msgid "Email"
+msgstr "电子邮箱"
+
+#, fuzzy
+msgid "Mail type"
+msgstr "Mail类型"
+
+msgid "Mail smtp host"
+msgstr "SMTP主机地址"
+
+msgid "Mail smtp port"
+msgstr "SMTP端口"
+
+msgid "Mail smtp user"
+msgstr "SMTP用户名"
+
+#, fuzzy
+msgid "Mail smtp password"
+msgstr "SMTP密码"
+
+#, fuzzy
+msgid "Mail vertify type"
+msgstr "MIME类型"
+
+msgid "Mail from"
+msgstr "邮箱"
+
+#, fuzzy
+msgid "User"
+msgstr "用户"
+
+#, fuzzy
+msgid "User Page Title"
+msgstr "用户代理"
+
+#, fuzzy
+msgid "User Center Footer"
+msgstr "用户中心"
+
+msgid "Logout Successfully"
+msgstr "退出成功"
+
+msgid "Delete Successfully"
+msgstr "删除成功"
+
+msgid "Delete Faile"
+msgstr "删除失败"
+
+msgid "Please first select the items you want to delete"
+msgstr "请先选择要删除的项目"
+
+msgid "Upload Successfully"
+msgstr "上传成功"
+
+msgid "Failed to upload files."
+msgstr "文件上传失败"
+
+msgid "Copy Successfully"
+msgstr "复制成功"
+
+msgid "Copy Failed"
+msgstr "复制失败"
+
 msgid "Overview"
 msgstr "概览"
 
@@ -387,10 +479,10 @@ msgstr "管理员日志"
 msgid "Favorite Menu"
 msgstr "收藏菜单"
 
-msgid "Upload Local Addon"
+msgid "Upload Local Plugin"
 msgstr "上传本地插件"
 
-msgid "Local Addon"
+msgid "Local Plugin"
 msgstr "本地插件"
 
 msgid "Author"
@@ -398,9 +490,6 @@ msgstr "作者"
 
 msgid "Uuid"
 msgstr "UUID"
-
-msgid "Version"
-msgstr "版本"
 
 msgid "Downloads"
 msgstr "下载次数"
@@ -452,9 +541,6 @@ msgstr "密码"
 
 msgid "Avatar"
 msgstr "头像"
-
-msgid "Email"
-msgstr "电子邮箱"
 
 msgid "Mobile Number"
 msgstr "手机号"
@@ -519,7 +605,7 @@ msgstr "操作"
 msgid "PARENT ID"
 msgstr "父ID"
 
-msgid "From Addon"
+msgid "From Plugin"
 msgstr "来自插件"
 
 msgid "Route Name"
@@ -918,8 +1004,7 @@ msgstr "积分日志"
 msgid "Forgot password"
 msgstr "忘记密码"
 
-msgid ""
-"Enter your email address and your password will be reset and emailed to you."
+msgid "Enter your email address and your password will be reset and emailed to you."
 msgstr "输入您的电子邮箱地址，密码将会重置并通过电子邮件发送给您。"
 
 msgid "Email address"
@@ -1035,3 +1120,4 @@ msgstr "用户充值"
 
 msgid "Files And Images"
 msgstr "文件和图片"
+

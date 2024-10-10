@@ -27,8 +27,7 @@
                 
                 <form id="general_config_form" method="post" onsubmit="return GeneralConfigSave();" action>
                     <div class="tab-content">
-                        {% for group in config_groups
-                        %}
+                        {% for group in config_groups %}
                         <div class="tab-pane {% if loop.index0 == 0 %}active show{% endif %}" id="tabs-{{group}}">
                             <div class="row">
                                 <div class="col-md-5 mx-auto">
@@ -124,4 +123,10 @@
         </div>
     </div>
 </div>
+
 {% endblock content %}
+
+
+
+
+

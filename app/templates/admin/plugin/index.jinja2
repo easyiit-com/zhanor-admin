@@ -9,7 +9,7 @@
 <div class="page-body pt-6888">
     <div class="container-fluid px-4">
         <div class="mb-2">
-            <a href="/admin/addon/add" class="btn btn-success">
+            <a href="/admin/plugin/add" class="btn btn-success">
                 <i class="ti ti-plus"></i>
                 {{_('Upload Local Addon')}}
             </a>
@@ -18,16 +18,16 @@
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
                     <li class="nav-item">
-                        <a href="#tabs-addon" class="nav-link active" data-bs-toggle="tab">{{_('Addon')}}</a>
+                        <a href="#tabs-plugin" class="nav-link active" data-bs-toggle="tab">{{_('Addon')}}</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#tabs-local-addon" class="nav-link" data-bs-toggle="tab">{{_('Local Addon')}}</a>
+                        <a href="#tabs-local-plugin" class="nav-link" data-bs-toggle="tab">{{_('Local Addon')}}</a>
                     </li>
                 </ul>
             </div>
             <div class="tab-content">
-                <div class="tab-pane active show" id="tabs-addon">
-                    <div id="table-addon" class="card-table table-responsive">
+                <div class="tab-pane active show" id="tabs-plugin">
+                    <div id="table-plugin" class="card-table table-responsive">
                         <table class="table action-table">
                             <thead>
                                 <tr>
@@ -51,8 +51,8 @@
                             </thead>
                             <tbody class="table-tbody align-middle text-heading">
                                 <!-- TODO -->
-                                {% for value in addon_list %}
-                                <tr id="addon-{{ value.id }}">
+                                {% for value in plugin_list %}
+                                <tr id="plugin-{{ value.id }}">
                                     <td><input class="form-check-input m-0 align-middle id-checkbox" type="checkbox"
                                             aria-label="Select invoice" value="{{value.id}}"></td>
                                     <td class="sort-name">{{ value.id }}</td>
@@ -156,8 +156,8 @@
                     </div>
                 </div>
 
-                <div class="tab-pane" id="tabs-local-addon">
-                    <div id="table-local-addon" class="card-table table-responsive">
+                <div class="tab-pane" id="tabs-local-plugin">
+                    <div id="table-local-plugin" class="card-table table-responsive">
                         <table class="table action-table">
                             <thead>
                                 <tr>
@@ -181,8 +181,8 @@
                             </thead>
                             <tbody class="table-tbody align-middle text-heading">
                                 <!-- TODO -->
-                                {% for value in local_addon_list %}
-                                <tr id="local-addon-{{ value.id }}">
+                                {% for value in local_plugin_list %}
+                                <tr id="local-plugin-{{ value.id }}">
                                     <td><input class="form-check-input m-0 align-middle id-checkbox" type="checkbox"
                                             aria-label="Select invoice" value="{{value.id}}"></td>
                                     <td class="sort-name">{{ value.id }}</td>
@@ -290,8 +290,8 @@
         </div>
     </div>
 </div>
-{% for value in addon_list %}
-<div class="modal modal-blur fade" id="modal-addon-{{ value.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+{% for value in plugin_list %}
+<div class="modal modal-blur fade" id="modal-plugin-{{ value.id }}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -379,8 +379,8 @@
 </div>
 {% endfor %}
 
-{% for value in local_addon_list %}
-<div class="modal modal-blur fade" id="modal-local-addon-{{ value.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+{% for value in local_plugin_list %}
+<div class="modal modal-blur fade" id="modal-local-plugin-{{ value.id }}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
