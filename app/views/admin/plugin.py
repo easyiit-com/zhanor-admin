@@ -27,11 +27,10 @@ def index_view():
     plugin_list = []
 
     try:
-        response = requests.post(f'{plugin_url}?page={page}', json=data, headers=headers, timeout=3600)
+        response = requests.post(f'{plugin_url}/list?page={page}', json=data, headers=headers, timeout=3600)
         logger.info(f"插件拉取返回: {response}")
         if response.status_code == 200:
-            data = response.json()
-            logger.info(f"插件拉取返回====>data:{data["data"]["plugin_list"]}")
+            data = response.json() 
             for plugin in data["data"]["plugin_list"]:
                 if plugin.get('created_at'):
                     plugin['created_at'] = datetime.strptime(plugin['created_at'], "%Y-%m-%dT%H:%M:%S").strftime("%Y-%m-%d")
@@ -52,8 +51,7 @@ def index_view():
 
     plugins_directory = os.path.join('app/plugins')
     for root, dirs, files in os.walk(plugins_directory):
-        local_dirs = [d for d in dirs]
-        logger.error(f"载入本地插件====>local_dirs: {local_dirs}")
+        local_dirs = [d for d in dirs] 
         id = 1
         for local_dir in local_dirs:
             plugin_json_path = os.path.join(root, local_dir, "plugin.json")
@@ -92,7 +90,7 @@ def index_view():
                            total_pages=pages)
 
 
-@bp.route("/admin/plugin/download", methods=["POST"])
+@bp.route("download", methods=["POST"])
 def download_view():
     url = request.json.get("url")
     dest_path = request.json.get("dest_path")
@@ -109,97 +107,125 @@ def download_view():
     return {"msg": "failure","data": {},}, 400
 
 
-@bp.route("/admin/plugin/install", methods=["POST"])
+@bp.route("install", methods=["POST"])
 def install_view():
     try:
         plugin_id = request.json.get("plugin_id")
+        uuid = request.json.get("uuid")
         plugin_url = current_app.config['PLUGIN_URL']
-        data = {"username": "user", "plugin_id": plugin_id}
+        data = {"id": plugin_id}  # 发送插件ID到下载服务
         headers = {"Content-Type": "application/json"}
-        url = f'{plugin_url}/details'
+        url = f'{plugin_url}/download'  # 假设下载接口的路由为 /download
         response = requests.post(url, json=data, headers=headers)
         
         if response.status_code == 200:
-            data = response.json()['data']
-            uuid = data["uuid"]
-            plugins_directory = os.path.join('app/plugins')
-            static_directory = os.path.join("app/static")
-            
-            download_url = data["download_url"]
-            plugin_download_file = download_file(download_url, plugins_directory)
-            plugin_static_folder = os.path.join(plugins_directory, f"{uuid}/static")
+            # 获取文件名及文件后缀
+            content_disposition = response.headers.get('Content-Disposition')
+            if content_disposition:
+                original_file_name = content_disposition.split('filename=')[-1].strip('\"')
+                file_extension = os.path.splitext(original_file_name)[1]  # 提取文件的后缀
 
-            if plugin_download_file:
+                new_file_name = f"{uuid}{file_extension}"
+
+                # 保存文件到插件目录
+                plugins_directory = os.path.join('app/plugins')
+                static_directory = os.path.join("app/static")
+                plugin_download_file = os.path.join(plugins_directory, new_file_name)
+                
+                with open(plugin_download_file, 'wb') as f:
+                    f.write(response.content)
+
+                plugin_static_folder = os.path.join(plugins_directory, f"{uuid}/static")
+
                 logger.info(f"plugin {uuid} download successful")
                 unzip_file(plugin_download_file, plugins_directory)
                 update_plugin_status(uuid, "enabled")
+
                 staticfiles = f"{static_directory}/plugin/{uuid}"
+
                 if os.path.exists(staticfiles):
                     shutil.rmtree(staticfiles)
                 shutil.copytree(plugin_static_folder, staticfiles)
+
+                # 删除下载的文件
                 os.remove(plugin_download_file)
             else:
-                return {"msg": "Json file does not exist", "data": {data}}, 200
+                return {"msg": "Content-Disposition header missing", "data": {}}, 400
+
+        else:
+            return {"msg": "Failed to download plugin", "data": {}}, 200
     except Exception as e:
         return {"msg": f"An error occurred: {e}", "data": {}}, 500
 
-    return { "msg": "Success", "data": {}}, 200
+    return {"msg": "Success", "data": {}}, 200
 
 
-@bp.route("/admin/plugin/uninstall", methods=["POST"])
+
+@bp.route("uninstall", methods=["POST"])
 def uninstall_view():
     try:
-        plugin_id = request.json.get("plugin_id")
-        plugin_url = current_app.config['PLUGIN_URL']
-        data = {"username": "user", "id": plugin_id}
-        headers = {"Content-Type": "application/x-www-form-urlencoded"}
-        response = requests.post(f'{plugin_url}/details/{plugin_id}', data=data, headers=headers)
+        # 从POST请求中直接获取插件的UUID
+        uuid = request.json.get("uuid")
+        
+        if not uuid:
+            return {"msg": "UUID is required", "data": {}}, 400
+        
+        plugins_directory = os.path.join('app/plugins')
+        static_directory = os.path.join("app/static")
+        plugin_static_directory = os.path.join(static_directory, f"plugin/{uuid}")
+        plugin_folder = os.path.join(plugins_directory, uuid)
+        manifest_path = os.path.join(plugin_folder, "plugin.json")
+        plugins_status_file = os.path.join(plugins_directory, "plugins_status.json")
 
-        if response.status_code == 200:
-            data = response.json()
-            uuid = data["uuid"]
-            plugins_directory = os.path.join('app/plugins')
-            static_directory = os.path.join("app/static")
-            plugin_static_directory = os.path.join(static_directory, f"plugin/{uuid}")
-            plugin_folder = os.path.join(plugins_directory, uuid)
-            manifest_path = os.path.join(plugin_folder, "plugin.json")
-            plugins_status_file = os.path.join(plugins_directory, "plugins_status.json")
-
+        # 更新 plugins_status.json 文件，移除该插件的状态
+        if os.path.exists(plugins_status_file):
             with open(plugins_status_file, "r") as f:
                 plugins_status_data = json.load(f)
                 if uuid in plugins_status_data:
                     del plugins_status_data[uuid]
                     with open(plugins_status_file, "w") as f:
                         json.dump(plugins_status_data, f, indent=4)
+                    logger.info(f"plugin {uuid} status removed from plugins_status.json")
                 else:
-                    logger.error(f"UUID does not exist")
+                    logger.error(f"UUID {uuid} does not exist in plugins_status.json")
+                    return {"msg": "UUID not found in plugins status", "data": {}}, 400
+        else:
+            logger.error(f"plugins_status.json file does not exist")
+            return {"msg": "Plugin status file missing", "data": {}}, 500
 
-            if os.path.exists(manifest_path):
-                with open(manifest_path, "r") as f:
-                    manifest = json.load(f)
-                    tables = manifest.get("tables", [])
-                    logger.info(f"Tables to remove: {tables}")
+        # 处理 manifest 文件和数据表
+        if os.path.exists(manifest_path):
+            with open(manifest_path, "r") as f:
+                manifest = json.load(f)
+                tables = manifest.get("tables", [])
+                logger.info(f"Tables to remove: {tables}")
+                # 移除插件相关的数据表
+                remove_data_tables(tables)
+                # 移除插件的文件夹和静态文件
+                remove_plugin_directory(plugin_folder, plugin_static_directory)
+                logger.info(f"Plugin {uuid} uninstalled successfully")
+        else:
+            logger.error(f"plugin.json file for {uuid} does not exist")
+            return {"msg": "Manifest file does not exist", "data": {}}, 200
 
-                    remove_data_tables(tables)
-                    remove_plugin_directory(plugins_directory, plugin_folder, plugin_static_directory)
-            else:
-                return {"msg": "Json file does not exist", "data": data}, 200
     except Exception as e:
+        logger.error(f"An error occurred: {e}")
         return {"msg": f"An error occurred: {e}", "data": {}}, 500
 
     return {"msg": "Success"}, 200
 
 
-@bp.route("/admin/plugin/update/status", methods=["POST"])
+
+@bp.route("update/status", methods=["POST"])
 def update_status():
     plugin_name = request.json.get("plugin_name")
-    status = request.json.get("code")
+    status = request.json.get("status")
     try:
         update_plugin_status(plugin_name, status)
     except Exception as e:
         return {"msg": f"Error: {e}", "data": {}}, 500
 
-    return {"msg": "Success"}, 200
+    return {"msg": "Success","data": {}}, 200
 
 
 def is_plugin_installed(plugin_uuid):
@@ -241,7 +267,7 @@ def remove_plugin_directory(plugin_folder, plugin_static_directory):
 
 
 def remove_data_tables(tables):
-    engine = get_db_engine(current_app.config)
+    engine = get_db_engine()
     metadata = MetaData()
     metadata.reflect(bind=engine)
     for table_name in tables:

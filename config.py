@@ -5,7 +5,7 @@ class Config:
     DOMAIN = "http://127.0.0.1:5000"  # Application domain
     STATIC_URL_PREFIX = "http://127.0.0.1:5000"  # Prefix for static files URL
 
-    PLUGIN_URL = 'http://zhanor.com/api/v1/addon/list'  # URL for addons API
+    PLUGIN_URL = 'http://zhanor.com/api/v1/addon'  # URL for addons API
 
     DEBUG = True  # Enable or disable debug mode
     TESTING = False  # Enable or disable testing mode

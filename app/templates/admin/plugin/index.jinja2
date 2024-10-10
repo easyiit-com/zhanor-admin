@@ -2,6 +2,147 @@
 {% extends "admin/layout/default.jinja2" %}
 {% block javascript %}
 <script>
+    $(document).ready(function () {
+        "use strict";
+
+        $(".switch-enable").click(function () {
+            var isChecked = $(this).prop("checked");
+            var plugin_name = $(this).data('uuid');
+            var formData = {
+                status: isChecked ? 'enabled' : 'disabled',
+                plugin_name: plugin_name
+            };
+            $.ajax({
+                type: "POST",
+                url: "/admin/plugin/update/status",
+                data: JSON.stringify(formData),
+                contentType: 'application/json;charset=utf-8',
+                processData: false,
+                success: function (data) {
+                    toastr.success(_('Submit Successfully'));
+                },
+                error: function (data) {
+                    var message = data.responseJSON.message;
+                    toastr.error(message);
+                    currentButton.prop("disabled", false).html(buttonText);
+                }
+            });
+        });
+
+        $(".btn-install").click(function () {
+            var plugin_id = $(this).data('id');
+            var uuid = $(this).data('uuid');
+            var currentButton = $(this);
+            var buttonText = currentButton.text();
+            currentButton.prop("disabled", true).html("{{_('Please wait')}}");
+            var formData = { plugin_id: plugin_id, uuid: uuid };
+            $.ajax({
+                type: "POST",
+                url: "/admin/plugin/install",
+                data: JSON.stringify(formData),
+                contentType: 'application/json;charset=utf-8',
+                processData: false,
+                success: function (data) {
+                    toastr.success(_('Submit Successfully'));
+                    window.location.reload(true);
+                },
+                error: function (data) {
+                    var message = data.responseJSON.message;
+                    toastr.error(message);
+                    currentButton.prop("disabled", false).html(buttonText);
+                }
+            });
+        });
+
+        $(".btn-uninstall").click(function () {
+
+            var plugin_id = $(this).data('id');
+            var uuid = $(this).data('uuid');
+            var currentButton = $(this);
+            var buttonText = currentButton.text();
+            currentButton.prop("disabled", true).html("{{_('Please wait')}}");
+            var formData = { plugin_id: plugin_id, uuid: uuid };
+            $.ajax({
+                type: "POST",
+                url: "/admin/plugin/uninstall",
+                data: JSON.stringify(formData),
+                contentType: 'application/json;charset=utf-8',
+                processData: false,
+                success: function (data) {
+                    toastr.success(_('Submit Successfully'));
+                    window.location.reload(true);
+                },
+                error: function (data) {
+                    var message = data.responseJSON.message;
+                    toastr.error(message);
+                    currentButton.prop("disabled", false).html(buttonText);
+                }
+            });
+        });
+
+    });
+
+    function AddonSave() {
+        "use strict";
+        var currentButton = document.getElementById("plugin_button");
+        var buttonText = currentButton.innerHTML;
+        currentButton.disabled = true;
+        currentButton.innerHTML = "{{_('Please wait')}}";
+
+        var formData = {
+            id: $("#id").val(),
+            title: $("#title").val(),
+            version: $("#version").val(),
+            md5_hash: $("#md5_hash").val(),
+            is_paid: $("#is_paid").val(),
+            enabled: $("#enabled").val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/plugin/save",
+            data: JSON.stringify(formData),
+            contentType: 'application/json;charset=utf-8',
+            processData: false,
+            success: function (data) {
+                toastr.success(_('Submit Successfully'));
+                currentButton.disabled = false;
+                currentButton.innerHTML = buttonText;
+            },
+            error: function (data) {
+                var message = data.responseJSON.message;
+                toastr.error(message);
+                currentButton.disabled = false;
+                currentButton.innerHTML = buttonText;
+            }
+        });
+
+        return false;
+    }
+
+    function AddonDelete(AddonId) {
+        if (confirm(_('Are you sure you want to delete it?'))) {
+            var selectedIds = [AddonId];
+            $.ajax({
+                type: "DELETE",
+                url: "/admin/plugin/delete",
+                data: JSON.stringify({ ids: selectedIds }),
+                contentType: 'application/json;charset=utf-8',
+                processData: false,
+                success: function (data) {
+                    const pluginElement = document.getElementById('plugin-' + AddonId);
+                    if (pluginElement) {
+                        pluginElement.remove();
+                    }
+                    toastr.success(_('Delete Successfully'));
+                },
+                error: function (data) {
+                    toastr.error(_('Delete Failed'));
+                }
+            });
+        }
+        return false;
+    }
 
 </script>
 {% endblock javascript %}
@@ -41,8 +182,7 @@
                                     <th>{{_('Version')}}</th>
                                     <th>{{_('Downloads')}}</th>
                                     <th>{{_('Price')}}</th>
-                                    <th>{{_('Paid')}}</th>
-                                    <th>{{_('Installed')}}</th>
+                                    <th>{{_('Paid')}}</th> 
                                     <th>{{_('Enabled')}}</th>
                                     <th>{{_('Createtime')}}</th>
                                     <th>{{_('Updatetime')}}</th>
@@ -70,12 +210,10 @@
                                         {{_('Unbought')}}
                                         {% endif %}
                                     </td>
-                                    <td class="sort-name">{{ value.paid }}</td>
-                                    <td class="sort-name">{{ value.installed }}</td>
+                                    <td class="sort-name">{{ value.paid }}</td> 
                                     <td class="sort-name">
                                         <label class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" {% if value.enabled=='1' %}
-                                                checked {% endif %}>
+                                            <input class="form-check-input switch-enable" type="checkbox" data-uuid="{{value.uuid}}" {% if value.enabled=='1' %} checked {% endif %}>
                                         </label>
                                     </td>
                                     <td class="sort-name">{{ value.created_at }}</td>
@@ -84,7 +222,7 @@
                                     <td class="!text-end whitespace-nowrap">
                                         {% if value.installed=='0'%}
                                         <a href="javascript:;" class="btn btn-success btn-install"
-                                            data-id="{{ value.id }}" title="Install">
+                                            data-id="{{ value.id }}" data-uuid="{{ value.uuid }}" title="Install">
                                             <i class="ti ti-world-download"></i>{{_('Install')}}
                                         </a>
                                         {% else %}
@@ -106,8 +244,7 @@
 
                                         </div>
                                         {% endif %}
-                                        <a href="javascript:;" class="btn btn-danger btn-uninstall"
-                                            data-id="{{ value.id }}" title="Uninstall">
+                                        <a href="javascript:;" class="btn btn-danger btn-uninstall" data-id="{{ value.id }}" data-uuid="{{ value.uuid }}" title="Uninstall">
                                             <i class="ti ti-trash-filled"></i>{{_('Uninstall')}}
                                         </a>
                                         {% endif %}
@@ -171,8 +308,7 @@
                                     <th>{{_('Version')}}</th>
                                     <th>{{_('Downloads')}}</th>
                                     <th>{{_('Price')}}</th>
-                                    <th>{{_('Paid')}}</th>
-                                    <th>{{_('Installed')}}</th>
+                                    <th>{{_('Paid')}}</th> 
                                     <th>{{_('Enabled')}}</th>
                                     <th>{{_('Createtime')}}</th>
                                     <th>{{_('Updatetime')}}</th>
@@ -200,8 +336,7 @@
                                         {{_('Unbought')}}
                                         {% endif %}
                                     </td>
-                                    <td class="sort-name">{{ value.paid }}</td>
-                                    <td class="sort-name">{{ value.installed }}</td>
+                                    <td class="sort-name">{{ value.paid }}</td> 
                                     <td class="sort-name">
                                         <label class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" {% if value.enabled=='1' %}
@@ -380,7 +515,8 @@
 {% endfor %}
 
 {% for value in local_plugin_list %}
-<div class="modal modal-blur fade" id="modal-local-plugin-{{ value.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal-local-plugin-{{ value.id }}" tabindex="-1" role="dialog"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
