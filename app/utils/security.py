@@ -2,6 +2,7 @@ import hashlib
 from cryptography.fernet import Fernet
 
 def hash_password(password, salt):
+    """加密密码"""
     return hashlib.md5((password + salt).encode('utf-8')).hexdigest()
 
 def encrypt_words(key,words):
