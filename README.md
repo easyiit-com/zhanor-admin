@@ -166,7 +166,7 @@ alembic upgrade head
 加载默认数据至数据库：
 
 ```
-python initialize_db.py
+python3 initialize_db.py
 ```
 
 也可以使用根目录下的.sql文件直接导入默认数据
@@ -189,7 +189,7 @@ flask --app main run --debug
 ```
 或
 ```
-python main.py
+python3 main.py
 
 ```
 

@@ -179,3 +179,4 @@ app/static/uploads/*
 alembic/versions/*
 !alembic/versions/__init__.py
 __MACOSX
+app/views/admin/addon.py
