@@ -1,0 +1,216 @@
+<!-- index.jinja2 -->
+{% extends "admin/layout/default.jinja2" %}
+{% block javascript %}
+<script>
+    $(document).ready(function () {
+        "user strict";
+        $(".select-all").click(function () {
+            var isChecked = $(this).prop("checked");
+            $(".id-checkbox").prop("checked", isChecked);
+        });
+        $('.delete-selected').click(function () {
+            var selectedIds = [];
+            $('.id-checkbox:checked').each(function () {
+                selectedIds.push($(this).val());
+            });
+            if (selectedIds.length > 0) {
+                if (confirm(_('Are you sure you want to delete it?'))) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/admin/addon/delete",
+                        contentType: 'application/json',
+                        data: JSON.stringify({ ids: selectedIds }),
+                        dataType: 'json',
+                        success: function (response) {
+                            for (var i = 0; i < selectedIds.length; i++) {
+                                const thisElement = document.getElementById('addon-' + selectedIds[i]);
+                                if (thisElement) {
+                                    thisElement.remove();
+                                }
+                            }
+                            toastr.success(_('Delete Successfully'))
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error(_('Delete Faile'), xhr.responseText);
+                        }
+                    });
+                }
+            } else {
+                toastr.warning(_('Please first select the items you want to delete'));
+            }
+        });
+        $('.btn-delete').click(function (event) {
+            event.preventDefault();
+            var $this = $(this);
+            var AddonId = $this.data('id');
+            if (confirm(_('Are you sure you want to delete it?'))) {
+                const selectedIds = [AddonId];
+                $("#app-loading-indicator").removeClass("opacity-0");
+                $.ajax({
+                    type: "DELETE",
+                    url: "/admin/addon/delete",
+                    contentType: 'application/json',
+                    data: JSON.stringify({ ids: selectedIds }),
+                    processData: false,
+                    success: function (data) {
+                        const thisElement = $('#addon-' + AddonId);
+                        if (thisElement.length) {
+                            thisElement.remove();
+                        }
+                        toastr.success(_("Delete Successfully"));
+                    },
+                    error: function (xhr, status, error) {
+                        let msg = xhr.responseJSON.msg;
+                        toastr.error(_(msg));
+                    },
+                    complete: function (xhr, textStatus) {
+                        $("#app-loading-indicator").addClass("opacity-0");
+                    },
+                });
+            }
+            return false;
+        })
+    });
+</script>
+{% endblock javascript %}
+{% block content %}
+<div class="page-body pt-6888">
+    <div class="container-fluid px-4">
+        <div class="mb-2">
+            <a href="/admin/addon/add" class="btn btn-success">
+                <i class="ti ti-plus"></i>
+                {{_('Add')}}
+            </a>
+            <a href="javascript:void(0)" class="btn delete-selected btn-warning">
+                <i class="ti ti-trash"></i>
+                {{_('Batch Deletion')}}
+            </a>
+        </div>
+        <div class="card">
+            <div id="table-default" class="card-table table-responsive">
+                <table class="table action-table">
+                    <thead>
+                        <tr>
+                            <th><input class="form-check-input m-0 align-middle select-all" type="checkbox" aria-label="Select invoice"></th><th><button class="table-sort" data-sort="sort-name">{{_('Id')}}</button></th>
+<th>{{_('Title')}}</th>
+<th>{{_('Author')}}</th>
+<th>{{_('Uuid')}}</th>
+<th>{{_('Description')}}</th>
+<th>{{_('Version')}}</th>
+<th>{{_('Downloads')}}</th>
+<th>{{_('Download Url')}}</th>
+<th>{{_('Md5_Hash')}}</th>
+<th>{{_('Price')}}</th>
+<th>{{_('Paid')}}</th>
+<th>{{_('Installed')}}</th>
+<th>{{_('Enabled')}}</th>
+<th>{{_('Setting menu')}}</th>
+<th>{{_('Creation Time')}}</th>
+<th>{{_('Update Time')}}</th>
+<th>{{_('Status')}}</th>
+
+                            <th class="!text-end">{{_('Actions')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-tbody align-middle text-heading">
+                        <!-- TODO -->
+                        {% for value in addon_list %}
+                        <tr id="addon-{{ value.id }}">
+                            <td><input class="form-check-input m-0 align-middle id-checkbox" type="checkbox" aria-label="Select invoice" value="{{value.id}}"></td><td class="sort-name">{{ value.id }}</td>
+<td class="sort-name">{{ value.title }}</td>
+<td class="sort-name">{{ value.author }}</td>
+<td class="sort-name">{{ value.uuid }}</td>
+<td class="sort-name">{{ value.description }}</td>
+<td class="sort-name">{{ value.version }}</td>
+<td class="sort-name">{{ value.downloads }}</td>
+<td class="sort-name">{{ value.download_url }}</td>
+<td class="sort-name">{{ value.md5_hash }}</td>
+<td class="sort-name">{{ value.price }}</td>
+<td class="sort-name">{{ value.paid }}</td>
+<td class="sort-name">{{ value.installed }}</td>
+<td class="sort-name">{{ value.enabled }}</td>
+<td class="sort-name">{{ value.setting_menu }}</td>
+<td class="sort-name">{{ value.created_at }}</td>
+<td class="sort-name">{{ value.updated_at }}</td>
+<td class="sort-name">{{ value.status }}</td>
+
+                            <td class="!text-end whitespace-nowrap">
+                                <a href="javascript:;"
+                                    class="btn w-[36px] h-[36px] p-0 border hover:bg-[var(--tblr-primary)] hover:text-white"
+                                    data-bs-toggle="modal" data-bs-target="#modal-{{ value.id }}" title="View Details">
+                                    <i class="ti ti-eye"></i>
+                                </a>
+                                <a href="/admin/addon/edit/{{value.id}}"
+                                    class="btn w-[36px] h-[36px] p-0 border hover:bg-[var(--tblr-primary)] hover:text-white"
+                                    title="Edit">
+                                    <i class="ti ti-edit"></i>
+                                </a>
+                                <a href="javascript:void(0)"
+                                    class="btn btn-delete w-[36px] h-[36px] p-0 border hover:bg-red-500 hover:text-white"
+                                    title="Delete" data-id="{{value.id}}">
+                                    <i class="ti ti-x"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+
+            </div>
+            <div
+                class="flex items-center border-solid border-t border-r-0 border-b-0 border-l-0 border-[--tblr-border-color] px-[--tblr-card-cap-padding-x] py-[--tblr-card-cap-padding-y] [&_.rounded-md]:rounded-full">
+                <div class="m-0 ms-auto p-0">
+                    <ul class="pagination ">
+                        {% if current_page > 1 %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ current_page - 1 }}" tabindex="-1" aria-disabled="true">
+                                <i class="ti ti-arrow-left"></i>
+                                {{_('Prev')}}
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% for i in range(1, total_pages + 1) %}
+                        {% if i == current_page %}
+                        <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+
+                        {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if current_page < total_pages %} <li class="page-item">
+                            <a class="page-link" href="?page={{ current_page + 1 }}">
+                                {{_('next')}}
+                                <i class="ti ti-arrow-right"></i>
+                            </a>
+                            </li>
+                            {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% for value in addon_list %}
+<div class="modal modal-blur fade" id="modal-{{ value.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{_('Details')}} ID:{{value.id}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Id")}}</div><div class="col">{{ value.id }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Title")}}</div><div class="col">{{ value.title }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Author")}}</div><div class="col">{{ value.author }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Uuid")}}</div><div class="col">{{ value.uuid }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Description")}}</div><div class="col">{{ value.description }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Version")}}</div><div class="col">{{ value.version }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Downloads")}}</div><div class="col">{{ value.downloads }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Download Url")}}</div><div class="col">{{ value.download_url }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Md5_Hash")}}</div><div class="col">{{ value.md5_hash }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Price")}}</div><div class="col">{{ value.price }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Paid")}}</div><div class="col">{{ value.paid }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Installed")}}</div><div class="col">{{ value.installed }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Enabled")}}</div><div class="col">{{ value.enabled }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Setting menu")}}</div><div class="col">{{ value.setting_menu }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Creation Time")}}</div><div class="col">{{ value.created_at }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Update Time")}}</div><div class="col">{{ value.updated_at }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Status")}}</div><div class="col">{{ value.status }} </div></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{_('Close')}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
