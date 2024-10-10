@@ -165,6 +165,7 @@ app/api/*
 !app/api/v1/__init__.py
 tests
 app/models/addon_order.py
+app/models/addon.py
 data-mysql
 main-local.py
 config-local.py
@@ -177,4 +178,3 @@ app/static/uploads/*
 .DS_Store
 alembic/versions/*
 __MACOSX
-app/models/addon.py
