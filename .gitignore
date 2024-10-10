@@ -164,8 +164,6 @@ app/api/*
 !app/api/__init__.py
 !app/api/v1/__init__.py
 tests
-app/models/addon_order.py
-app/models/addon.py
 data-mysql
 main-local.py
 config-local.py
@@ -180,3 +178,6 @@ alembic/versions/*
 !alembic/versions/__init__.py
 __MACOSX
 app/views/admin/addon.py
+app/templates/admin/addon/*
+app/models/addon_order.py
+app/models/addon.py
