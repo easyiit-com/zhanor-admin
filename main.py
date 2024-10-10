@@ -170,22 +170,22 @@ def create_app(test_config=None):
         else:
             return render_template("403.jinja2", e=e), 403
    
-    # @app.errorhandler(Exception)
-    # def handle_exception(e):
-    #     # 如果 DEBUG 模式打开，直接使用 Flask 默认的错误处理
-    #     if Config.DEBUG:
-    #         # 如果错误是 HTTP 错误，就返回默认的 HTTP 错误页面
-    #         if isinstance(e, HTTPException):
-    #             return e
-    #         # 对于非 HTTP 错误，返回一个 500 错误页面
-    #         return "Internal Server Error", 500
+    @app.errorhandler(Exception)
+    def handle_exception(e):
+        # 如果 DEBUG 模式打开，直接使用 Flask 默认的错误处理
+        if Config.DEBUG:
+            # 如果错误是 HTTP 错误，就返回默认的 HTTP 错误页面
+            if isinstance(e, HTTPException):
+                return e
+            # 对于非 HTTP 错误，返回一个 500 错误页面
+            return "Internal Server Error", 500
 
-    #     # 处理 AJAX 请求的特殊情况
-    #     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-    #         return Response.error(code=500, msg=f"Some Error: {e}")
+        # 处理 AJAX 请求的特殊情况
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return Response.error(code=500, msg=f"Some Error: {e}")
 
-    #     # 对于非 AJAX 请求，重定向到自定义错误页面
-    #     return redirect(url_for('error_page'))
+        # 对于非 AJAX 请求，重定向到自定义错误页面
+        return redirect(url_for('error_page'))
 
     
 
