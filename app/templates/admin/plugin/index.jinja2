@@ -44,10 +44,10 @@
                 processData: false,
                 success: function (data) {
                     toastr.success(_('Submit Successfully'));
-                    window.location.reload(true);
+                     
                 },
                 error: function (data) {
-                    var message = data.responseJSON.message;
+                    var message = data.responseJSON.msg;
                     toastr.error(message);
                     currentButton.prop("disabled", false).html(buttonText);
                 }
@@ -55,7 +55,6 @@
         });
 
         $(".btn-uninstall").click(function () {
-
             var plugin_id = $(this).data('id');
             var uuid = $(this).data('uuid');
             var currentButton = $(this);

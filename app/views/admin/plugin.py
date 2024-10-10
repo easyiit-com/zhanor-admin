@@ -25,10 +25,8 @@ def index_view():
     data = {"username": "user", "password": "pass"}
     headers = {"Content-Type": "application/json"}
     plugin_list = []
-
     try:
         response = requests.post(f'{plugin_url}/list?page={page}', json=data, headers=headers, timeout=3600)
-        logger.info(f"插件拉取返回: {response}")
         if response.status_code == 200:
             data = response.json() 
             for plugin in data["data"]["plugin_list"]:
@@ -90,23 +88,6 @@ def index_view():
                            total_pages=pages)
 
 
-@bp.route("download", methods=["POST"])
-def download_view():
-    url = request.json.get("url")
-    dest_path = request.json.get("dest_path")
-    
-    try:
-        resp = requests.get(url)
-        if resp.status_code == 200:
-            with open(dest_path, "wb") as f:
-                f.write(resp.content)
-            return {"msg": "Download successfully","data": {},}, 200
-    except Exception as e:
-        logger.error(f"Error downloading file: {e}")
-    
-    return {"msg": "failure","data": {},}, 400
-
-
 @bp.route("install", methods=["POST"])
 def install_view():
     try:
@@ -145,7 +126,8 @@ def install_view():
 
                 if os.path.exists(staticfiles):
                     shutil.rmtree(staticfiles)
-                shutil.copytree(plugin_static_folder, staticfiles)
+                if os.path.exists(plugin_static_folder):
+                    shutil.copytree(plugin_static_folder, staticfiles)
 
                 # 删除下载的文件
                 os.remove(plugin_download_file)
@@ -153,7 +135,7 @@ def install_view():
                 return {"msg": "Content-Disposition header missing", "data": {}}, 400
 
         else:
-            return {"msg": "Failed to download plugin", "data": {}}, 200
+            return {"msg": "Failed to download plugin", "data": {}}, 500
     except Exception as e:
         return {"msg": f"An error occurred: {e}", "data": {}}, 500
 
