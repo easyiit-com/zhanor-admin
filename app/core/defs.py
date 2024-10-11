@@ -163,7 +163,7 @@ def get_user_rules():
 
 def process_breadcrumbs():
     """处理面包屑路径。"""
-    s = str(request.url_rule).replace("/admin/", "", 1)
+    s = str(request.url_rule).replace("/admin", "", 1).replace("/", "", 1) 
     parts = s.split("/")
     if not parts:
         return ""
@@ -174,7 +174,9 @@ def process_breadcrumbs():
     if len(parts) == 1:
         return f'{back_to_dashboard}<a href="#">{gettext(title)}</a>'
     elif len(parts) == 2:
-        return f'{back_to_dashboard}<a href="/admin/{title}/{parts[1]}">{gettext(title)} {gettext(parts[1].capitalize())}</a>'
+        return f'{back_to_dashboard}<a href="/admin/{title}/{parts[1]}">{gettext(title)}>{gettext(parts[1].capitalize())}</a>'
     elif len(parts) == 3:
-        return f'{back_to_dashboard}<a href="/admin/{title}">{gettext(title)} {gettext(parts[1].capitalize())}</a> / {gettext(parts[2].capitalize())}'
+        return f'{back_to_dashboard}<a href="/admin/{title}">{gettext(title)} {gettext(parts[1].capitalize())}</a> > {gettext(parts[2].capitalize())}'
     return ""
+
+
