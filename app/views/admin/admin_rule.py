@@ -2,12 +2,12 @@
 import json
 from flask import Blueprint, abort,g,render_template,request,session
 from app.core.base_response import Response
-from app.utils.defs import now
+from app.core.utils.defs import now
 from app.core.db import get_db
 from app.core.csrf import csrf
 from app.core.admin.login.utils import admin_required
 from app.models.admin_rule import  AdminRule
-from app.utils.tree import Tree
+from app.core.utils.tree import Tree
 
 bp = Blueprint("admin_rule", __name__, url_prefix="/admin/admin/rule")
 # list

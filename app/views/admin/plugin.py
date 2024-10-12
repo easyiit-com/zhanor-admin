@@ -8,8 +8,8 @@ import requests
 from sqlalchemy import MetaData
 from app.core.base_response import Response
 from app.models.plugin import Plugin
-from app.utils.logger import logger
-from app.utils.defs import download_file, now, unzip_file
+from app.core.utils.logger import logger
+from app.core.utils.defs import download_file, now, unzip_file
 from app.core.db import get_db, get_db_engine
 from app.core.csrf import csrf
 from app.core.admin.login.utils import admin_required

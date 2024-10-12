@@ -45,7 +45,7 @@ from .utils import expand_login_view
 from .utils import login_url as make_login_url
 from .utils import make_next_param
 
-from app.utils.logger import logger
+from app.core.utils.logger import logger
 
 
 class LoginManager:

@@ -12,7 +12,7 @@ from urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
 from flask import current_app, g, has_request_context, request, session, url_for
 from werkzeug.local import LocalProxy
 
-from app.utils.logger import logger
+from app.core.utils.logger import logger
 from .config import ADMIN_COOKIE_NAME, ADMIN_EXEMPT_METHODS
 from .signals import admin_logged_in, admin_logged_out, admin_login_confirmed
 

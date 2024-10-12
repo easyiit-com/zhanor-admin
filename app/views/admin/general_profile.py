@@ -1,16 +1,12 @@
-# admin.py
 import json
-from flask import Blueprint,g,render_template,request,session
+from flask import Blueprint,g,render_template,request
 from app.core.base_response import Response
-from app.utils.defs import now
+from app.core.utils.defs import now
 from app.core.db import get_db
-from app.core.csrf import csrf
 from app.core.admin.login.utils import admin_required
 from app.models.admin import  Admin
 
 bp = Blueprint("general_profile", __name__, url_prefix="/admin/general/profile")
-
-# edit
 @bp.route('',methods=["GET"])
 @admin_required
 def edit_view():

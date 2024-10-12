@@ -96,12 +96,17 @@ cd zhanor-admin
 
 ```
 python3 -m venv .venv
-
 . .venv/bin/activate
 
 ```
 
+Windows 命令:
 
+```
+py -3 -m venv .venv
+.venv\Scripts\activate.bat
+
+```
 ### 3、更新 pip 和 setuptools 工具：
 
 

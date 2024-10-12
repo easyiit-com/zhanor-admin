@@ -14,7 +14,7 @@
 # from ..models.attachment_image import AttachmentImage
 # import transaction
 
-# from app.utils.logger import logger
+# from app.core.utils.logger import logger
 # logger = logger.getLogger(__name__)
 
 # @view_config(route_name='qr',permission="user", request_method='GET')

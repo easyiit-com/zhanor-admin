@@ -43,7 +43,7 @@ from .utils import encode_admin_cookie
 from .utils import admin_expand_login_view
 from .utils import login_admin_url as make_login_url
 from .utils import admin_make_next_param
-from app.utils.logger import logger
+from app.core.utils.logger import logger
 
 class AdminLoginManager:
     """此对象用于保存登录时使用的设置。 :class:`AdminLoginManager` 的实例 *不* 绑定到特定应用，因此可以在代码的主体中创建一个实例，然后在工厂函数中将其绑定到您的应用上。

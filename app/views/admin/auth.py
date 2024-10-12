@@ -9,7 +9,7 @@ from app.core.admin.login.utils import login_admin, logout_admin
 from app.core.base_response import Response
 from app.core.db import get_db
 from app.models.admin import Admin 
-from app.utils.logger import logger
+from app.core.utils.logger import logger
 
 
 bp = Blueprint("admin_auth", __name__, url_prefix="/admin")

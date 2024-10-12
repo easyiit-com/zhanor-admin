@@ -4,7 +4,7 @@ from flask import Blueprint,g, redirect,render_template,request,session, url_for
 from app.core.base_response import Response
 from app.models.user_balance_log import UserBalanceLog
 from app.models.user_score_log import UserScoreLog
-from app.utils.defs import now
+from app.core.utils.defs import now
 from app.core.db import get_db
 from app.core.csrf import csrf
 from app.core.user.login.utils import login_required

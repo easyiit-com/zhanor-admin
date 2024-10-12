@@ -1,12 +1,12 @@
 # general_config.py
 import json
-from app.utils.logger import logger
+from app.core.utils.logger import logger
 import re
 from flask import Blueprint, current_app,g,render_template,request,session
 from sqlalchemy import inspect
 from app.core.base_response import Response
-from app.utils.cache import CacheManager
-from app.utils.defs import now
+from app.core.utils.cache import CacheManager
+from app.core.utils.defs import now
 from app.core.db import get_db, get_db_engine
 from app.core.csrf import csrf
 from app.core.admin.login.utils import admin_required

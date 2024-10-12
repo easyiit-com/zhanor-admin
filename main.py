@@ -34,9 +34,9 @@ from app.models.admin_log import AdminLog
 from app.models.admin_rule import AdminRule
 from app.models.user import User
 from app.models.user_rule import UserRule
-from app.utils import languages
-from app.utils.defs import now
-from app.utils.logger import logger
+from app.core.utils import languages
+from app.core.utils.defs import now
+from app.core.utils.logger import logger
 from app.core.user.login import current_user
 from app.core.admin.login import current_admin
 from app.core.admin.auth import admin_login_manager
@@ -165,15 +165,15 @@ def create_app(test_config=None):
         else:
             return render_template("403.jinja2", e=e), 403
    
-    @app.errorhandler(Exception)
-    def handle_exception(e):
-        # 如果 DEBUG 模式打开，直接使用 Flask 默认的错误处理
-        if Config.DEBUG:
-            # 如果错误是 HTTP 错误，就返回默认的 HTTP 错误页面
-            if isinstance(e, HTTPException):
-                return e
-            # 对于非 HTTP 错误，返回一个 500 错误页面
-            return "Internal Server Error", 500
+    # @app.errorhandler(Exception)
+    # def handle_exception(e):
+    #     # 如果 DEBUG 模式打开，直接使用 Flask 默认的错误处理
+    #     if Config.DEBUG:
+    #         # 如果错误是 HTTP 错误，就返回默认的 HTTP 错误页面
+    #         if isinstance(e, HTTPException):
+    #             return e
+    #         # 对于非 HTTP 错误，返回一个 500 错误页面
+    #         return f"Internal Server Error:{e}", 500
 
         # 处理 AJAX 请求的特殊情况
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":

@@ -6,9 +6,9 @@ from flask import Blueprint, current_app, request
 from app.core.base_response import Response
 from app.core.db import get_db
 from app.models.attachment_file import AttachmentFile
-from app.utils.defs import get_image_info, is_image, now 
+from app.core.utils.defs import get_image_info, is_image, now 
 from PIL import Image
-from app.utils.logger import logger
+from app.core.utils.logger import logger
  
 bp = Blueprint("upload", __name__)
 

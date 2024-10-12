@@ -1,5 +1,5 @@
-from app.utils.logger import logger
-from app.utils.defs import ip, now
+from app.core.utils.logger import logger
+from app.core.utils.defs import ip, now
 from flask import Blueprint
 from flask import flash
 from flask import g
