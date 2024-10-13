@@ -270,29 +270,29 @@ class Generator:
                     input_field = f'<input type="{input_type}" class="form-control" step="{step}" id="{column_name}" name="{column_name}" value="{{{{value.{column_name}}}}}" {maxlength} placeholder="{{{{_(\'{column_comment}\')}}}}"  {required}/>\n'
                     
                 elif (column_type == "DATETIME" or column_type == "TIMESTAMP"):
-
-                    input_type = "datetime"
-                    input_field = f'<input type="{input_type}" class="form-control" id="{column_name}" name="{column_name}" value="{{{{value.{column_name}}}}}" placeholder="{{{{_(\'{column_comment}\')}}}}"  {required}/>\n'
-                    
-                    add_js_code += f"""
-                    <script>   
-                        document.addEventListener("DOMContentLoaded", function () {{
-                            const input = document.getElementById("{column_name}");
-                            let initialDate;
-                            const existingValue = input.value.trim();
-                            if (existingValue !== "") {{
-                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
-                            }} else {{
-                                initialDate = new Date();
-                            }}
-                            flatpickr("#{column_name}", {{
-                                enableTime: true,
-                                dateFormat: "Y-m-d H:i:s",
-                                defaultDate: initialDate
-                            }});
-                        }}); 
-                    </script>
-                    """
+                    if (column_name != "created_at" and column_name != "updated_at"):
+                        input_type = "datetime"
+                        input_field = f'<input type="{input_type}" class="form-control" id="{column_name}" name="{column_name}" value="{{{{value.{column_name}}}}}" placeholder="{{{{_(\'{column_comment}\')}}}}"  {required}/>\n'
+                        
+                        add_js_code += f"""
+                        <script>   
+                            document.addEventListener("DOMContentLoaded", function () {{
+                                const input = document.getElementById("{column_name}");
+                                let initialDate;
+                                const existingValue = input.value.trim();
+                                if (existingValue !== "") {{
+                                    initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+                                }} else {{
+                                    initialDate = new Date();
+                                }}
+                                flatpickr("#{column_name}", {{
+                                    enableTime: true,
+                                    dateFormat: "Y-m-d H:i:s",
+                                    defaultDate: initialDate
+                                }});
+                            }}); 
+                        </script>
+                        """
                 elif column_type == "DATE":
                     input_type = "date"
                     input_field = f'<input type="{input_type}"  class="form-control"id="{column_name}" name="{column_name}" value="{{{{value.{column_name}}}}}" placeholder="{{{{_(\'{column_comment}\')}}}}"  {required}/>\n'

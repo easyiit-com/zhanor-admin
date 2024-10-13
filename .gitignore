@@ -161,8 +161,7 @@ cython_debug/
 app/plugins/*
 !app/plugins/plugins_status.json
 !app/plugins/generator
-app/api/*
-!app/api/__init__.py
+app/api/v1/*
 !app/api/v1/__init__.py
 !app/api/v1/auth.py
 tests
