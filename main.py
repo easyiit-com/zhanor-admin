@@ -218,28 +218,30 @@ def create_app(test_config=None):
 
     def scan_plugins_folder(plugin_dir: str):
         """
-        导入插件API路由及API模块。
+        导入插件API路由及API模块，遍历子目录，搜索views.py和views文件夹中的所有.py文件。
         """
         plugins_folder = Path(plugin_dir)
         for sub_dir in plugins_folder.glob("**/"):
             if not sub_dir.is_dir():
                 continue
-            
+
             # 确定插件名称
             plugin_name = sub_dir.parts[-1]
             parent_plugin_name = sub_dir.parts[-2]  # 假设这个是 "vip"
+
+            # 搜索views.py文件
             router_file = sub_dir / "views.py"
             if router_file.is_file():
-                module_name = f"app.plugins.{parent_plugin_name}.{plugin_name}"
-                try:
-                    plugin_module = importlib.import_module(f"{module_name}.views")
-                    router_instance = getattr(plugin_module, "bp", None)
-                    if isinstance(router_instance, Blueprint):
-                        app.register_blueprint(router_instance)
-                    else:
-                        logger.error(f"scan_plugins_folder====>未知:{module_name}")
-                except Exception as e:
-                    logger.error(f"scan_plugins_folder====>导入插件:{module_name}, 捕获错误：{e}")
+                module_name = f"app.plugins.{parent_plugin_name}.{plugin_name}.views"
+                _import_and_register_module(module_name)
+
+            # 搜索views文件夹中的所有.py文件
+            views_folder = sub_dir / "views"
+            if views_folder.is_dir():
+                for py_file in views_folder.glob("*.py"):
+                    if py_file.is_file():
+                        module_name = f"app.plugins.{parent_plugin_name}.{plugin_name}.views.{py_file.stem}"
+                        _import_and_register_module(module_name)
 
         plugin_json_file = plugins_folder / "plugin.json"
         if plugin_json_file.is_file():
@@ -304,9 +306,22 @@ def create_app(test_config=None):
                 )
 
         create_plugin_models(plugins_folder)
-
+        
+    def _import_and_register_module(module_name: str):
+        """
+        辅助函数，导入模块并注册蓝图。
+        """
+        try:
+            plugin_module = importlib.import_module(module_name)
+            router_instance = getattr(plugin_module, "bp", None)
+            if isinstance(router_instance, Blueprint):
+                app.register_blueprint(router_instance)
+            else:
+                logger.error(f"scan_plugins_folder====>未知: {module_name}")
+        except Exception as e:
+            logger.error(f"scan_plugins_folder====>导入插件: {module_name}, 捕获错误：{e}")
+            
     # 注册接口蓝图
-    
     Swagger(app)
     FlaskApiSpec(app)
      # Api 创建并配置API蓝图

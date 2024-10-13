@@ -1,5 +1,6 @@
 {
     "third_payment": "enabled",
     "vip": "enabled",
-    "generator": "enabled"
+    "generator": "enabled",
+    "web": "enabled"
 }

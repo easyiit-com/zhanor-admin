@@ -71,7 +71,7 @@ def index_view():
                     "md5_hash": plugin_info.get("md5_hash", ""),
                     "price": plugin_info.get("price", "0.00"),
                     "paid": plugin_info.get("paid", "0"),
-                    "installed": plugin_info.get("installed", "0"),
+                    "installed": ( "1" if is_plugin_installed(plugin.uuid) else "0" ),
                     "enabled": "1" if is_plugin_enabled(plugin_info.get("uuid", "none")) else "0",
                     "setting_menu": plugin_info.get("setting_menu", []),
                     "created_at":  plugin_info.get("created_at", "0"),

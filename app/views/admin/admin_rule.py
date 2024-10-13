@@ -15,7 +15,7 @@ bp = Blueprint("admin_rule", __name__, url_prefix="/admin/admin/rule")
 @admin_required
 def index_view():
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        admin_rules = AdminRule.query.order_by(AdminRule.id.desc()).all()
+        admin_rules = AdminRule.query.order_by(AdminRule.id.asc()).all()
         admin_rule_dicts = [admin_rule.to_dict() for admin_rule in admin_rules]
         return Response.success(admin_rule_dicts)
     else:
@@ -44,7 +44,7 @@ def index_view():
         page = request.args.get('page', 1, type=int)
         per_page = 20
         total_count = AdminRule.query.count()
-        admin_rule_list = AdminRule.query.order_by(AdminRule.id.desc()).offset((page - 1) * per_page).limit(per_page).all()
+        admin_rule_list = AdminRule.query.order_by(AdminRule.id.asc()).offset((page - 1) * per_page).limit(per_page).all()
         pages = (total_count + per_page - 1) // per_page
 
         options = {
@@ -57,6 +57,7 @@ def index_view():
                     'type': rule.type,
                     'pid': rule.pid,
                     'name': rule.name,
+                    'url_path': rule.url_path,
                     'title': rule.title,
                     'icon': rule.icon,
                     'weigh': rule.weigh,

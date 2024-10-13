@@ -1,0 +1,41 @@
+{
+  "name": "Generator",
+  "author": "Zhanor",
+  "info":{
+      "title": "Generator",
+      "author": "Zhanor",
+      "uuid": "generator",
+      "description": "",
+      "version": "1.0.0",
+      "downloads": 0,
+      "download_url": "",
+      "md5_hash": "",
+      "price": "0.00",
+      "paid": "0",
+      "installed": "1",
+      "enabled": "0",
+      "setting_menu": [],
+      "created_at": "2024-04-01",
+      "updated_at": "2024-04-01"
+  },
+  
+  "admin_menu": [
+    {
+      "id": 6,
+      "type": "menu",
+      "pid": 0,
+      "name": "admin.generator",
+      "url_path": "/admin/generator",
+      "title": "Generator",
+      "description": "Generator",
+      "icon": "ti ti-separator-vertical",
+      "extend": "",
+      "created_at": "2024-01-22 14:32:00",
+      "updated_at": "2024-01-22 14:32:00",
+      "weigh": 6,
+      "status": "normal"
+    }
+  ],
+  "user_menu": [],
+  "setting":{}
+}

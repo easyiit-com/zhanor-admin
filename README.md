@@ -7,13 +7,73 @@ zhanor(栈鱼)是基于flask 2.0框架开发的一个通用后台管理系统，
 
 -------------------------------------------
 
-截图：
+### 截图：
 
 | ![Example Image](screen_shot/admin.png) | ![Example Image](screen_shot/dashboard.png) |
 |------------------------------------------|---------------------------------------------|
 | ![Example Image](screen_shot/general_category_add.png) | ![Example Image](screen_shot/general_category.png) |
 | ![Example Image](screen_shot/general_config.png) | ![Example Image](screen_shot/generator.png) |
 | ![Example Image](screen_shot/profile.png) |                                             |
+
+### 功能
+
+Dashboard
+Generals
+ ├ Profile
+      └ Save
+ ├ Category
+ └ Config
+   ├ Add
+   ├ Save
+   ├ Delete
+   └ Table List
+Attachment
+ └ Attachment File
+   ├ Add
+   ├ Edit
+   ├ Save
+   └ Delete
+Plugin
+ ├ Update state
+ ├ Setting
+ ├ Refresh
+ ├ Multi
+ ├ Install
+ ├ Uninstall
+ ├ Update status
+ └ Download
+Admin
+ ├ Admin Manage
+ ├ Admin Group
+      ├ Add
+      ├ Edit
+      ├ Save
+      └ Delete
+ ├ Admin Rule
+ └ Admin Log
+   └ Delete
+User Manage
+ ├ User Manage
+      ├ Add
+      ├ Edit
+      ├ Save
+      └ Del
+ ├ User Rule
+ ├ User Balance Log
+      └ Del
+ ├ User Score Log
+      └ Del
+ └ User Group
+   ├ Add
+   ├ Edit
+   ├ Save
+   └ Del
+Addon
+ ├ Add
+ ├ Edit
+ ├ Save
+ └ Del
+
 
 
 选择flask的原因：flask用的人多
@@ -213,7 +273,7 @@ gunicorn启动命令：
 ```
 
 启动后默认访问地址：http://127.0.0.1:5001
-
+Swagger地址：http://127.0.0.1:5001/apidocs/
 后台地址：http://127.0.0.1:5001/admin
 默认用户名：admin@admin.com
 默认密码：88888888

@@ -91,21 +91,17 @@
                 <table class="table action-table">
                     <thead>
                         <tr>
-                            <th><input class="form-check-input m-0 align-middle select-all" type="checkbox" aria-label="Select invoice"></th><th><button class="table-sort" data-sort="sort-name">{{_('ID')}}</button></th>
-<th>{{_('Type')}}</th>
-<th>{{_('PARENT ID')}}</th>
-<th>{{_('From Addon')}}</th>
-<th>{{_('Route Name')}}</th>
-<th>{{_('Url_Path')}}</th>
-<th>{{_('Title')}}</th>
-<th>{{_('Description')}}</th>
-<th>{{_('Icon')}}</th>
-<th>{{_('Menutype')}}</th>
-<th>{{_('Extend')}}</th>
-<th>{{_('created_at')}}</th>
-<th>{{_('updated_at')}}</th>
-<th>{{_('Weigh')}}</th>
-<th>{{_('Status')}}</th>
+                            <th><input class="form-check-input m-0 align-middle select-all" type="checkbox"
+                                    aria-label="Select invoice"></th>
+                            <th><button class="table-sort" data-sort="sort-name">{{_('ID')}}</button></th>
+                            <th>{{_('Type')}}</th>
+                            <th>{{_('PARENT ID')}}</th>  
+                            <th>{{_('Url_Path')}}</th>
+                            <th width="150">{{_('Title')}}</th>  
+                            <th>{{_('created_at')}}</th>
+                            <th>{{_('updated_at')}}</th>
+                            <th>{{_('Weigh')}}</th>
+                            <th>{{_('Status')}}</th>
 
                             <th class="!text-end">{{_('Actions')}}</th>
                         </tr>
@@ -114,21 +110,17 @@
                         <!-- TODO -->
                         {% for value in admin_rule_list %}
                         <tr id="admin_rule-{{ value.id }}">
-                            <td><input class="form-check-input m-0 align-middle id-checkbox" type="checkbox" aria-label="Select invoice" value="{{value.id}}"></td><td class="sort-name">{{ value.id }}</td>
-<td class="sort-name">{{ value.type }}</td>
-<td class="sort-name">{{ value.pid }}</td>
-<td class="sort-name">{{ value.plugin }}</td>
-<td class="sort-name">{{ value.name }}</td>
-<td class="sort-name">{{ value.url_path }}</td>
-<td class="sort-name">{{ value.title }}</td>
-<td class="sort-name">{{ value.description }}</td>
-<td class="sort-name">{{ value.icon }}</td>
-<td class="sort-name">{{ value.menutype }}</td>
-<td class="sort-name">{{ value.extend }}</td>
-<td class="sort-name">{{ value.created_at }}</td>
-<td class="sort-name">{{ value.updated_at }}</td>
-<td class="sort-name">{{ value.weigh }}</td>
-<td class="sort-name">{{ value.status }}</td>
+                            <td><input class="form-check-input m-0 align-middle id-checkbox" type="checkbox"
+                                    aria-label="Select invoice" value="{{value.id}}"></td>
+                            <td class="sort-name">{{ value.id }}</td>
+                            <td class="sort-name">{{ value.type }}</td>
+                            <td class="sort-name">{{ value.pid }}</td> 
+                            <td class="sort-name">{{ value.url_path }}</td>
+                            <td class="sort-name">{{ value.title }}</td>  
+                            <td class="sort-name">{{ value.created_at }}</td>
+                            <td class="sort-name">{{ value.updated_at }}</td>
+                            <td class="sort-name">{{ value.weigh }}</td>
+                            <td class="sort-name">{{ value.status }}</td>
 
                             <td class="!text-end whitespace-nowrap">
                                 <a href="javascript:;"
@@ -200,7 +192,66 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("ID")}}</div><div class="col">{{ value.id }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Type")}}</div><div class="col">{{ value.type }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("PARENT ID")}}</div><div class="col">{{ value.pid }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("From Addon")}}</div><div class="col">{{ value.plugin }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Route Name")}}</div><div class="col">{{ value.name }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Url_Path")}}</div><div class="col">{{ value.url_path }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Title")}}</div><div class="col">{{ value.title }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Description")}}</div><div class="col">{{ value.description }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Icon")}}</div><div class="col">{{ value.icon }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Menutype")}}</div><div class="col">{{ value.menutype }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Extend")}}</div><div class="col">{{ value.extend }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("created_at")}}</div><div class="col">{{ value.created_at }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("updated_at")}}</div><div class="col">{{ value.updated_at }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Weigh")}}</div><div class="col">{{ value.weigh }} </div></div><div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{_("Status")}}</div><div class="col">{{ value.status }} </div></div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("ID")}}</div>
+                    <div class="col">{{ value.id }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Type")}}</div>
+                    <div class="col">{{ value.type }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("PARENT ID")}}</div>
+                    <div class="col">{{ value.pid }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("From Addon")}}</div>
+                    <div class="col">{{ value.plugin }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Route Name")}}</div>
+                    <div class="col">{{ value.name }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Url_Path")}}</div>
+                    <div class="col">{{ value.url_path }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Title")}}</div>
+                    <div class="col">{{ value.title }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Description")}}</div>
+                    <div class="col">{{ value.description }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Icon")}}</div>
+                    <div class="col">{{ value.icon }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Menutype")}}</div>
+                    <div class="col">{{ value.menutype }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Extend")}}</div>
+                    <div class="col">{{ value.extend }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("created_at")}}</div>
+                    <div class="col">{{ value.created_at }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("updated_at")}}</div>
+                    <div class="col">{{ value.updated_at }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Weigh")}}</div>
+                    <div class="col">{{ value.weigh }} </div>
+                </div>
+                <div class="row mb-3 align-items-end">
+                    <div class="col-auto fw-bold"> {{_("Status")}}</div>
+                    <div class="col">{{ value.status }} </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{_('Close')}}</button>
@@ -209,4 +260,5 @@
     </div>
 </div>
 {% endfor %}
+
 {% endblock content %}

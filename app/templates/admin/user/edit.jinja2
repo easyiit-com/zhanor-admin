@@ -2,8 +2,10 @@
 {% extends "admin/layout/default.jinja2" %}
 
 {% block javascript %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js?v={{configs.basic.version}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js?v={{configs.basic.version}}"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js?v={{configs.basic.version}}"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js?v={{configs.basic.version}}"></script>
 <script src="/static/assets/js/backend/user.js"></script>
 <script src="/static/assets/js/backend/upload.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.0.0/tinymce.min.js"
@@ -17,96 +19,96 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-                    <script>   
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const input = document.getElementById("birthday");
-                            let initialDate;
-                            const existingValue = input.value.trim();
-                            if (existingValue !== "") {
-                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d");
-                            } else {
-                                initialDate = new Date();
-                            }
-                            flatpickr("#birthday", {
-                                disableMobile : true,
-                                dateFormat: "Y-m-d",
-                                defaultDate: initialDate
-                            });
-                        }); 
-                    </script>
-                    
-                    <script>   
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const input = document.getElementById("prevtime");
-                            let initialDate;
-                            const existingValue = input.value.trim();
-                            if (existingValue !== "") {
-                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
-                            } else {
-                                initialDate = new Date();
-                            }
-                            flatpickr("#prevtime", {
-                                enableTime: true,
-                                dateFormat: "Y-m-d H:i:s",
-                                defaultDate: initialDate
-                            });
-                        }); 
-                    </script>
-                    
-                    <script>   
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const input = document.getElementById("logintime");
-                            let initialDate;
-                            const existingValue = input.value.trim();
-                            if (existingValue !== "") {
-                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
-                            } else {
-                                initialDate = new Date();
-                            }
-                            flatpickr("#logintime", {
-                                enableTime: true,
-                                dateFormat: "Y-m-d H:i:s",
-                                defaultDate: initialDate
-                            });
-                        }); 
-                    </script>
-                    
-                    <script>   
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const input = document.getElementById("created_at");
-                            let initialDate;
-                            const existingValue = input.value.trim();
-                            if (existingValue !== "") {
-                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
-                            } else {
-                                initialDate = new Date();
-                            }
-                            flatpickr("#created_at", {
-                                enableTime: true,
-                                dateFormat: "Y-m-d H:i:s",
-                                defaultDate: initialDate
-                            });
-                        }); 
-                    </script>
-                    
-                    <script>   
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const input = document.getElementById("updated_at");
-                            let initialDate;
-                            const existingValue = input.value.trim();
-                            if (existingValue !== "") {
-                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
-                            } else {
-                                initialDate = new Date();
-                            }
-                            flatpickr("#updated_at", {
-                                enableTime: true,
-                                dateFormat: "Y-m-d H:i:s",
-                                defaultDate: initialDate
-                            });
-                        }); 
-                    </script>
-                    
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("birthday");
+        let initialDate;
+        const existingValue = input.value.trim();
+        if (existingValue !== "") {
+            initialDate = flatpickr.parseDate(existingValue, "Y-m-d");
+        } else {
+            initialDate = new Date();
+        }
+        flatpickr("#birthday", {
+            disableMobile: true,
+            dateFormat: "Y-m-d",
+            defaultDate: initialDate
+        });
+    }); 
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("prevtime");
+        let initialDate;
+        const existingValue = input.value.trim();
+        if (existingValue !== "") {
+            initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+        } else {
+            initialDate = new Date();
+        }
+        flatpickr("#prevtime", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i:s",
+            defaultDate: initialDate
+        });
+    }); 
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("logintime");
+        let initialDate;
+        const existingValue = input.value.trim();
+        if (existingValue !== "") {
+            initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+        } else {
+            initialDate = new Date();
+        }
+        flatpickr("#logintime", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i:s",
+            defaultDate: initialDate
+        });
+    }); 
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("created_at");
+        let initialDate;
+        const existingValue = input.value.trim();
+        if (existingValue !== "") {
+            initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+        } else {
+            initialDate = new Date();
+        }
+        flatpickr("#created_at", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i:s",
+            defaultDate: initialDate
+        });
+    }); 
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("updated_at");
+        let initialDate;
+        const existingValue = input.value.trim();
+        if (existingValue !== "") {
+            initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+        } else {
+            initialDate = new Date();
+        }
+        flatpickr("#updated_at", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i:s",
+            defaultDate: initialDate
+        });
+    }); 
+</script>
+
 
 <script>
     var currentButton = undefined;
@@ -117,16 +119,16 @@
         submitHandler: function (form) {
             var buttonText = currentButton.text();
             currentButton.prop("disabled", true).html("{{_('Please wait')}}");
-            var formData = $('#user_form').serializeArray(); 
-            var jsonData = {}; 
-            formData.forEach(function(item) {jsonData[item.name] = item.value;}); 
+            var formData = $('#user_form').serializeArray();
+            var jsonData = {};
+            formData.forEach(function (item) { jsonData[item.name] = item.value; });
             var type = currentButton.data('type');
 
             $.ajax({
                 type: "POST",
                 url: "/admin/user/save",
                 data: JSON.stringify(jsonData),
-                contentType: 'application/json;charset=utf-8', 
+                contentType: 'application/json;charset=utf-8',
                 processData: false,
                 success: function (data) {
                     toastr.options.timeOut = 200;
@@ -181,112 +183,138 @@
             <div class="col-md-5 mx-auto">
                 <form id="user_form" method="post" action>
                     <div class="mb-[20px]">
-    <label class="form-label" for="id" required>{{_('ID')}}</label>
-   <input class="form-control" type="hidden" id="id" name="id"  value="{{value.id}}" placeholder="{{_('ID')}}"  required/>{{value.id}}
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="user_group_id" required>{{_('Group ID')}}</label>
-   <select id="user_group_id" class="form-select ajax" data-model="user_group" data-title="name" data-value="{{value.user_group_id}}" name="user_group_id">
-  
-</select>  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="name" required>{{_('Username')}}</label>
-   <input class="form-control" type="text" id="name" name="name"  value="{{value.name}}" placeholder="{{_('Username')}}"  maxlength = 32 required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="nickname" required>{{_('Nickname')}}</label>
-   <input class="form-control" type="text" id="nickname" name="nickname"  value="{{value.nickname}}" placeholder="{{_('Nickname')}}"  maxlength = 50 required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="password" required>{{_('Password')}}</label>
-   <input class="form-control" type="text" id="password" name="password"  value="" placeholder="{{_('Password')}}" required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="email" required>{{_('Email')}}</label>
-   <input class="form-control" type="text" id="email" name="email"  value="{{value.email}}" placeholder="{{_('Email')}}"  maxlength = 100 required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="mobile" required>{{_('Mobile Phone Number')}}</label>
-   <input class="form-control" type="text" id="mobile" name="mobile"  value="{{value.mobile}}" placeholder="{{_('Mobile Phone Number')}}"  maxlength = 16 required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="avatar" >{{_('Avatar')}}</label>
-   <input class="form-control" type="text" id="avatar" name="avatar"  value="{{value.avatar}}" placeholder="{{_('Avatar')}}"  maxlength = 255 />
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="level" required>{{_('Level')}}</label>
-   <input type="number" class="form-control" step="1" id="level" name="level" value="{{value.level}}"  placeholder="{{_('Level')}}"  required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="gender" required>{{_('Gender')}}</label>
-   <select id="gender" type="text" class="form-select" name="gender">
-    <option value="female">{{_('Female')}}</option>
-  <option value="male">{{_('Male')}}</option>
+                        <label class="form-label" for="id" required>{{_('ID')}}</label>
+                        <input class="form-control" type="hidden" id="id" name="id" value="{{value.id}}"
+                            placeholder="{{_('ID')}}" required />{{value.id}}
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="user_group_id" required>{{_('Group ID')}}</label>
+                        <select id="user_group_id" class="form-select ajax" data-model="user_group" data-title="name"
+                            data-value="{{value.user_group_id}}" name="user_group_id">
 
-</select>  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="birthday" >{{_('Date of Birth')}}</label>
-   <input type="date"  class="form-control"id="birthday" name="birthday" value="{{value.birthday}}" placeholder="{{_('Date of Birth')}}"  />
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="bio" >{{_('Motto')}}</label>
-   <input class="form-control" type="text" id="bio" name="bio"  value="{{value.bio}}" placeholder="{{_('Motto')}}"  maxlength = 100 />
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="balance" >{{_('Balance')}}</label>
-   <input type="number" class="form-control" step="0.01" id="balance" name="balance" value="{{value.balance}}"  placeholder="{{_('Balance')}}"  />
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="score" required>{{_('Points')}}</label>
-   <input type="number" class="form-control" step="1" id="score" name="score" value="{{value.score}}"  placeholder="{{_('Points')}}"  required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="successions" required>{{_('Consecutive Login Days')}}</label>
-   <input type="number" class="form-control" step="1" id="successions" name="successions" value="{{value.successions}}"  placeholder="{{_('Consecutive Login Days')}}"  required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="maxsuccessions" required>{{_('Maximum Consecutive Login Days')}}</label>
-   <input type="number" class="form-control" step="1" id="maxsuccessions" name="maxsuccessions" value="{{value.maxsuccessions}}"  placeholder="{{_('Maximum Consecutive Login Days')}}"  required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="prevtime" >{{_('Previous Login Time')}}</label>
-   <input type="datetime" class="form-control" id="prevtime" name="prevtime" value="{{value.prevtime}}" placeholder="{{_('Previous Login Time')}}"  />
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="logintime" >{{_('Login Time')}}</label>
-   <input type="datetime" class="form-control" id="logintime" name="logintime" value="{{value.logintime}}" placeholder="{{_('Login Time')}}"  />
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="loginip" >{{_('Login IP Address')}}</label>
-   <input class="form-control" type="text" id="loginip" name="loginip"  value="{{value.loginip}}" placeholder="{{_('Login IP Address')}}"  maxlength = 50 />
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="loginfailure" required>{{_('Failed Login Attempts')}}</label>
-   <input type="number" class="form-control" step="1" id="loginfailure" name="loginfailure" value="{{value.loginfailure}}"  placeholder="{{_('Failed Login Attempts')}}"  required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="joinip" >{{_('Joining IP Address')}}</label>
-   <input class="form-control" type="text" id="joinip" name="joinip"  value="{{value.joinip}}" placeholder="{{_('Joining IP Address')}}"  maxlength = 50 />
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="verification" >{{_('Verification')}}</label>
-   <input class="form-control" type="text" id="verification" name="verification"  value="{{value.verification}}" placeholder="{{_('Verification')}}"  maxlength = 255 />
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="token" >{{_('Token')}}</label>
-   <input class="form-control" type="text" id="token" name="token"  value="{{value.token}}" placeholder="{{_('Token')}}"  maxlength = 50 />
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="status" >{{_('Status')}}</label>
-   <select id="status" type="text" class="form-select" name="status">
-    <option value="normal">{{_('Normal')}}</option>
-  <option value="hidden">{{_('Hidden')}}</option>
+                        </select>
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="name" required>{{_('Username')}}</label>
+                        <input class="form-control" type="text" id="name" name="name" value="{{value.name}}"
+                            placeholder="{{_('Username')}}" maxlength=32 required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="nickname" required>{{_('Nickname')}}</label>
+                        <input class="form-control" type="text" id="nickname" name="nickname" value="{{value.nickname}}"
+                            placeholder="{{_('Nickname')}}" maxlength=50 required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="password" required>{{_('Password')}}</label>
+                        <input class="form-control" type="text" id="password" name="password" value=""
+                            placeholder="{{ _('Leave blank for no modification')}}" required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="email" required>{{_('Email')}}</label>
+                        <input class="form-control" type="text" id="email" name="email" value="{{value.email}}"
+                            placeholder="{{_('Email')}}" maxlength=100 required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="mobile" required>{{_('Mobile Phone Number')}}</label>
+                        <input class="form-control" type="text" id="mobile" name="mobile" value="{{value.mobile}}"
+                            placeholder="{{_('Mobile Phone Number')}}" maxlength=16 required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="avatar">{{_('Avatar')}}</label>
+                        <input class="form-control" type="text" id="avatar" name="avatar" value="{{value.avatar}}"
+                            placeholder="{{_('Avatar')}}" maxlength=255 />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="level" required>{{_('Level')}}</label>
+                        <input type="number" class="form-control" step="1" id="level" name="level"
+                            value="{{value.level}}" placeholder="{{_('Level')}}" required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="gender" required>{{_('Gender')}}</label>
+                        <select id="gender" type="text" class="form-select" name="gender">
+                            <option value="female">{{_('Female')}}</option>
+                            <option value="male">{{_('Male')}}</option>
 
-</select>  </div>
+                        </select>
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="birthday">{{_('Date of Birth')}}</label>
+                        <input type="date" class="form-control" id="birthday" name="birthday" value="{{value.birthday}}"
+                            placeholder="{{_('Date of Birth')}}" />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="bio">{{_('Motto')}}</label>
+                        <input class="form-control" type="text" id="bio" name="bio" value="{{value.bio}}"
+                            placeholder="{{_('Motto')}}" maxlength=100 />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="balance">{{_('Balance')}}</label>
+                        <input type="number" class="form-control" step="0.01" id="balance" name="balance"
+                            value="{{value.balance}}" placeholder="{{_('Balance')}}" />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="score" required>{{_('Points')}}</label>
+                        <input type="number" class="form-control" step="1" id="score" name="score"
+                            value="{{value.score}}" placeholder="{{_('Points')}}" required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="successions" required>{{_('Consecutive Login Days')}}</label>
+                        <input type="number" class="form-control" step="1" id="successions" name="successions"
+                            value="{{value.successions}}" placeholder="{{_('Consecutive Login Days')}}" required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="maxsuccessions" required>{{_('Maximum Consecutive Login
+                            Days')}}</label>
+                        <input type="number" class="form-control" step="1" id="maxsuccessions" name="maxsuccessions"
+                            value="{{value.maxsuccessions}}" placeholder="{{_('Maximum Consecutive Login Days')}}"
+                            required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="prevtime">{{_('Previous Login Time')}}</label>
+                        <input type="datetime" class="form-control" id="prevtime" name="prevtime"
+                            value="{{value.prevtime}}" placeholder="{{_('Previous Login Time')}}" />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="logintime">{{_('Login Time')}}</label>
+                        <input type="datetime" class="form-control" id="logintime" name="logintime"
+                            value="{{value.logintime}}" placeholder="{{_('Login Time')}}" />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="loginip">{{_('Login IP Address')}}</label>
+                        <input class="form-control" type="text" id="loginip" name="loginip" value="{{value.loginip}}"
+                            placeholder="{{_('Login IP Address')}}" maxlength=50 />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="loginfailure" required>{{_('Failed Login Attempts')}}</label>
+                        <input type="number" class="form-control" step="1" id="loginfailure" name="loginfailure"
+                            value="{{value.loginfailure}}" placeholder="{{_('Failed Login Attempts')}}" required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="joinip">{{_('Joining IP Address')}}</label>
+                        <input class="form-control" type="text" id="joinip" name="joinip" value="{{value.joinip}}"
+                            placeholder="{{_('Joining IP Address')}}" maxlength=50 />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="verification">{{_('Verification')}}</label>
+                        <input class="form-control" type="text" id="verification" name="verification"
+                            value="{{value.verification}}" placeholder="{{_('Verification')}}" maxlength=255 />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="token">{{_('Token')}}</label>
+                        <input class="form-control" type="text" id="token" name="token" value="{{value.token}}"
+                            placeholder="{{_('Token')}}" maxlength=50 />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="status">{{_('Status')}}</label>
+                        <select id="status" type="text" class="form-select" name="status">
+                            <option value="normal">{{_('Normal')}}</option>
+                            <option value="hidden">{{_('Hidden')}}</option>
+
+                        </select>
+                    </div>
 
                     <div class="d-flex justify-content-between">
-                        <button type="submit" form="user_form" data-type="submit"
-                            class="btn btn-primary btn-submit">
+                        <button type="submit" form="user_form" data-type="submit" class="btn btn-primary btn-submit">
                             {{_('Submit')}}
                         </button>
                         <button type="submit" form="user_form" data-type="submit-return"

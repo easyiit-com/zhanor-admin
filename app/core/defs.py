@@ -180,16 +180,16 @@ def process_breadcrumbs():
         return ""
     
     # 返回到仪表盘的链接
-    back_to_dashboard = f'<a href="/admin/dashboard">< {gettext("Back To Dashboard")}</a>'
+    back_to_dashboard = f'<a href="/admin/dashboard"> {gettext("Back To Dashboard")}</a>'
     
     # 处理不同层级的路径
     title = parts[0].capitalize()
     if len(parts) == 1:
-        return f'{back_to_dashboard}<a href="#">{gettext(title)}</a>'
+        return f'{back_to_dashboard}><a href="#">{gettext(title)}</a>'
     elif len(parts) == 2:
-        return f'{back_to_dashboard}<a href="/admin/{title}/{parts[1]}">{gettext(title)}>{gettext(parts[1].capitalize())}</a>'
+        return f'{back_to_dashboard}><a href="/admin/{title.lower()}/{parts[1]}">{gettext(title)}>{gettext(parts[1].capitalize())}</a>'
     elif len(parts) == 3:
-        return f'{back_to_dashboard}<a href="/admin/{title}">{gettext(title)} {gettext(parts[1].capitalize())}</a> > {gettext(parts[2].capitalize())}'
+        return f'{back_to_dashboard}><a href="/admin/{title.lower()}/{parts[1].capitalize().lower()}">{gettext(title)}>{gettext(parts[1].capitalize())}</a> > {gettext(parts[2].capitalize())}'
     
     return ""
 
@@ -204,3 +204,31 @@ def is_safe_url(target):
 
     # 判断协议是否为 http 或 https，且主机名相同
     return test_url.scheme in ('http', 'https') and ref_url.netloc == test_url.netloc
+
+
+def print_directory_structure(start_path):
+    """
+    打印指定目录的结构，包括子目录和文件，使用符号来显示树状结构。
+    
+    :param start_path: 目录的起始路径
+    :return: None
+    """
+    def walk_dir(current_path, indent=""):
+        # 获取当前目录中的所有文件和子目录
+        files_and_dirs = os.listdir(current_path)
+        files_and_dirs.sort()  # 排序，保证子目录和文件有序显示
+
+        total_items = len(files_and_dirs)  # 获取文件和目录的数量
+
+        for i, item in enumerate(files_and_dirs):
+            path = os.path.join(current_path, item)
+            is_last = i == (total_items - 1)  # 检查是否为最后一个元素
+
+            if os.path.isdir(path):
+                # 打印子目录，使用'└'或'├'来表示目录结构
+                print(f"{indent}{'└' if is_last else '├'} {item}")
+                # 递归遍历子目录，调整缩进
+                walk_dir(path, indent + ("    " if is_last else "│   "))
+            else:
+                # 打印文件，使用'└'或'├'来表示文件结构
+                print(f"{indent}{'└' if is_last else '├'} {item}")

@@ -44,7 +44,7 @@
                 processData: false,
                 success: function (data) {
                     toastr.success(_('Submit Successfully'));
-                     
+
                 },
                 error: function (data) {
                     var message = data.responseJSON.msg;
@@ -181,7 +181,7 @@
                                     <th>{{_('Version')}}</th>
                                     <th>{{_('Downloads')}}</th>
                                     <th>{{_('Price')}}</th>
-                                    <th>{{_('Paid')}}</th> 
+                                    <th>{{_('Paid')}}</th>
                                     <th>{{_('Enabled')}}</th>
                                     <th>{{_('Createtime')}}</th>
                                     <th>{{_('Updatetime')}}</th>
@@ -209,10 +209,12 @@
                                         {{_('Unbought')}}
                                         {% endif %}
                                     </td>
-                                    <td class="sort-name">{{ value.paid }}</td> 
+                                    <td class="sort-name">{{ value.paid }}</td>
                                     <td class="sort-name">
                                         <label class="form-check form-switch">
-                                            <input class="form-check-input switch-enable" type="checkbox" data-uuid="{{value.uuid}}" {% if value.enabled=='1' %} checked {% endif %}>
+                                            <input class="form-check-input switch-enable" type="checkbox"
+                                                data-uuid="{{value.uuid}}" {% if value.enabled=='1' %} checked {% endif
+                                                %}>
                                         </label>
                                     </td>
                                     <td class="sort-name">{{ value.created_at }}</td>
@@ -243,7 +245,8 @@
 
                                         </div>
                                         {% endif %}
-                                        <a href="javascript:;" class="btn btn-danger btn-uninstall" data-id="{{ value.id }}" data-uuid="{{ value.uuid }}" title="Uninstall">
+                                        <a href="javascript:;" class="btn btn-danger btn-uninstall"
+                                            data-id="{{ value.id }}" data-uuid="{{ value.uuid }}" title="Uninstall">
                                             <i class="ti ti-trash-filled"></i>{{_('Uninstall')}}
                                         </a>
                                         {% endif %}
@@ -307,7 +310,7 @@
                                     <th>{{_('Version')}}</th>
                                     <th>{{_('Downloads')}}</th>
                                     <th>{{_('Price')}}</th>
-                                    <th>{{_('Paid')}}</th> 
+                                    <th>{{_('Paid')}}</th>
                                     <th>{{_('Enabled')}}</th>
                                     <th>{{_('Createtime')}}</th>
                                     <th>{{_('Updatetime')}}</th>
@@ -335,11 +338,12 @@
                                         {{_('Unbought')}}
                                         {% endif %}
                                     </td>
-                                    <td class="sort-name">{{ value.paid }}</td> 
+                                    <td class="sort-name">{{ value.paid }}</td>
                                     <td class="sort-name">
                                         <label class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" {% if value.enabled=='1' %}
-                                                checked {% endif %}>
+                                            <input class="form-check-input switch-enable" type="checkbox"
+                                                data-uuid="{{value.uuid}}" {% if value.enabled=='1' %} checked {% endif
+                                                %}>
                                         </label>
                                     </td>
                                     <td class="sort-name">{{ value.created_at }}</td>
@@ -354,8 +358,6 @@
                                         {% else %}
                                         {% if value.setting_menu|length >0 %}
                                         <div class="btn">
-
-
                                             <a class="dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
                                                 data-bs-auto-close="outside" role="button" aria-expanded="false">
                                                 <span class="nav-link-title">
