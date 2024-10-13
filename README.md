@@ -16,62 +16,62 @@ zhanor(栈鱼)是基于flask 2.0框架开发的一个通用后台管理系统，
 | ![Example Image](screen_shot/profile.png) |                                             |
 
 ## 功能
-Dashboard
-Generals
- ├ Profile
-      └ Save
- ├ Category
- └ Config
-   ├ Add
-   ├ Save
-   ├ Delete
-   └ Table List
-Attachment
- └ Attachment File
-   ├ Add
-   ├ Edit
-   ├ Save
-   └ Delete
-Plugin
- ├ Update state
- ├ Setting
- ├ Refresh
- ├ Multi
- ├ Install
- ├ Uninstall
- ├ Update status
- └ Download
-Admin
- ├ Admin Manage
- ├ Admin Group
-      ├ Add
-      ├ Edit
-      ├ Save
-      └ Delete
- ├ Admin Rule
- └ Admin Log
-   └ Delete
-User Manage
- ├ User Manage
-      ├ Add
-      ├ Edit
-      ├ Save
-      └ Del
- ├ User Rule
- ├ User Balance Log
-      └ Del
- ├ User Score Log
-      └ Del
- └ User Group
-   ├ Add
-   ├ Edit
-   ├ Save
-   └ Del
-Addon
- ├ Add
- ├ Edit
- ├ Save
- └ Del
+    Dashboard
+    Generals
+    ├ Profile
+        └ Save
+    ├ Category
+    └ Config
+    ├ Add
+    ├ Save
+    ├ Delete
+    └ Table List
+    Attachment
+    └ Attachment File
+    ├ Add
+    ├ Edit
+    ├ Save
+    └ Delete
+    Plugin
+    ├ Update state
+    ├ Setting
+    ├ Refresh
+    ├ Multi
+    ├ Install
+    ├ Uninstall
+    ├ Update status
+    └ Download
+    Admin
+    ├ Admin Manage
+    ├ Admin Group
+        ├ Add
+        ├ Edit
+        ├ Save
+        └ Delete
+    ├ Admin Rule
+    └ Admin Log
+    └ Delete
+    User Manage
+    ├ User Manage
+        ├ Add
+        ├ Edit
+        ├ Save
+        └ Del
+    ├ User Rule
+    ├ User Balance Log
+        └ Del
+    ├ User Score Log
+        └ Del
+    └ User Group
+    ├ Add
+    ├ Edit
+    ├ Save
+    └ Del
+    Addon
+    ├ Add
+    ├ Edit
+    ├ Save
+    └ Del
 
 
 ## 简介
@@ -118,7 +118,9 @@ jquery：jquery 3.7.1
 
 3、vip插件，在线购买vip插件。
 
-以上3个插件基本就可以满足搭建一个灵活度很高的后台系统了，flask优质的插件功能，非常适合大型项目。
+4、web建站插件，快速建立一个企业站。
+
+以上4个插件基本就可以满足搭建一个灵活度很高的后台系统了，flask优质的插件功能，非常适合大型项目。
 
 开发中的插件：极光认证，会员充值插件，blog插件，商城插件
 
