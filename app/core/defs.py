@@ -3,7 +3,9 @@ import os
 from collections import defaultdict
 import re
 import importlib
-from flask import request, jsonify
+from flask import request
+import string
+import random
 from flask_babel import gettext
 from sqlalchemy import inspect
 from app.core import db
@@ -232,3 +234,14 @@ def print_directory_structure(start_path):
             else:
                 # 打印文件，使用'└'或'├'来表示文件结构
                 print(f"{indent}{'└' if is_last else '├'} {item}")
+
+
+def generate_random_string(length):
+    """Generate a random string of a given length."""
+    # 定义可能的字符集合
+    characters = string.ascii_letters + string.digits
+    
+    # 使用random.choices函数从字符集合中随机选择指定数量的字符，然后用join合并为一个字符串
+    random_string = ''.join(random.choices(characters, k=length))
+    
+    return random_string

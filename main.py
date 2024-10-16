@@ -149,32 +149,51 @@ def create_app(test_config=None):
     def page_not_found(e):
         """404错误处理"""
         logger.error("页面未找到: %s", request.path)
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return Response.error(code=404, msg="页面未找到")
         return render_template("404.jinja2", e=e), 404
-    
+
     @app.errorhandler(500)
     def internal_error(e):
         """500错误处理"""
         logger.error("运行错误: %s", request.path)
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return Response.error(code=500, msg="服务器内部错误")
         return render_template("500.jinja2", e=e), 500
 
     @app.errorhandler(403)
     def forbidden(e):
         """403错误处理"""
+        logger.error("禁止访问: %s", request.path)
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return Response.error(code=403, msg="未经授权的访问")
-        else:
-            return render_template("403.jinja2", e=e), 403
-   
-    # @app.errorhandler(Exception)
-    # def handle_exception(e):
-    #     # 如果 DEBUG 模式打开，直接使用 Flask 默认的错误处理
-    #     if Config.DEBUG:
-    #         # 如果错误是 HTTP 错误，就返回默认的 HTTP 错误页面
-    #         if isinstance(e, HTTPException):
-    #             return e
-    #         # 对于非 HTTP 错误，返回一个 500 错误页面
-    #         return f"Internal Server Error:{e}", 500
+        return render_template("403.jinja2", e=e), 403
 
+    @app.errorhandler(Exception)
+    def handle_exception(e):
+        """全局异常处理"""
+        if isinstance(e, HTTPException):
+            return e
+        
+        logger.error("未处理的异常: %s", str(e))
+        
+        if Config.DEBUG:
+            return f"Internal Server Error: {str(e)}", 500
+
+        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return Response.error(code=500, msg="服务器出现错误，请稍后再试")
+
+        return redirect(url_for('error_page'))
+   
+    @app.errorhandler(Exception)
+    def handle_exception(e):
+        # 如果 DEBUG 模式打开，直接使用 Flask 默认的错误处理
+        if Config.DEBUG:
+            # 如果错误是 HTTP 错误，就返回默认的 HTTP 错误页面
+            if isinstance(e, HTTPException):
+                return e
+            # 对于非 HTTP 错误，返回一个 500 错误页面
+            return f"Internal Server Error:{e}", 500
         # 处理 AJAX 请求的特殊情况
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return Response.error(code=500, msg=f"Some Error: {e}")

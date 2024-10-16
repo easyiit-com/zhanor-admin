@@ -11,7 +11,7 @@ class CommonSms(Base):
     id = db.Column(db.Integer, primary_key=True, nullable=False,comment='ID') 
     event = db.Column(db.String(30),comment='Event') 
     mobile = db.Column(db.String(20),comment='Phone Number') 
-    code = db.Column(db.String(10),comment='Verification Code') 
+    captcha = db.Column(db.String(10),comment='Verification Code') 
     times = db.Column(db.Integer, nullable=False,comment='Validation Attempts') 
     ip = db.Column(db.String(30),comment='IP Address') 
     created_at = db.Column(db.DateTime,comment='Creation Time') 
