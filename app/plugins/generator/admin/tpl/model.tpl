@@ -2,13 +2,14 @@
 from datetime import datetime, date, time
 from decimal import Decimal
 from sqlalchemy.sql.expression import ClauseElement
+from sqlalchemy import func
 from app.core.base import Base
 from app.core.db import db
 
  
 %%model_class%%
 
-
+ 
     @classmethod
     def from_dict(cls, data):
         """

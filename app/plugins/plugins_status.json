@@ -2,5 +2,7 @@
     "third_payment": "enabled",
     "vip": "enabled",
     "generator": "enabled",
-    "web": "enabled"
+    "sms": "enabled",
+    "app": "enabled",
+    "shop": "enabled"
 }

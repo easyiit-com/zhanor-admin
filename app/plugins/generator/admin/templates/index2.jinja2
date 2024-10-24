@@ -1,6 +1,6 @@
 {% extends "admin/layout/default.jinja2" %}
 
-{% block css %}
+{% block head %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
 <style>
@@ -11,7 +11,7 @@
 
     .form-check-input {
         margin-right: 0.5rem;
-    } 
+    }
 
     .textarea-wrapper {
         position: relative;
@@ -26,7 +26,7 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 </style>
-{% endblock css %}
+{% endblock head %}
 
 {% block javascript %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.8/ace.min.js"
@@ -77,95 +77,118 @@
                     <div class="mb-4">
                         <div class="form-check">
                             <input class="form-check-input generate_menu" type="checkbox" id="generate_menu_checked"
-                                name="generate_menu_checked" value="1" checked>
-                            <label class="form-check-label" for="generate_menu_checked">{{ _('Should the menu be generated?') }}</label>
+                                name="generate_menu_checked" value="1">
+                            <label class="form-check-label" for="generate_menu_checked">{{ _('Should the menu be
+                                generated?') }}</label>
                         </div>
                     </div>
 
                     <div class="mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input generate_in_plugin_fold" type="checkbox" id="generate_in_plugin_fold_checked"
+                                name="generate_in_plugin_fold_checked" value="1">
+                            <label class="form-check-label" for="generate_in_plugin_fold_checked">{{ _('Generate in plugin fold?')
+                                }}</label>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-4">
                         <label class="form-label">
-                            <input class="form-check-input" type="checkbox" id="model_code_checked" name="model_code_checked" value="1" checked>
+                            <input class="form-check-input" type="checkbox" id="model_code_checked"
+                                name="model_code_checked" value="1" checked>
                             {{ _('Model Code') }}
                         </label>
                         <div class="textarea-wrapper">
                             <textarea class="form-control" name="model_code" id="model_code" rows="10"></textarea>
                         </div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <label class="form-label">
-                            <input class="form-check-input" type="checkbox" id="template_index_code_checked" name="template_index_code_checked" value="1" checked>
+                            <input class="form-check-input" type="checkbox" id="template_index_code_checked"
+                                name="template_index_code_checked" value="1" checked>
                             {{ _('Template Index Code') }}
                         </label>
                         <div class="textarea-wrapper">
-                            <textarea class="form-control" name="template_index_code" id="template_index_code" rows="10"></textarea>
+                            <textarea class="form-control" name="template_index_code" id="template_index_code"
+                                rows="10"></textarea>
                         </div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <label class="form-label">
-                            <input class="form-check-input" type="checkbox" id="template_add_code_checked" name="template_add_code_checked" value="1" checked>
+                            <input class="form-check-input" type="checkbox" id="template_add_code_checked"
+                                name="template_add_code_checked" value="1" checked>
                             {{ _('Template Add Code') }}
                         </label>
                         <div class="textarea-wrapper">
-                            <textarea class="form-control" name="template_add_code" id="template_add_code" rows="10"></textarea>
+                            <textarea class="form-control" name="template_add_code" id="template_add_code"
+                                rows="10"></textarea>
                         </div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <label class="form-label">
-                            <input class="form-check-input" type="checkbox" id="template_edit_code_checked" name="template_edit_code_checked" value="1" checked>
+                            <input class="form-check-input" type="checkbox" id="template_edit_code_checked"
+                                name="template_edit_code_checked" value="1" checked>
                             {{ _('Template Edit Code') }}
                         </label>
                         <div class="textarea-wrapper">
-                            <textarea class="form-control" name="template_edit_code" id="template_edit_code" rows="10"></textarea>
+                            <textarea class="form-control" name="template_edit_code" id="template_edit_code"
+                                rows="10"></textarea>
                         </div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <label class="form-label">
-                            <input class="form-check-input" type="checkbox" id="views_code_checked" name="views_code_checked" value="1" checked>
+                            <input class="form-check-input" type="checkbox" id="views_code_checked"
+                                name="views_code_checked" value="1" checked>
                             {{ _('Views Code') }}
                         </label>
                         <div class="textarea-wrapper">
                             <textarea class="form-control" name="views_code" id="views_code" rows="10"></textarea>
                         </div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <label class="form-label">
-                            <input class="form-check-input" type="checkbox" id="api_code_checked" name="api_code_checked" value="1">
+                            <input class="form-check-input" type="checkbox" id="api_code_checked"
+                                name="api_code_checked" value="1">
                             {{ _('API Code') }}
                         </label>
                         <div class="textarea-wrapper">
                             <textarea class="form-control" name="api_code" id="api_code" rows="10"></textarea>
                         </div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <label class="form-label">
-                            <input class="form-check-input" type="checkbox" id="schema_code_checked" name="schema_code_checked" value="1" checked>
+                            <input class="form-check-input" type="checkbox" id="schema_code_checked"
+                                name="schema_code_checked" value="1" checked>
                             {{ _('Schema Code') }}
                         </label>
                         <div class="textarea-wrapper">
                             <textarea class="form-control" name="schema_code" id="schema_code" rows="10"></textarea>
                         </div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <label class="form-label">
-                            <input class="form-check-input" type="checkbox" id="js_code_checked" name="js_code_checked" value="1" checked>
+                            <input class="form-check-input" type="checkbox" id="js_code_checked" name="js_code_checked"
+                                value="1" checked>
                             {{ _('Js Code') }}
                         </label>
                         <div class="textarea-wrapper">
                             <textarea class="form-control" name="js_code" id="js_code" rows="10"></textarea>
                         </div>
                     </div>
-                    
+
 
 
                     <div class="mb-4">
-                        <label class="form-label">{{ _('Route Code') }} ({{ _('Copy the following addition and paste it into the route.py file.') }})</label>
+                        <label class="form-label">{{ _('Route Code') }} ({{ _('Copy the following addition and paste it
+                            into the route.py file.') }})</label>
                         <div class="textarea-wrapper">
                             <textarea class="form-control" name="route_code" id="route_code" rows="10"></textarea>
                         </div>

@@ -112,6 +112,7 @@ $(document).ready(function () {
         });
 
         formData.append("generate_menu_checked", $("#generate_menu_checked").is(':checked') ? 1 : 0);
+        formData.append("generate_in_plugin_fold_checked", $("#generate_in_plugin_fold_checked").is(':checked') ? 1 : 0);
 
         $.ajax({
             type: "post",

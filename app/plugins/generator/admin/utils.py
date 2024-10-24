@@ -159,7 +159,7 @@ class Generator:
                 enums_argument = getattr(column["type"], "enums", [])
                 column_comment = column.get("comment", column_name)
                 required = "required" if nullable == False else ""
-                maxlength = f"maxlength = {length}" if length else ""
+                maxlength = f"maxlength = '{length}'" if length else ""
                 sets_argument = getattr(column["type"], "values", "")
                 sets_argument = sets_argument or ()
                 column_comment_safe = column_comment or column_name.title()
@@ -192,14 +192,21 @@ class Generator:
                 schema_key_str = "dump_only=True" if primary_key else ""
                 nullable_str = ", nullable=False" if nullable == False else ""
                 default_str = (
-                    f', default = {column["default"]} '
-                    if (
-                        default != None
-                        and (column_type != "DATETIME")
-                        and column_name != "id"
-                    )
-                    else ""
-                )
+                                    f', default=func.now() '  # 处理 created_at
+                                    if column_name == "created_at"
+                                    else (
+                                        f', default=func.now(), onupdate=func.now() '  # 处理 updated_at
+                                        if column_name == "updated_at"
+                                        else (
+                                            f', default={column["default"]} '  # 其他字段的默认值处理
+                                            if column.get("default") is not None
+                                            and column_type != "DATETIME"
+                                            and column_name != "id"
+                                            else ""
+                                        )
+                                    )
+                                )
+
                 enums_argument_str = ""
                 if model_type == "Enum" and len(enums_argument) > 0:
                     enums_argument_str = "('" + "', '".join(enums_argument) + "')"

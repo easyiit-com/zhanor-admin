@@ -828,16 +828,6 @@ tr:last-child td {
     --tblr-border-radius: 2em
 }
 
-.bg-success {
-    --tblr-bg-opacity: 0.1;
-    --tblr-badge-color: var(--tblr-success)
-}
-
-.bg-danger {
-    --tblr-bg-opacity: 0.1;
-    --tblr-badge-color: var(--tblr-danger)
-}
-
 .badge {
     font-size: .75rem;
     text-transform: none;

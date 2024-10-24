@@ -30,6 +30,7 @@
       "description": "Generator",
       "icon": "ti ti-separator-vertical",
       "extend": "",
+      "model_name":"Generator",
       "created_at": "2024-01-22 14:32:00",
       "updated_at": "2024-01-22 14:32:00",
       "weigh": 6,

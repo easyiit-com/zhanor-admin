@@ -136,7 +136,7 @@ def create_app(test_config=None):
                 db_session = db.get_db()
                 db_session.add(admin_log)
                 db_session.commit()
-                print(f"请求的JSON数据（已序列化）: {content_str}")
+                logger.info(f"请求的JSON数据（已序列化）: {content_str}")
         except Exception as e:
             logger.error(f"处理请求时发生错误: {e}")
 
@@ -149,7 +149,7 @@ def create_app(test_config=None):
     def page_not_found(e):
         """404错误处理"""
         logger.error("页面未找到: %s", request.path)
-        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        if request.method != 'GET' or request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return Response.error(code=404, msg="页面未找到")
         return render_template("404.jinja2", e=e), 404
 
@@ -157,7 +157,7 @@ def create_app(test_config=None):
     def internal_error(e):
         """500错误处理"""
         logger.error("运行错误: %s", request.path)
-        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        if request.method != 'GET' or request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return Response.error(code=500, msg="服务器内部错误")
         return render_template("500.jinja2", e=e), 500
 
@@ -165,55 +165,39 @@ def create_app(test_config=None):
     def forbidden(e):
         """403错误处理"""
         logger.error("禁止访问: %s", request.path)
-        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        if request.method != 'GET' or request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return Response.error(code=403, msg="未经授权的访问")
         return render_template("403.jinja2", e=e), 403
+ 
+    # @app.errorhandler(Exception)
+    # def handle_exception(e):
+    #     # 如果 DEBUG 模式打开，直接使用 Flask 默认的错误处理
+    #     if Config.DEBUG:
+    #         # 如果错误是 HTTP 错误，就返回默认的 HTTP 错误页面
+    #         if isinstance(e, HTTPException):
+    #             return e
+    #         # 对于非 HTTP 错误，返回一个 500 错误页面
+    #         return f"Internal Server Error:{e}", 500
+    #     # 处理 AJAX 请求的特殊情况
+    #     if request.method != 'GET' or request.headers.get("X-Requested-With") == "XMLHttpRequest":
+    #         return Response.error(code=500, msg=f"Some Error: {e}")
 
-    @app.errorhandler(Exception)
-    def handle_exception(e):
-        """全局异常处理"""
-        if isinstance(e, HTTPException):
-            return e
-        
-        logger.error("未处理的异常: %s", str(e))
-        
-        if Config.DEBUG:
-            return f"Internal Server Error: {str(e)}", 500
-
-        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-            return Response.error(code=500, msg="服务器出现错误，请稍后再试")
-
-        return redirect(url_for('error_page'))
-   
-    @app.errorhandler(Exception)
-    def handle_exception(e):
-        # 如果 DEBUG 模式打开，直接使用 Flask 默认的错误处理
-        if Config.DEBUG:
-            # 如果错误是 HTTP 错误，就返回默认的 HTTP 错误页面
-            if isinstance(e, HTTPException):
-                return e
-            # 对于非 HTTP 错误，返回一个 500 错误页面
-            return f"Internal Server Error:{e}", 500
-        # 处理 AJAX 请求的特殊情况
-        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-            return Response.error(code=500, msg=f"Some Error: {e}")
-
-        # 对于非 AJAX 请求，重定向到自定义错误页面
-        return redirect(url_for('error_page'))
+    #     # 对于非 AJAX 请求，重定向到自定义错误页面
+    #     return redirect(url_for('error_page'))
 
     
 
     @login_manager.unauthorized_handler
     def unauthorized():
         """处理未授权访问"""
-        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        if request.method != 'GET' or request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return Response.error(code=403, msg="未经授权的访问")
         return redirect(url_for("user_auth.login", next=request.url))
 
     @admin_login_manager.unauthorized_handler
     def unauthorized_admin():
         """处理管理员未授权访问"""
-        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        if request.method != 'GET' or request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return Response.error(code=403, msg="未经授权的访问")
         return redirect(url_for("admin_auth.login", next=request.url))
 
@@ -237,30 +221,55 @@ def create_app(test_config=None):
 
     def scan_plugins_folder(plugin_dir: str):
         """
-        导入插件API路由及API模块，遍历子目录，搜索views.py和views文件夹中的所有.py文件。
+        导入插件API路由及API模块，遍历子目录，搜索views.py和views文件夹中的所有.py文件及其递归子目录。
         """
         plugins_folder = Path(plugin_dir)
         for sub_dir in plugins_folder.glob("**/"):
             if not sub_dir.is_dir():
                 continue
 
-            # 确定插件名称
-            plugin_name = sub_dir.parts[-1]
-            parent_plugin_name = sub_dir.parts[-2]  # 假设这个是 "vip"
+            # 确定插件名称和父插件名称
+            parts = sub_dir.parts
+            plugin_name = parts[-1]
+            
+            # 确保路径从 plugins 开始，不重复
+            try:
+                plugins_index = parts.index('plugins')
+            except ValueError:
+                # 如果路径中不包含 'plugins'，跳过这个子目录
+                continue
+
+            # 获取插件的完整路径部分，从 'plugins' 开始
+            relative_plugin_path = ".".join(parts[plugins_index+1:])
 
             # 搜索views.py文件
             router_file = sub_dir / "views.py"
             if router_file.is_file():
-                module_name = f"app.plugins.{parent_plugin_name}.{plugin_name}.views"
-                _import_and_register_module(module_name)
+                module_name = f"app.plugins.{relative_plugin_path}.views"
+                try:
+                    _import_and_register_module(module_name)
+                    logger.info(f"导入插件: {module_name}")
+                except ModuleNotFoundError as e:
+                    logger.error(f"捕获错误：{e}")
 
-            # 搜索views文件夹中的所有.py文件
+            # 搜索views文件夹及其递归子目录中的所有.py文件
             views_folder = sub_dir / "views"
             if views_folder.is_dir():
-                for py_file in views_folder.glob("*.py"):
+                # 使用 rglob 递归搜索views及其子目录中的所有.py文件
+                for py_file in views_folder.rglob("*.py"):
                     if py_file.is_file():
-                        module_name = f"app.plugins.{parent_plugin_name}.{plugin_name}.views.{py_file.stem}"
-                        _import_and_register_module(module_name)
+                        # 构建模块路径，处理子目录时要包括文件夹层级
+                        relative_path = py_file.relative_to(views_folder).with_suffix('')
+                        # 替换路径中的斜杠为点，符合模块导入规则
+                        module_name = f"app.plugins.{relative_plugin_path}.views.{relative_path.as_posix().replace('/', '.')}"
+                        try:
+                            _import_and_register_module(module_name)
+                            logger.info(f"导入插件: {module_name}")
+                        except ModuleNotFoundError as e:
+                            print(f"捕获错误：{e}")
+                            logger.error(f"scan_plugins_folder====>捕获错误：{e}")
+
+
 
         plugin_json_file = plugins_folder / "plugin.json"
         if plugin_json_file.is_file():
@@ -335,6 +344,7 @@ def create_app(test_config=None):
             router_instance = getattr(plugin_module, "bp", None)
             if isinstance(router_instance, Blueprint):
                 app.register_blueprint(router_instance)
+                logger.info(f"scan_plugins_folder====>注入插件成功: {module_name}")
             else:
                 logger.error(f"scan_plugins_folder====>未知: {module_name}")
         except Exception as e:

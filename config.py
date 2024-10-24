@@ -1,9 +1,10 @@
+from datetime import timedelta
 import os
 
 class Config:
     # Application Configuration
-    DOMAIN = "http://127.0.0.1:5000"  # Application domain
-    STATIC_URL_PREFIX = "http://127.0.0.1:5000"  # Prefix for static files URL
+    DOMAIN = "http://127.0.0.1:5001"  # Application domain
+    STATIC_URL_PREFIX = "http://127.0.0.1:5001"  # Prefix for static files URL
 
     PLUGIN_URL = 'http://zhanor.com/api/v1/addon'  # URL for addons API
 
@@ -25,6 +26,8 @@ class Config:
         "uiversion": 3,  # Swagger UI version
         # Additional configurations can be added here
     }
+
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=48)
     
     # Internationalization (i18n) and Localization (l10n)
     LANGUAGES = ['en', 'zh']  # Supported languages: English and Chinese

@@ -34,12 +34,12 @@ def setup_logger(name):
 
     # 如果 Logger 没有设置处理器，则进行配置
     if not logger.hasHandlers():
-        logger.setLevel(logging.DEBUG)  # 设置日志级别为 DEBUG
+        logger.setLevel(logging.ERROR)  # 设置日志级别为 DEBUG
 
         # 创建并设置自定义处理器
         handler = FilepathLogHandler()
         # 定义日志输出格式，包含时间、级别、文件路径、行号等信息
-        formatter = logging.Formatter(fmt='\n-----开始-----\n%(asctime)s\n%(levelname)-8s\n[%(filepath)s:%(lineno)d]\n%(message)s\n-----结束-----\n\n')
+        formatter = logging.Formatter(fmt='\n [%(levelname)-8s]日志开始====>%(message)-s\n\n%(asctime)s-[%(filepath)s:%(lineno)d]-end')
         handler.setFormatter(formatter)
 
         # 确保处理器未重复添加到 Logger 中
