@@ -169,21 +169,21 @@ def create_app(test_config=None):
             return Response.error(code=403, msg="未经授权的访问")
         return render_template("403.jinja2", e=e), 403
  
-    # @app.errorhandler(Exception)
-    # def handle_exception(e):
-    #     # 如果 DEBUG 模式打开，直接使用 Flask 默认的错误处理
-    #     if Config.DEBUG:
-    #         # 如果错误是 HTTP 错误，就返回默认的 HTTP 错误页面
-    #         if isinstance(e, HTTPException):
-    #             return e
-    #         # 对于非 HTTP 错误，返回一个 500 错误页面
-    #         return f"Internal Server Error:{e}", 500
-    #     # 处理 AJAX 请求的特殊情况
-    #     if request.method != 'GET' or request.headers.get("X-Requested-With") == "XMLHttpRequest":
-    #         return Response.error(code=500, msg=f"Some Error: {e}")
+    @app.errorhandler(Exception)
+    def handle_exception(e):
+        # 如果 DEBUG 模式打开，直接使用 Flask 默认的错误处理
+        if Config.DEBUG:
+            # 如果错误是 HTTP 错误，就返回默认的 HTTP 错误页面
+            if isinstance(e, HTTPException):
+                return e
+            # 对于非 HTTP 错误，返回一个 500 错误页面
+            return f"Internal Server Error:{e}", 500
+        # 处理 AJAX 请求的特殊情况
+        if request.method != 'GET' or request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return Response.error(code=500, msg=f"Some Error: {e}")
 
-    #     # 对于非 AJAX 请求，重定向到自定义错误页面
-    #     return redirect(url_for('error_page'))
+        # 对于非 AJAX 请求，重定向到自定义错误页面
+        return redirect(url_for('error_page'))
 
     
 
@@ -404,6 +404,7 @@ def create_app(test_config=None):
         global_val = dict(
             title="zhanor",
             version =__version__ ,
+            lang= get_locale(),
             get_timestamp=get_timestamp(),
             configs=get_general_configs(),
             all_languages=languages,
