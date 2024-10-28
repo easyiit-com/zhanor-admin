@@ -6,9 +6,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js?v={{configs.basic.version}}"></script>
 <script src="/static/assets/js/backend/user_group.js"></script>
 <script src="/static/assets/js/backend/upload.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.0.0/tinymce.min.js"
-    integrity="sha512-xEHlM+pBhSw2P/G+5x3BR8723QPEf2bPr4BLV8p8pvtaCHmWVuSzzKy9M0oqWaXDZrB3r2Ntwmc9iJcNV/nfBQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.4.1/tinymce.min.js" integrity="sha512-TDS3vtbiUCZzBBZO8LFud171Hw+ykrQgkrvjwV+i+XsI0LC46PR4affO+9VbgcR79KreoN7J0HKup9mrle4gRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"
     integrity="sha512-K/oyQtMXpxI4+K0W7H25UopjM8pzq0yrVdFdG21Fh5dBe91I40pDd9A4lzNlHPHBIP2cwZuoxaUSX0GJSObvGA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -17,42 +15,6 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-                    <script>   
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const input = document.getElementById("created_at");
-                            let initialDate;
-                            const existingValue = input.value.trim();
-                            if (existingValue !== "") {
-                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
-                            } else {
-                                initialDate = new Date();
-                            }
-                            flatpickr("#created_at", {
-                                enableTime: true,
-                                dateFormat: "Y-m-d H:i:s",
-                                defaultDate: initialDate
-                            });
-                        }); 
-                    </script>
-                    
-                    <script>   
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const input = document.getElementById("updated_at");
-                            let initialDate;
-                            const existingValue = input.value.trim();
-                            if (existingValue !== "") {
-                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
-                            } else {
-                                initialDate = new Date();
-                            }
-                            flatpickr("#updated_at", {
-                                enableTime: true,
-                                dateFormat: "Y-m-d H:i:s",
-                                defaultDate: initialDate
-                            });
-                        }); 
-                    </script>
-                    
 
 <script>
     var currentButton = undefined;
@@ -132,11 +94,11 @@
   </div>
 <div class="mb-[20px]">
     <label class="form-label" for="name" >{{_('Group Name')}}</label>
-   <input class="form-control" type="text" id="name" name="name"  value="{{value.name}}" placeholder="{{_('Group Name')}}"  maxlength = 50 />
+   <input class="form-control" type="text" id="name" name="name"  value="{{value.name}}" placeholder="{{_('Group Name')}}"  maxlength = '50' />
   </div>
 <div class="mb-[20px]">
     <label class="form-label" for="rules" >{{_('Permission Nodes')}}</label>
-   <input class="form-control" type="text" id="rules" name="rules"  value="{{value.rules}}" placeholder="{{_('Permission Nodes')}}"  maxlength = 512 />
+   <input class="form-control" type="text" id="rules" name="rules"  value="{{value.rules}}" placeholder="{{_('Permission Nodes')}}"  maxlength = '512' />
   </div>
 <div class="mb-[20px]">
     <label class="form-label" for="status" required>{{_('Status')}}</label>
@@ -146,8 +108,8 @@
   <option value="normal" {% if value.status=='normal' %} selected {% endif %}>{{_('Normal')}}</option>
   <option value="hidden" {% if value.status=='hidden' %} selected {% endif %}>{{_('Hidden')}}</option>
  {% else %}
-  <option value="normal" {% if 'normal'=='normal' %} selected {% endif %}>{{_('Normal')}}</option>
-  <option value="hidden" {% if 'normal'=='hidden' %} selected {% endif %}>{{_('Hidden')}}</option>
+  <option value="normal" {% if None=='normal' %} selected {% endif %}>{{_('Normal')}}</option>
+  <option value="hidden" {% if None=='hidden' %} selected {% endif %}>{{_('Hidden')}}</option>
  {% endif %}
 
 </select>  </div>

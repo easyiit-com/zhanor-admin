@@ -70,6 +70,29 @@
             }
             return false;
         })
+
+        $('.toggle-status').change(function () {
+            var $this = $(this);
+            var UserGroupId = $this.data('id');
+            var newStatus = $this.is(':checked') ? 'normal' : 'hidden';
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/user/group/status",
+                contentType: 'application/json',
+                data: JSON.stringify({ id: UserGroupId, status: newStatus }),
+                dataType: 'json',
+                success: function (response) {
+                    toastr.success("Status updated successfully");
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("Failed to update status");
+                    // Revert checkbox state in case of error
+                    $this.prop('checked', newStatus === 'normal' ? false : true);
+                }
+            });
+        });
+
     });
 </script>
 {% endblock javascript %}
@@ -110,8 +133,13 @@
 <td class="sort-name">{{ value.rules }}</td>
 <td class="sort-name">{{ value.created_at }}</td>
 <td class="sort-name">{{ value.updated_at }}</td>
-<td class="sort-name">{{ value.status }}</td>
 
+                            <td class="sort-name">
+                                <label class="form-check form-switch">
+                                    <input class="form-check-input toggle-status" type="checkbox" data-id="{{ value.id }}" {% if value.status == 'normal' %} checked {% endif %}>
+                                </label>
+                            </td>
+                        
                             <td class="!text-end whitespace-nowrap">
                                 <a href="javascript:;"
                                     class="btn w-[36px] h-[36px] p-0 border hover:bg-[var(--tblr-primary)] hover:text-white"

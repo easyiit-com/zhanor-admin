@@ -52,7 +52,7 @@ def edit_view(id):
 # save
 @bp.route('save',methods=["POST"])
 @admin_required
-def add_or_edit_%%model_name%%_view():
+def add_or_edit_%%model_name%%():
     db_session = get_db()
     try:
         data = request.get_json()
@@ -87,6 +87,39 @@ def add_or_edit_%%model_name%%_view():
         db_session.rollback()
         return Response.error(msg=f"Error: {e}")
     return Response.success()
+@bp.route('status', methods=["POST"])
+@admin_required
+def update_%%model_name%%_status():
+    db_session = get_db()
+    try:
+        data = request.get_json()
+        if not data:
+            return Response.error(msg="No JSON data received")
+
+        # Retrieve %%model_class_name%% ID and new status from the request
+        %%model_name%%_id = data.get("id")
+        new_status = data.get("status")
+
+        # Check for valid input
+        if not %%model_name%%_id or new_status not in ["normal", "hidden"]:
+            return Response.error(msg="Invalid %%model_class_name%% ID or status")
+
+        # Find the %%model_class_name%% in the database
+        %%model_name%% = %%model_class_name%%.query.filter_by(id=%%model_name%%_id).one_or_none()
+        if %%model_name%% is None:
+            return Response.error(msg="%%model_class_name%% not found")
+
+        # Update the %%model_class_name%% status
+        %%model_name%%.status = new_status
+        if hasattr(%%model_class_name%%, "updated_at"):
+            %%model_name%%.updated_at = now()
+
+        db_session.commit()
+    except Exception as e:
+        db_session.rollback()
+        return Response.error(msg=f"Error: {e}")
+    
+    return Response.success(msg="Status updated successfully")
 
 # delete
 @bp.route('delete',methods=["DELETE"])

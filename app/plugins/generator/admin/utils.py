@@ -474,18 +474,21 @@ class Generator:
                     js_code += f"    formData.append( '{column_name}', $( \"#{column_name}\" ).val() );\n"
                     js_code += "}\n"
                 else:
-                    if fields == "*" or fields == None:
-                        replace_template_index_tpl_table_ths += (
-                            f"<th>{{{{_('{button_text}')}}}}</th>\n"
-                        )
+                  if fields == "*" or fields is None or column_name in fields.split(","):
+                    replace_template_index_tpl_table_ths += f"<th>{{{{_('{button_text}')}}}}</th>\n"
 
+                    # 检查 column_type 是否为 ENUM 且值为 normal 和 hidden
+                    if column_type == "ENUM" and set(enums_argument) == {"normal", "hidden"}:
+                        replace_template_index_tpl_table_tds += f'''
+                            <td class="sort-name">
+                                <label class="form-check form-switch">
+                                    <input class="form-check-input toggle-status" type="checkbox" data-id="{{{{ value.id }}}}" {{% if value.status == 'normal' %}} checked {{% endif %}}>
+                                </label>
+                            </td>
+                        '''
+                    else:
                         replace_template_index_tpl_table_tds += f'<td class="sort-name">{{{{ value.{column_name} }}}}</td>\n'
 
-                    elif column_name in fields.split(","):
-                        replace_template_index_tpl_table_ths += (
-                            f"<th>{{{{_('{button_text}')}}}}</th>\n"
-                        )
-                        replace_template_index_tpl_table_tds += f'<td class="sort-name">{{{{ value.{column_name} }}}}</td>\n'
                     replace_template_index_tpl_table_details += f'<div class="row mb-3 align-items-end"><div class="col-auto fw-bold"> {{{{_("{button_text}")}}}}</div><div class="col">{{{{ value.{column_name} }}}} </div></div>'
                     if column_type == "SET":
                         js_code += f"var {column_name}SelectedValues = [];\n"

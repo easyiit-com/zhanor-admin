@@ -52,7 +52,7 @@ def edit_view(id):
 # save
 @bp.route('save',methods=["POST"])
 @admin_required
-def add_or_edit_user_group_view():
+def add_or_edit_user_group():
     db_session = get_db()
     try:
         data = request.get_json()
@@ -87,6 +87,39 @@ def add_or_edit_user_group_view():
         db_session.rollback()
         return Response.error(msg=f"Error: {e}")
     return Response.success()
+@bp.route('status', methods=["POST"])
+@admin_required
+def update_user_group_status():
+    db_session = get_db()
+    try:
+        data = request.get_json()
+        if not data:
+            return Response.error(msg="No JSON data received")
+
+        # Retrieve UserGroup ID and new status from the request
+        user_group_id = data.get("id")
+        new_status = data.get("status")
+
+        # Check for valid input
+        if not user_group_id or new_status not in ["normal", "hidden"]:
+            return Response.error(msg="Invalid UserGroup ID or status")
+
+        # Find the UserGroup in the database
+        user_group = UserGroup.query.filter_by(id=user_group_id).one_or_none()
+        if user_group is None:
+            return Response.error(msg="UserGroup not found")
+
+        # Update the UserGroup status
+        user_group.status = new_status
+        if hasattr(UserGroup, "updated_at"):
+            user_group.updated_at = now()
+
+        db_session.commit()
+    except Exception as e:
+        db_session.rollback()
+        return Response.error(msg=f"Error: {e}")
+    
+    return Response.success(msg="Status updated successfully")
 
 # delete
 @bp.route('delete',methods=["DELETE"])

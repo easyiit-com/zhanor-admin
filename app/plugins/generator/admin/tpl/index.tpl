@@ -70,6 +70,29 @@
             }
             return false;
         })
+
+        $('.toggle-status').change(function () {
+            var $this = $(this);
+            var %%model_class_name%%Id = $this.data('id');
+            var newStatus = $this.is(':checked') ? 'normal' : 'hidden';
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/%%route%%/status",
+                contentType: 'application/json',
+                data: JSON.stringify({ id: %%model_class_name%%Id, status: newStatus }),
+                dataType: 'json',
+                success: function (response) {
+                    toastr.success("Status updated successfully");
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("Failed to update status");
+                    // Revert checkbox state in case of error
+                    $this.prop('checked', newStatus === 'normal' ? false : true);
+                }
+            });
+        });
+
     });
 </script>
 {% endblock javascript %}

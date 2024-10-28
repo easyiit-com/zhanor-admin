@@ -2,6 +2,7 @@
 from datetime import datetime, date, time
 from decimal import Decimal
 from sqlalchemy.sql.expression import ClauseElement
+from sqlalchemy import func
 from app.core.base import Base
 from app.core.db import db
 
@@ -11,12 +12,12 @@ class UserGroup(Base):
     id = db.Column(db.Integer, primary_key=True, nullable=False,comment='ID') 
     name = db.Column(db.String(50),comment='Group Name') 
     rules = db.Column(db.String(512),comment='Permission Nodes') 
-    created_at = db.Column(db.DateTime,comment='Creation Time') 
-    updated_at = db.Column(db.DateTime,comment='Update Time') 
-    status = db.Column(db.Enum('normal', 'hidden'), nullable=False, default = 'normal' ,comment='Status') 
+    created_at = db.Column(db.DateTime, default=func.now() ,comment='Creation Time') 
+    updated_at = db.Column(db.DateTime, default=func.now(), onupdate=func.now() ,comment='Update Time') 
+    status = db.Column(db.Enum('normal', 'hidden'), nullable=False,comment='Status') 
 
 
-
+ 
     @classmethod
     def from_dict(cls, data):
         """
