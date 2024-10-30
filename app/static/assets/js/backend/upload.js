@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
 	$('.upload').each(function () {
 		var uploadElement = $(this);
@@ -8,19 +7,16 @@ $(document).ready(function () {
 		
 		$.each(initialValues, function (i, fileUrl) {
 			var trimmedFileUrl = fileUrl.trim();
-			
-			// 动态判断文件类型，初始化 uploadType
 			var fileExtension = trimmedFileUrl.substring(trimmedFileUrl.lastIndexOf('.') + 1).toLowerCase();
 			var uploadType = '';
 	
 			if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
-				uploadType = 'image'; // 图片类型
+				uploadType = 'image';
 			} else if (['pdf', 'docx', 'txt'].includes(fileExtension)) {
-				uploadType = 'file'; // 文件类型
-				trimmedFileUrl = '/static/assets/images/file.png'; // 使用文件图标
+				uploadType = 'file';
+				trimmedFileUrl = '/static/assets/images/file.png';
 			}
 	
-			// 如果文件 URL 存在，创建预览
 			if (trimmedFileUrl) {
 				createFileDiv(imagesContainer, trimmedFileUrl, hiddenInput, fileUrl.trim());
 			}
@@ -42,7 +38,7 @@ $(document).ready(function () {
 		}
 		
 		if (typeof allowedExtensionsStr !== 'string') {
-			allowedExtensionsStr = ".jpg,.jpeg,.png,.gif,.pdf,.docx,.txt";  // 扩展文件类型
+			allowedExtensionsStr = ".jpg,.jpeg,.png,.gif,.pdf,.docx,.txt";
 		}
 	
 		const allowedExtensions = allowedExtensionsStr.split(',');
@@ -53,11 +49,10 @@ $(document).ready(function () {
 			const fileName = file.name;
 			const fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
 			
-			// 动态判断文件类型并设置 uploadType
 			if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
-				uploadType = 'image'; // 如果是图片
+				uploadType = 'image';
 			} else if (['pdf', 'docx', 'txt'].includes(fileExtension)) {
-				uploadType = 'file'; // 如果是文档
+				uploadType = 'file';
 			} else {
 				toastr.error(_(`File "${fileName}" is not an allowed format (only ${allowedExtensions.join(', ')} are allowed), and this file has been skipped.`));
 				return;
@@ -69,21 +64,24 @@ $(document).ready(function () {
 		});
 	
 		if (validFiles.length > 0) {
-			uploadFile(validFiles, hiddenInput, uploadType, save, imagesContainer);  // 这里使用动态判断的 uploadType
+			uploadFile(validFiles, hiddenInput, uploadType, save, imagesContainer);
 			fileInput.val('');
 		}
 	});
 	
-
 	function uploadFile(files, hiddenInput, uploadType, save = 'true', imagesContainer) {
 		const fileData = new FormData();
-		fileData.append("save", save); 
+		fileData.append("save", save);
 		$.each(files, function (i, file) {
 			fileData.append("files[]", file);
 		});
 
+		// 根据data-url动态设置url
+		const uploadElement = imagesContainer.prev('.upload');
+		const uploadUrl = uploadElement.data('url') || '/upload';
+
 		$.ajax({
-			url: '/upload',
+			url: uploadUrl,
 			type: 'POST',
 			processData: false,
 			contentType: false,
@@ -96,7 +94,7 @@ $(document).ready(function () {
 						hiddenInput.val(newVal);
 						createFileDiv(imagesContainer, fileInfo.relative_url, hiddenInput, fileInfo.relative_url, uploadType);
 					});
-					toastr.success(_('Upload Successfully'))
+					toastr.success(_('Upload Successfully'));
 				}
 			},
 			error: function (xhr, status, error) {
@@ -104,8 +102,9 @@ $(document).ready(function () {
 			}
 		});
 	}
+
 	function createFileDiv(imagesContainer, displayUrl, hiddenInput, originalUrl, uploadType) {
-		var imgDiv = ''
+		var imgDiv = '';
 		var extension = originalUrl.substring(originalUrl.lastIndexOf('.') + 1);
 		if (uploadType == "file") {
 			imgDiv = $('<div class="col-6 col-sm-3"><label class="form-image m-2"><i class="ti ti-x delete-image-btn" data-url="' + originalUrl + '"></i><img src="/static/assets/images/file-type-' + extension + '.png" class="form-image-image" onError="/static/assets/images/file.png"></label></div>');

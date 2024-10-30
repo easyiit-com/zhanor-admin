@@ -315,3 +315,39 @@ def delete_expired_sms_codes(request):
     for sms in expired_sms:
         request.dbsession.delete(sms)
     request.dbsession.flush()
+
+
+from PIL import Image
+import os
+from datetime import datetime
+
+def generate_thumbnail(image_path, base_path, relative_path,size=(128, 128)):
+    """
+    生成图像的缩略图并保存。
+
+    :param image_path: 原始图像的路径
+    :param base_path: 存储缩略图的基础路径
+    :param size: 缩略图的尺寸，默认为 (128, 128)
+    :return: 缩略图的相对路径
+    """
+    # 打开原始图像
+    img = Image.open(image_path)
+    
+    # 生成缩略图，保持纵横比
+    img.thumbnail(size)
+
+    # 生成缩略图文件名，前缀为 'thumb_'
+    thumbnail_filename = 'thumb_' + os.path.basename(image_path)
+    
+    # 创建存储缩略图的目录，确保与 base_path 一致
+    thumbnail_path = os.path.join(base_path, thumbnail_filename)
+    
+    # 确保目录存在
+    os.makedirs(base_path , exist_ok=True)
+    
+    # 保存缩略图到指定路径
+    img.save(thumbnail_path)
+    
+    # 返回缩略图的相对路径，供外部访问
+    return os.path.join(relative_path,thumbnail_filename)
+
