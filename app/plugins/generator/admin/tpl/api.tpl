@@ -99,7 +99,7 @@ class Api%%model_class_name%%Create(Resource):
             },
         }
     )
-    def put(self, %%model_name%%_id=None):
+    def put(self):
         db_session = get_db()
         data = request.get_json()
         new_%%model_name%% = %%model_class_name%%(**data)

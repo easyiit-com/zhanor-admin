@@ -96,7 +96,7 @@ def load_plugin_apis(api, plugin: str):
                         # 获取方法并注册路由
                         for method_name in dir(api_class):
                             method = getattr(api_class, method_name)
-                            if callable(method) and not method_name.startswith("__") and method_name in {"get", "put", "delete"}:
+                            if callable(method) and not method_name.startswith("__") and method_name in {"get", "put", "delete",'post'}:
                                 try:
                                     # 获取方法参数
                                     params = inspect.signature(method).parameters
