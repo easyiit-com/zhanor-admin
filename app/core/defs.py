@@ -102,7 +102,6 @@ def load_plugin_apis(api, plugin: str):
                                     params = inspect.signature(method).parameters
                                     # 筛选出除了 'self' 以外的参数
                                     path_params = [f"<{param.name}>" for param in params.values() if param.name != 'self' and param.kind in {inspect.Parameter.POSITIONAL_OR_KEYWORD, inspect.Parameter.VAR_POSITIONAL}]
-
                                     # 构建完整路由
                                     if path_params:
                                         route_with_params = f"{base_route}/" + "/".join(path_params)
