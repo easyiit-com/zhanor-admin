@@ -49,7 +49,7 @@ def load_apis(api):
                             # 获取方法并注册路由
                             for method_name in dir(api_class):
                                 method = getattr(api_class, method_name)
-                                if callable(method) and not method_name.startswith("__") and method_name in {"get", "put", "delete"}:
+                                if callable(method) and not method_name.startswith("__") and method_name in {"get", "put", "delete",'post'}:
                                     try:
                                         # 获取方法参数
                                         params = inspect.signature(method).parameters
@@ -69,6 +69,57 @@ def load_apis(api):
 
                 except Exception as e:
                     logger.error(f"导入模块 {module_path} 时发生错误: {e}")
+
+def load_plugin_apis(api, plugin: str):
+    """
+    加载插件 API 模块
+    :param api: Flask API 实例
+    :param plugin: 插件名称
+    """
+    plugin_api_path = os.path.join("app/plugins", plugin, "api/v1")
+
+    # 遍历插件 API 目录中的文件
+    for root, _, files in os.walk(plugin_api_path):
+        for file in [f for f in files if f.endswith(".py") and f != "__init__.py"]:
+            module_path = os.path.join(root, file).replace("/", ".").replace(".py", "")
+            try:
+                module = importlib.import_module(module_path)
+                folder_name = os.path.basename(root)
+
+                # 动态注册以 'Api' 开头的类
+                for name in dir(module):
+                    if name.startswith("Api"):
+                        api_class = getattr(module, name)
+                        route_name = re.sub(r"(?<!^)(?=[A-Z])", "/", name[3:]).lower()
+                        base_route = f"/{plugin}/{folder_name}/{route_name}"
+
+                        # 获取方法并注册路由
+                        for method_name in dir(api_class):
+                            method = getattr(api_class, method_name)
+                            if callable(method) and not method_name.startswith("__") and method_name in {"get", "put", "delete", 'post'}:
+                                try:
+                                    # 获取方法参数
+                                    params = inspect.signature(method).parameters
+                                    # 筛选出除了 'self' 以外的参数
+                                    path_params = [f"<{param.name}>" for param in params.values() if param.name != 'self' and param.kind in {inspect.Parameter.POSITIONAL_OR_KEYWORD, inspect.Parameter.VAR_POSITIONAL}]
+                                    # 构建完整路由
+                                    if path_params:
+                                        route_with_params = f"{base_route}/" + "/".join(path_params)
+                                        api.add_resource(api_class, route_with_params, endpoint=f"{folder_name}_{route_name}_{method_name}")
+                                        logger.info(f"已注册 API: {api_class.__name__} 方法: {method_name}，路径: {route_with_params}")
+                                    else:
+                                        api.add_resource(api_class, base_route, endpoint=f"{folder_name}_{route_name}")
+
+                                except Exception as e:
+                                    logger.error(f"处理方法 {method_name} 时发生错误: {e}")
+
+            except ImportError as e:
+                logger.error(f"导入插件模块 {module_path} 时发生错误: {e}")
+            except Exception as e:
+                logger.error(f"处理模块 {module_path} 时发生错误: {e}")
+
+
+
 
 
 
