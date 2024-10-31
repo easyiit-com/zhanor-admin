@@ -60,7 +60,7 @@ def load_apis(api):
                                         if path_params:
                                             route_with_params = f"{base_route}/" + "/".join(path_params)
                                             api.add_resource(api_class, route_with_params, endpoint=f"{folder_name}_{route_name}_{method_name}")
-                                            logger.error(f"已注册 API: {api_class.__name__} 方法: {method_name}，路径: {route_with_params}")
+                                            logger.info(f"已注册 API: {api_class.__name__} 方法: {method_name}，路径: {route_with_params}")
                                         else:
                                             api.add_resource(api_class, base_route, endpoint=f"{folder_name}_{route_name}")
 
@@ -107,7 +107,7 @@ def load_plugin_apis(api, plugin: str):
                                     if path_params:
                                         route_with_params = f"{base_route}/" + "/".join(path_params)
                                         api.add_resource(api_class, route_with_params, endpoint=f"{folder_name}_{route_name}_{method_name}")
-                                        logger.error(f"已注册 API: {api_class.__name__} 方法: {method_name}，路径: {route_with_params}")
+                                        logger.info(f"已注册 API: {api_class.__name__} 方法: {method_name}，路径: {route_with_params}")
                                     else:
                                         api.add_resource(api_class, base_route, endpoint=f"{folder_name}_{route_name}")
 
