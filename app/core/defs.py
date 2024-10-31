@@ -43,11 +43,29 @@ def load_apis(api):
                     for name in dir(module):
                         if name.startswith("Api"):
                             api_class = getattr(module, name)
-                            # 移除 'Api' 前缀并将驼峰命名转为路径格式
                             route_name = re.sub(r"(?<!^)(?=[A-Z])", "/", name[3:]).lower()
-                            route = f"/{folder_name}/{route_name}"  # 生成完整路由
-                            api.add_resource(api_class, route)
-                            logger.info(f"已注册 API: {api_class.__name__}，路径: {route}")
+                            base_route = f"/{folder_name}/{route_name}" 
+
+                            # 获取方法并注册路由
+                            for method_name in dir(api_class):
+                                method = getattr(api_class, method_name)
+                                if callable(method) and not method_name.startswith("__") and method_name in {"get", "put", "delete"}:
+                                    try:
+                                        # 获取方法参数
+                                        params = inspect.signature(method).parameters
+                                        # 筛选出除了 'self' 以外的参数
+                                        path_params = [f"<{param.name}>" for param in params.values() if param.name != 'self' and param.kind in {inspect.Parameter.POSITIONAL_OR_KEYWORD, inspect.Parameter.VAR_POSITIONAL}]
+
+                                        # 构建完整路由
+                                        if path_params:
+                                            route_with_params = f"{base_route}/" + "/".join(path_params)
+                                            api.add_resource(api_class, route_with_params, endpoint=f"{folder_name}_{route_name}_{method_name}")
+                                            logger.error(f"已注册 API: {api_class.__name__} 方法: {method_name}，路径: {route_with_params}")
+                                        else:
+                                            api.add_resource(api_class, base_route, endpoint=f"{folder_name}_{route_name}")
+
+                                    except Exception as e:
+                                        logger.error(f"处理方法 {method_name} 时发生错误: {e}")
 
                 except Exception as e:
                     logger.error(f"导入模块 {module_path} 时发生错误: {e}")
