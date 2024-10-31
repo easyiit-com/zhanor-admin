@@ -72,13 +72,30 @@ def load_plugin_apis(api, plugin):
                     if name.startswith("Api"):
                         api_class = getattr(module, name)
                         route_name = re.sub(r"(?<!^)(?=[A-Z])", "/", name[3:]).lower()
+                        
+                        # 构建基本路由
                         route = f"/{plugin}/{folder_name}/{route_name}"
-                        api.add_resource(api_class, route)
+
+                        # 获取方法参数
+                        for method_name in dir(api_class):
+                            method = getattr(api_class, method_name)
+                            if callable(method):
+                                # 获取方法的参数
+                                params = inspect.signature(method).parameters
+                                path_params = [f"<{param.name}>" for param in params.values() if param.kind == inspect.Parameter.POSITIONAL_OR_KEYWORD]
+
+                                # 如果方法有参数，则构建完整的路由
+                                if path_params:
+                                    route_with_params = route + "/" + "/".join(path_params)
+                                    api.add_resource(api_class, route_with_params)
+                                else:
+                                    api.add_resource(api_class, route)
 
             except ImportError as e:
                 logger.error(f"导入插件模块 {module_path} 时发生错误: {e}")
             except Exception as e:
                 logger.error(f"处理模块 {module_path} 时发生错误: {e}")
+
 
 def register_blueprints(app):
     """
