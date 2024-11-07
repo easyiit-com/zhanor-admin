@@ -143,8 +143,8 @@ def create_app(test_config=None):
     @app.route("/.well-known/<path:path>")
     def serve_well_known(path):
         """提供 .well-known 目录下的静态文件"""
-        return send_from_directory('.well-known', path)
-    
+        return send_from_directory('.well-known', path, mimetype='application/json')
+
     @app.route("/<path:path>")
     def serve_static(path):
         """提供静态文件"""
