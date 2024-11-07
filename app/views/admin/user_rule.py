@@ -18,7 +18,7 @@ def index_view():
         user_rule_dicts = [user_rule.to_dict() for user_rule in user_rules]
         return Response.success(user_rule_dicts)
     else:
-        page = int(request.form.get('page', 1))
+        page = int(request.args.get('page', 1))
         per_page = 20
         total_count = UserRule.query.count()
         user_rule_list = UserRule.query.order_by(UserRule.id.desc()).offset((page - 1) * per_page).limit(per_page).all()

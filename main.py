@@ -69,7 +69,7 @@ def create_app(test_config=None):
         __name__,
         instance_relative_config=True,
         template_folder="app/templates",
-        static_folder="app/static",
+        static_folder="www/static",
     )
 
     app.config.from_object(Config)
@@ -140,10 +140,10 @@ def create_app(test_config=None):
         except Exception as e:
             logger.error(f"处理请求时发生错误: {e}")
 
-    @app.route("/static/<path:path>")
+    @app.route("/<path:path>")
     def serve_static(path):
         """提供静态文件"""
-        return send_from_directory(app.static_folder, path)
+        return send_from_directory('"www"', path)
 
     @app.errorhandler(404)
     def page_not_found(e):
@@ -442,4 +442,5 @@ def create_app(test_config=None):
 
 if __name__ == "__main__":
     app = create_app()
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5001)), debug=True)
+    port  = app.config.get('PORT',5001) 
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", port)), debug=True)

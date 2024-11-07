@@ -18,7 +18,7 @@ def index_view():
         %%model_name%%_dicts = [%%model_name%%.to_dict() for %%model_name%% in %%model_name%%s]
         return Response.success(%%model_name%%_dicts)
     else:
-        page = int(request.form.get('page', 1))
+        page = int(request.args.get('page', 1))
         per_page = 20
         total_count = %%model_class_name%%.query.count()
         %%model_name%%_list = %%model_class_name%%.query.order_by(%%model_class_name%%.id.desc()).offset((page - 1) * per_page).limit(per_page).all()

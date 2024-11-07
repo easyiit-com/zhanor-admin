@@ -18,7 +18,7 @@ def index_view():
         admin_group_dicts = [admin_group.to_dict() for admin_group in admin_groups]
         return Response.success(admin_group_dicts)
     else:
-        page = int(request.form.get('page', 1))
+        page = int(request.args.get('page', 1))
         per_page = 20
         total_count = AdminGroup.query.count()
         admin_group_list = AdminGroup.query.order_by(AdminGroup.id.desc()).offset((page - 1) * per_page).limit(per_page).all()

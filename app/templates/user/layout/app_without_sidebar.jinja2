@@ -2,55 +2,54 @@
 <html lang="{{request.locale_name}}">
 
 <head>
+   {# Google Analytics code (if needed) #}
    {# @if(isset($setting->google_analytics_code))
-   <!-- Google tag (gtag.js) -->
-   <!-- <script async src="https://www.googletagmanager.com/gtag/js?id={{$setting->google_analytics_code}}"></script>
+   <script async src="https://www.googletagmanager.com/gtag/js?id={{$setting->google_analytics_code}}"></script>
    <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
-
       gtag('config', '{{$setting->google_analytics_code}}');
-   </script> -->
+   </script>
    @endif #}
 
-   <meta name="csrf-token" content="{{csrf_token() }}">
+   <meta name="csrf-token" content="{{ csrf_token() }}">
    <meta charset="utf-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
    <meta name="stream-url" content="streamUrl">
-   <link rel="icon" href="/assets/favicon.ico">
-   <title>{{_(title)}} | {{configs.user.user_page_title}}</title>
-   <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@500;600;700&display=swap" rel="stylesheet"> -->
-   <link href="/static/assets/libs/tabler/tabler.min.css?v={{configs.basic.version}}" rel="stylesheet" />
+   <link rel="icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
+   <title>{{ _(title) }} | {{ configs.user.user_page_title }}</title>
+   
+   <!-- Fonts and Styles -->
+   <link href="{{ url_for('static', filename='assets/libs/tabler/tabler.min.css') }}?v={{ configs.basic.version }}" rel="stylesheet" />
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css"
       integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
       integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
-   <link href="/static/assets/css/common.css?v={{configs.basic.version}}" rel="stylesheet" />
-   <link href="/static/assets/css/user.css?v={{configs.basic.version}}" rel="stylesheet" />
+   <link href="{{ url_for('static', filename='assets/css/common.css') }}?v={{ configs.basic.version }}" rel="stylesheet" />
+   <link href="{{ url_for('static', filename='assets/css/user.css') }}?v={{ configs.basic.version }}" rel="stylesheet" />
 </head>
 
 <body class="group/body">
-   <script src="/static/assets/libs/tabler/tabler-theme.min.js?v={{configs.basic.version}}"></script>
-   <script src="/static/assets/libs/navbar-shrink.js?v={{configs.basic.version}}"></script>
+   <!-- Scripts -->
+   <script src="{{ url_for('static', filename='assets/libs/tabler/tabler-theme.min.js') }}?v={{ configs.basic.version }}"></script>
+   <script src="{{ url_for('static', filename='assets/libs/navbar-shrink.js') }}?v={{ configs.basic.version }}"></script>
    <div id="app-loading-indicator" class="fixed top-0 left-0 right-0 z-[99] opacity-0 transition-opacity">
       <div class="progress [--tblr-progress-height:3px]">
-         <div
-            class="progress-bar progress-bar-indeterminate bg-[--tblr-primary] before:[animation-timing-function:ease-in-out] dark:bg-white">
-         </div>
+         <div class="progress-bar progress-bar-indeterminate bg-[--tblr-primary] before:[animation-timing-function:ease-in-out] dark:bg-white"></div>
       </div>
    </div>
    {% block content %}
    <p>No content</p>
    {% endblock content %}
+   
    <!-- Tabler Core -->
-   <script src="/static/assets/libs/tabler/tabler.min.js?v={{configs.basic.version}}" defer></script>
-   <script src="/static/assets/libs/opai.min.js?v={{configs.basic.version}}" defer></script>
+   <script src="{{ url_for('static', filename='assets/libs/tabler/tabler.min.js') }}?v={{ configs.basic.version }}" defer></script>
+   <script src="{{ url_for('static', filename='assets/libs/opai.min.js') }}?v={{ configs.basic.version }}" defer></script>
+   
    <!-- Clipboard -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"
       integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw=="
@@ -63,7 +62,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"
       integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ=="
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   <script src="/static/assets/js/frontend/frontend.js"></script>
+   <script src="{{ url_for('static', filename='assets/js/frontend/frontend.js') }}"></script>
    <script>
       function _(text) {
          const translations = {
@@ -83,7 +82,7 @@
    </script>
    {% block javascript %}
    {% endblock javascript %}
-   <script src="/static/assets/js/frontend/user.js"></script>
+   <script src="{{ url_for('static', filename='assets/js/frontend/user.js') }}"></script>
 
 </body>
 

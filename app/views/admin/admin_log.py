@@ -18,7 +18,7 @@ def index_view():
         admin_log_dicts = [admin_log.to_dict() for admin_log in admin_logs]
         return Response.success(admin_log_dicts)
     else:
-        page = int(request.form.get('page', 1))
+        page = int(request.args.get('page', 1))
         per_page = 20
         total_count = AdminLog.query.count()
         admin_log_list = AdminLog.query.order_by(AdminLog.id.desc()).offset((page - 1) * per_page).limit(per_page).all()

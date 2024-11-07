@@ -40,7 +40,7 @@ def profile_view():
 @bp.route('balance/log',methods=["GET","POST"])
 @login_required
 def balance_log_view():
-    page = int(request.form.get('page', 1))
+    page = int(request.args.get('page', 1))
     per_page = 20
     total_count = UserBalanceLog.query.count()
     user_balance_log_list = UserBalanceLog.query.order_by(UserBalanceLog.id.desc()).offset((page - 1) * per_page).limit(per_page).all()
@@ -56,7 +56,7 @@ def balance_log_view():
 @bp.route('score/log',methods=["GET","POST"])
 @login_required
 def score_log_view():
-    page = int(request.form.get('page', 1))
+    page = int(request.args.get('page', 1))
     per_page = 20
     total_count = UserScoreLog.query.count()
     user_score_log_list = UserScoreLog.query.order_by(UserScoreLog.id.desc()).offset((page - 1) * per_page).limit(per_page).all()

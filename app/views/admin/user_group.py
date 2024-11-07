@@ -18,7 +18,7 @@ def index_view():
         user_group_dicts = [user_group.to_dict() for user_group in user_groups]
         return Response.success(user_group_dicts)
     else:
-        page = int(request.form.get('page', 1))
+        page = int(request.args.get('page', 1))
         per_page = 20
         total_count = UserGroup.query.count()
         user_group_list = UserGroup.query.order_by(UserGroup.id.desc()).offset((page - 1) * per_page).limit(per_page).all()

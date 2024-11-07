@@ -18,7 +18,7 @@ def index_view():
         attachment_file_dicts = [attachment_file.to_dict() for attachment_file in attachment_files]
         return Response.success(attachment_file_dicts)
     else:
-        page = int(request.form.get('page', 1))
+        page = int(request.args.get('page', 1))
         per_page = 20
         total_count = AttachmentFile.query.count()
         attachment_file_list = AttachmentFile.query.order_by(AttachmentFile.id.desc()).offset((page - 1) * per_page).limit(per_page).all()

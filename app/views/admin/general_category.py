@@ -18,7 +18,7 @@ def index_view():
         general_category_dicts = [general_category.to_dict() for general_category in general_categorys]
         return Response.success(general_category_dicts)
     else:
-        page = int(request.form.get('page', 1))
+        page = int(request.args.get('page', 1))
         per_page = 20
         total_count = GeneralCategory.query.count()
         general_category_list = GeneralCategory.query.order_by(GeneralCategory.id.desc()).offset((page - 1) * per_page).limit(per_page).all()

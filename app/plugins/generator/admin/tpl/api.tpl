@@ -21,7 +21,23 @@ class Api%%model_class_name%%List(Resource):
                     "required": True,
                     "type": "string",
                     "format": "Bearer <token>",
-                    "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+                    "example": "Bearer <token>",
+                },
+                {
+                    "name": "page",
+                    "in": "query",
+                    "description": "Page number (default is 1)",
+                    "required": False,
+                    "type": "integer",
+                    "example": 1,
+                },
+                {
+                    "name": "per_page",
+                    "in": "query",
+                    "description": "Number of items per page (max 50, default is 50)",
+                    "required": False,
+                    "type": "integer",
+                    "example": 50,
                 },
             ],
             "responses": {
@@ -38,6 +54,12 @@ class Api%%model_class_name%%List(Resource):
     )
     @jwt_required()
     def get(self):
+
+        # Pagination parameters
+        page = request.args.get('page', default=1, type=int)
+        per_page = request.args.get('per_page', default=50, type=int)
+        per_page = min(per_page, 50)  # Ensure per_page does not exceed 50
+
         parser = reqparse.RequestParser()
         parser.add_argument(
             "%%model_name%%_id", type=int, location="args", help="Filter by %%model_name%%_id"
@@ -57,7 +79,7 @@ class Api%%model_class_name%%List(Resource):
         if args.title:
             query = query.filter(%%model_class_name%%.title.in_(args.title))
 
-        %%model_name%%s = %%model_class_name%%.query.order_by(%%model_class_name%%.id.desc()).all()
+        %%model_name%%s = %%model_class_name%%.query.order_by(%%model_class_name%%.id.desc()).offset((page - 1) * per_page).limit(per_page).all()
         %%model_name%%_dicts = [%%model_name%%.to_dict() for %%model_name%% in %%model_name%%s]
         return {"code": 1,"msg": "Get Successfully", "data": %%model_name%%_dicts}, 200
 

@@ -110,7 +110,7 @@ def install_view():
 
                 # 保存文件到插件目录
                 plugins_directory = os.path.join('app/plugins')
-                static_directory = os.path.join("app/static")
+                static_directory = os.path.join("www/static")
                 plugin_download_file = os.path.join(plugins_directory, new_file_name)
                 
                 with open(plugin_download_file, 'wb') as f:
@@ -153,7 +153,7 @@ def uninstall_view():
             return {"msg": "UUID is required", "data": {}}, 400
         
         plugins_directory = os.path.join('app/plugins')
-        static_directory = os.path.join("app/static")
+        static_directory = os.path.join("www/static")
         plugin_static_directory = os.path.join(static_directory, f"plugin/{uuid}")
         plugin_folder = os.path.join(plugins_directory, uuid)
         manifest_path = os.path.join(plugin_folder, "plugin.json")

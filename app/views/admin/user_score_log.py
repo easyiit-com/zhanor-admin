@@ -18,7 +18,7 @@ def index_view():
         user_score_log_dicts = [user_score_log.to_dict() for user_score_log in user_score_logs]
         return Response.success(user_score_log_dicts)
     else:
-        page = int(request.form.get('page', 1))
+        page = int(request.args.get('page', 1))
         per_page = 20
         total_count = UserScoreLog.query.count()
         user_score_log_list = UserScoreLog.query.order_by(UserScoreLog.id.desc()).offset((page - 1) * per_page).limit(per_page).all()
