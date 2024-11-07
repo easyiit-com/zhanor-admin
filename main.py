@@ -143,7 +143,7 @@ def create_app(test_config=None):
     @app.route("/<path:path>")
     def serve_static(path):
         """提供静态文件"""
-        return send_from_directory('"www"', path)
+        return send_from_directory('www', path)
 
     @app.errorhandler(404)
     def page_not_found(e):
