@@ -139,7 +139,12 @@ def create_app(test_config=None):
                 logger.info(f"请求的JSON数据（已序列化）: {content_str}")
         except Exception as e:
             logger.error(f"处理请求时发生错误: {e}")
-
+    
+    @app.route("/.well-known/<path:path>")
+    def serve_well_known(path):
+        """提供 .well-known 目录下的静态文件"""
+        return send_from_directory('.well-known', path)
+    
     @app.route("/<path:path>")
     def serve_static(path):
         """提供静态文件"""
