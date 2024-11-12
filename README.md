@@ -15,23 +15,23 @@ zhanor(栈鱼)是基于flask 2.0框架开发的一个通用后台管理系统，
 | ![Example Image](screen_shot/general_config.png) | ![Example Image](screen_shot/generator.png) |
 | ![Example Image](screen_shot/profile.png) |                                             |
 
-## 功能
+## 页面功能
     Dashboard
     Generals
     ├ Profile
         └ Save
     ├ Category
     └ Config
-    ├ Add
-    ├ Save
-    ├ Delete
-    └ Table List
+        ├ Add
+        ├ Save
+        ├ Delete
+        └ Table List
     Attachment
     └ Attachment File
-    ├ Add
-    ├ Edit
-    ├ Save
-    └ Delete
+        ├ Add
+        ├ Edit
+        ├ Save
+        └ Delete
     Plugin
     ├ Update state
     ├ Setting
@@ -63,15 +63,15 @@ zhanor(栈鱼)是基于flask 2.0框架开发的一个通用后台管理系统，
     ├ User Score Log
         └ Del
     └ User Group
-    ├ Add
-    ├ Edit
-    ├ Save
-    └ Del
+        ├ Add
+        ├ Edit
+        ├ Save
+        └ Del
     Addon
-    ├ Add
-    ├ Edit
-    ├ Save
-    └ Del
+        ├ Add
+        ├ Edit
+        ├ Save
+        └ Del
 
 
 ## 简介
@@ -275,9 +275,13 @@ gunicorn启动命令：
 ```
 
 启动后默认访问地址：http://127.0.0.1:5001
+
 Swagger地址：http://127.0.0.1:5001/apidocs/
+
 后台地址：http://127.0.0.1:5001/admin
+
 默认用户名：admin@admin.com
+
 默认密码：88888888
  
 ### 10、进入生产环境

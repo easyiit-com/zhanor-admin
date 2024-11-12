@@ -6,7 +6,9 @@ from app.core.utils.defs import now
 from app.core.db import get_db
 from app.core.csrf import csrf
 from app.core.admin.login.utils import admin_required
+from app.core.utils.tree import Tree
 from app.models.admin_group import  AdminGroup
+from app.models.admin_rule import AdminRule
 
 bp = Blueprint("admin_group", __name__, url_prefix="/admin/admin/group")
 # list
@@ -44,11 +46,35 @@ def add_view():
 def edit_view(id):
     admin_group_id = id
     result = AdminGroup.query.filter(AdminGroup.id == admin_group_id).first()
+
+    admin_rule_list = AdminRule.query.order_by(AdminRule.id.asc()).all()
+    options = {
+        'pidname': 'pid',
+        'nbsp': '&nbsp;&nbsp;&nbsp;&nbsp;',
+        'icon' : ['&nbsp&nbsp&nbsp&nbsp', '├', '└']
+    }
+    data = [{
+                'id': rule.id,
+                'type': rule.type,
+                'pid': rule.pid,
+                'name': rule.name,
+                'url_path': rule.url_path,
+                'title': rule.title,
+                'icon': rule.icon,
+                'weigh': rule.weigh,
+                'created_at': rule.created_at,
+                'updated_at': rule.updated_at,
+                'status': rule.status
+            } for rule in admin_rule_list]
+    tree = Tree(options)
+    tree.init(data)
+    admin_rule_tree_list = tree.getTreeList(tree.getTreeArray(0),field='title')
+
     if not result:
         abort(404, {'error': 'Data not Find'})
     return render_template(
             "admin/admin/group/edit.jinja2",
-            value= result)
+            value= result,admin_rule_tree_list=admin_rule_tree_list)
 
 @bp.route('save',methods=["POST"])
 @admin_required

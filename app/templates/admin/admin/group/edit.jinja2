@@ -2,8 +2,10 @@
 {% extends "admin/layout/default.jinja2" %}
 
 {% block javascript %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js?v={{configs.basic.version}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js?v={{configs.basic.version}}"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js?v={{configs.basic.version}}"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js?v={{configs.basic.version}}"></script>
 <script src="/static/assets/js/backend/admin_group.js"></script>
 <script src="{{ url_for('static', filename='assets/js/backend/upload.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.0.0/tinymce.min.js"
@@ -15,44 +17,42 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/ar-dz.min.js"
     integrity="sha512-qpDG6agspDXhnOZkCoWtFNJ13B6Fq6pwIuZoLw0b05J8TDd1qohuTaemmrpsN3ZVtB7AI7ZnqH5CVVIj01SV5g=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("created_at");
+        let initialDate;
+        const existingValue = input.value.trim();
+        if (existingValue !== "") {
+            initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+        } else {
+            initialDate = new Date();
+        }
+        flatpickr("#created_at", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i:s",
+            defaultDate: initialDate
+        });
+    }); 
+</script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("updated_at");
+        let initialDate;
+        const existingValue = input.value.trim();
+        if (existingValue !== "") {
+            initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
+        } else {
+            initialDate = new Date();
+        }
+        flatpickr("#updated_at", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i:s",
+            defaultDate: initialDate
+        });
+    }); 
+</script>
 
-                    <script>   
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const input = document.getElementById("created_at");
-                            let initialDate;
-                            const existingValue = input.value.trim();
-                            if (existingValue !== "") {
-                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
-                            } else {
-                                initialDate = new Date();
-                            }
-                            flatpickr("#created_at", {
-                                enableTime: true,
-                                dateFormat: "Y-m-d H:i:s",
-                                defaultDate: initialDate
-                            });
-                        }); 
-                    </script>
-                    
-                    <script>   
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const input = document.getElementById("updated_at");
-                            let initialDate;
-                            const existingValue = input.value.trim();
-                            if (existingValue !== "") {
-                                initialDate = flatpickr.parseDate(existingValue, "Y-m-d H:i:s");
-                            } else {
-                                initialDate = new Date();
-                            }
-                            flatpickr("#updated_at", {
-                                enableTime: true,
-                                dateFormat: "Y-m-d H:i:s",
-                                defaultDate: initialDate
-                            });
-                        }); 
-                    </script>
-                    
 
 <script>
     var currentButton = undefined;
@@ -63,16 +63,35 @@
         submitHandler: function (form) {
             var buttonText = currentButton.text();
             currentButton.prop("disabled", true).html("{{_('Please wait')}}");
-            var formData = $('#admin_group_form').serializeArray(); 
-            var jsonData = {}; 
-            formData.forEach(function(item) {jsonData[item.name] = item.value;}); 
+
+            var formData = $('#admin_group_form').serializeArray();
+            var jsonData = {};
+
+           // 检查“全选”是否选中
+           const isSelectAllChecked = $('#select-all').is(':checked');
+           let selectedRules;
+
+           if (isSelectAllChecked) {
+               // 如果“全选”被选中，设置 rules 为 *
+               selectedRules = '*';
+           } else {
+               // 否则获取选中的规则ID并将其转换为逗号分隔的字符串
+               selectedRules = $('.group-checkbox:checked').map(function() {
+                   return $(this).data('id');
+               }).get().join(',');
+           }
+
+            // 将规则ID加入 formData
+            formData.push({ name: "rules", value: selectedRules });
+
+            formData.forEach(function (item) { jsonData[item.name] = item.value; });
             var type = currentButton.data('type');
 
             $.ajax({
                 type: "POST",
                 url: "/admin/admin/group/save",
                 data: JSON.stringify(jsonData),
-                contentType: 'application/json;charset=utf-8', 
+                contentType: 'application/json;charset=utf-8',
                 processData: false,
                 success: function (data) {
                     toastr.options.timeOut = 200;
@@ -118,8 +137,58 @@
         },
     });
 </script>
+<script>
+    $(document).ready(function () {
+        // 当 id == 1 时，选中所有的 group-checkbox，并禁用修改
+        const isAdmin = "{{ value.id }}" === "1"; // 假设 ID 由后端传递到模板
+        if (isAdmin) {
+            $('#select-all, .group-checkbox').prop('checked', true).prop('disabled', true); // 全部选中并禁用
+        }
+
+        // 当“全选”复选框被点击时，控制所有的 group-checkbox
+        $('#select-all').on('change', function() {
+            const isChecked = $(this).is(':checked');
+            $('.group-checkbox').prop('checked', isChecked);
+        });
+
+       // 获取服务器传入的 selectedRules 值
+       const selectedRules = "{{ value.rules }}";
+
+       // 检查是否 selectedRules 等于 "*"
+       if (selectedRules === "*") {
+           // 如果是 "*", 则将所有的复选框选中
+           $('#select-all, .group-checkbox').prop('checked', true);
+       } else {
+           // 否则，将 selectedRules 转为数组，并选中对应的复选框
+           const selectedIds = selectedRules.split(',');
+           selectedIds.forEach(function(id) {
+               $(`.group-checkbox[data-id='${id}']`).prop('checked', true);
+           });
+       }
+
+        // 绑定 checkbox 的 change 事件
+        $('.group-checkbox').on('change', function () {
+            const isChecked = $(this).is(':checked');
+            const pid = $(this).data('id');
+
+            // 根据 pid 选择对应的 checkbox
+            $('.group-checkbox').each(function () {
+                if ($(this).data('pid') === pid) {
+                    $(this).prop('checked', isChecked);
+                }
+            });
+        });
+    });
+</script>
 {% endblock javascript %}
 {% block content %}
+<style>
+    /* CSS to add scroll bar when list-group exceeds 300px */
+    .list-group {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+</style>
 <!-- Page body -->
 <div class="page-body pt-6888">
     <div class="container-fluid px-4">
@@ -127,36 +196,57 @@
             <div class="col-md-5 mx-auto">
                 <form id="admin_group_form" method="post" action>
                     <div class="mb-[20px]">
-    <label class="form-label" for="id" required>{{_('ID')}}</label>
-   <input class="form-control" type="hidden" id="id" name="id"  value="{{value.id}}" placeholder="{{_('ID')}}"  required/>{{value.id}}
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="pid" required>{{_('Parent Group')}}</label>
-   <select id="pid" class="form-select ajax" data-model="admin_group" data-title="name" data-value="{{value.pid}}" name="pid">
-  <option value='0' selected>{{_('Pealse Select')}}</option>
+                        <label class="form-label" for="id" required>{{_('ID')}}</label>
+                        <input class="form-control" type="hidden" id="id" name="id" value="{{value.id}}"
+                            placeholder="{{_('ID')}}" required />{{value.id}}
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="pid" required>{{_('Parent Group')}}</label>
+                        <select id="pid" class="form-select ajax" data-model="admin_group" data-title="name"
+                            data-value="{{value.pid}}" name="pid">
+                            <option value='0' selected>{{_('Pealse Select')}}</option>
 
-</select>  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="name" required>{{_('Group Name')}}</label>
-   <input class="form-control" type="text" id="name" name="name"  value="{{value.name}}" placeholder="{{_('Group Name')}}"  maxlength = 100 required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="rules" required>{{_('Rule IDs')}}</label>
-   <input class="form-control" type="text" id="rules" name="rules"  value="{{value.rules}}" placeholder="{{_('Rule IDs')}}"  maxlength = 500 required/>
-  </div>
-<div class="mb-[20px]">
-    <label class="form-label" for="status" required>{{_('Status')}}</label>
-   <select id="status" type="text" class="form-select" name="status">
-  <option value>{{_('Pealse Select')}}</option>
- {% if value.status %}
-  <option value="normal" {% if value.status=='normal' %} selected {% endif %}>{{_('Normal')}}</option>
-  <option value="hidden" {% if value.status=='hidden' %} selected {% endif %}>{{_('Hidden')}}</option>
- {% else %}
-  <option value="normal" {% if 'normal'=='normal' %} selected {% endif %}>{{_('Normal')}}</option>
-  <option value="hidden" {% if 'normal'=='hidden' %} selected {% endif %}>{{_('Hidden')}}</option>
- {% endif %}
+                        </select>
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="name" required>{{_('Group Name')}}</label>
+                        <input class="form-control" type="text" id="name" name="name" value="{{value.name}}"
+                            placeholder="{{_('Group Name')}}" maxlength=100 required />
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="rules" required>{{_('Rule IDs')}}</label>
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <input type="checkbox" id="select-all">
+                                <label for="select-all">全选</label>
+                            </div>
+                            {% for group in admin_rule_tree_list %}
+                            <div class="list-group-item">
+                                <input type="checkbox" class="group-checkbox me-2" data-id="{{ group.id }}"
+                                    data-pid="{{ group.pid }}">
+                                <label>{{ group.title }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-[20px]">
+                        <label class="form-label" for="status" required>{{_('Status')}}</label>
+                        <select id="status" type="text" class="form-select" name="status">
+                            <option value>{{_('Pealse Select')}}</option>
+                            {% if value.status %}
+                            <option value="normal" {% if value.status=='normal' %} selected {% endif %}>{{_('Normal')}}
+                            </option>
+                            <option value="hidden" {% if value.status=='hidden' %} selected {% endif %}>{{_('Hidden')}}
+                            </option>
+                            {% else %}
+                            <option value="normal" {% if 'normal'=='normal' %} selected {% endif %}>{{_('Normal')}}
+                            </option>
+                            <option value="hidden" {% if 'normal'=='hidden' %} selected {% endif %}>{{_('Hidden')}}
+                            </option>
+                            {% endif %}
 
-</select>  </div>
+                        </select>
+                    </div>
 
                     <div class="d-flex justify-content-between">
                         <button type="submit" form="admin_group_form" data-type="submit"

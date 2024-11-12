@@ -13,9 +13,10 @@
   <meta name="keywords" content="{{configs.basic.keywords}}">
   <meta name="description" content="{{configs.basic.description}}">
   <meta name="version" content="{{version}}">
-  
+
   <!-- Fonts and Styles -->
-  <link href="{{ url_for('static', filename='assets/libs/tabler/tabler.min.css') }}?v={{configs.basic.version}}" rel="stylesheet" />
+  <link href="{{ url_for('static', filename='assets/libs/tabler/tabler.min.css') }}?v={{configs.basic.version}}"
+    rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css"
     integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -24,7 +25,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="{{ url_for('static', filename='assets/webfont/tabler-icons.min.css') }}" />
   <link href="{{ url_for('static', filename='assets/css/common.css') }}?v={{configs.basic.version}}" rel="stylesheet" />
-  <link href="{{ url_for('static', filename='assets/css/zhanor-admin.css') }}?v={{configs.basic.version}}" rel="stylesheet" />
+  <link href="{{ url_for('static', filename='assets/css/zhanor-admin.css') }}?v={{configs.basic.version}}"
+    rel="stylesheet" />
 
   {% block head %}
   {% endblock head %}
@@ -32,7 +34,8 @@
 
 <body class="group/body">
   <!-- Scripts -->
-  <script src="{{ url_for('static', filename='assets/libs/tabler/tabler-theme.min.js') }}?v={{configs.basic.version}}"></script>
+  <script
+    src="{{ url_for('static', filename='assets/libs/tabler/tabler-theme.min.js') }}?v={{configs.basic.version}}"></script>
   <script src="{{ url_for('static', filename='assets/libs/navbar-shrink.js') }}?v={{configs.basic.version}}"></script>
 
   <!-- App Loading Indicator -->
@@ -68,9 +71,11 @@
                 class="w-full h-auto hidden group-[.navbar-shrinked]/body:hidden dark:block">
 
               <!-- collapsed -->
-              <img src="{{ url_for('static', filename='assets/img/logo/logo-collapsed.png') }}" alt="{{configs.basic.name}}"
+              <img src="{{ url_for('static', filename='assets/img/logo/logo-collapsed.png') }}"
+                alt="{{configs.basic.name}}"
                 class="w-full h-auto hidden max-w-[40px] mx-auto group-[.navbar-shrinked]/body:block dark:!hidden">
-              <img src="{{ url_for('static', filename='assets/img/logo/logo-collapsed-dark.svg') }}" alt="{{configs.basic.name}}"
+              <img src="{{ url_for('static', filename='assets/img/logo/logo-collapsed-dark.svg') }}"
+                alt="{{configs.basic.name}}"
                 class="w-full h-auto hidden max-w-[40px] mx-auto group-[.theme-dark.navbar-shrinked]/body:block">
 
             </a>
@@ -90,16 +95,66 @@
           </button>
           <a class="hidden max-lg:flex items-center justify-center shrink-0 lg:px-2 max-md:max-w-[120px]"
             href="/dashboard">
-            <img src="{{ url_for('static', filename='assets/img/logo/logo.svg') }}" alt="{{configs.basic.name}}">
+            <img src="/static/assets/img/logo/logo.svg" alt="{{configs.basic.name}}" class>
           </a>
         </div>
         <div class="navbar-nav flex-row justify-end max-lg:basis-[65%]">
           <div class="flex gap-[18px] max-lg:gap-2">
+            <div class="flex items-center max-xl:gap-2 max-lg:hidden xl:gap-3">
+              <a class="btn clear-cache" href="javascript:;">
+                <i class="mx-1 ti fs-3 ti-trash-x-filled"></i>
+                <span class="max-lg:hidden">{{ _('Clear All Caches')}}</span>
+              </a>
+            </div>
+            <div class="flex items-center">
+              <a href="/" target="_blank" class="nav-link items-center justify-center px-0" title="Home">
+                <i class="mx-1 ti fs-1 ti-home"></i>
+              </a>
+            </div>
+            <div class="flex items-center">
+              <a href="?theme=dark"
+                class="nav-link items-center justify-center px-0 hide-theme-dark hover:!bg-transparent max-lg:w-10 max-lg:h-10 max-lg:p-0 max-lg:border max-lg:border-solid max-lg:border-[--tblr-border-color] max-lg:!rounded-full max-lg:dark:bg-white max-lg:dark:bg-opacity-[0.03]"
+                title="Enable dark mode">
+                <i class="mx-1 ti fs-1 ti-moon"></i>
+              </a>
+              <a href="?theme=light"
+                class="nav-link items-center justify-center px-0 hide-theme-light hover:!bg-transparent max-lg:w-10 max-lg:h-10 max-lg:p-0 max-lg:border max-lg:border-solid max-lg:border-[--tblr-border-color] max-lg:!rounded-full max-lg:dark:bg-white max-lg:dark:bg-opacity-[0.03]"
+                title="Enable light mode">
+                <i class="mx-1 ti fs-1 ti-sun"></i>
+              </a>
+            </div>
+            <div class="nav-item dropdown">
+              <a href="#"
+                class="nav-link px-0 hover:!bg-transparent max-lg:w-10 max-lg:h-10 max-lg:p-0 max-lg:border max-lg:border-solid max-lg:border-[--tblr-border-color] max-lg:!rounded-full max-lg:dark:bg-white max-lg:dark:bg-opacity-[0.03]"
+                data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
+                <i class="mx-1 ti fs-1 ti-world"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <div class="flex flex-col">
+                  <a class="dropdown-item" href="{{ url_for('set_language', lang='en') }}">
+                    English
+                  </a>
+                  <a class="dropdown-item" href="{{ url_for('set_language', lang='zh') }}">
+                    中文
+                  </a>
+                </div>
+              </div>
+
+            </div>
+            <div class="hidden items-center max-lg:flex">
+              <a href="/dashboard/user/payment"
+                class="inline-flex items-center justify-center text-current w-10 h-10 p-0 border border-solid !border-[--tblr-border-color] !rounded-full dark:bg-white dark:bg-opacity-[0.03]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"></path>
+                </svg>
+              </a>
+            </div>
             <div class="nav-item dropdown">
               <a href="#" class="p-0 nav-link d-flex lh-1 text-reset" data-bs-toggle="dropdown"
                 aria-label="Open user menu">
                 <span class="avatar avatar-sm max-lg:w-10 max-lg:h-10"
-                  style="background-image: url({{ url_for('static', filename='assets/img/auth/default-avatar.png') }})"></span>
+                  style="background-image: url(/static/assets/img/auth/default-avatar.png)"></span>
               </a>
               <div class="dropdown-menu dropdown-menu-end">
                 <div class="dropdown-item disabled">
@@ -119,6 +174,49 @@
               </div>
             </div>
           </div>
+        </div>
+        <div
+          class="flex items-center lg:-order-1 max-lg:w-full max-lg:fixed max-lg:bottom-16 max-lg:left-0 max-lg:z-50">
+          <form
+            class="navbar-search group !me-2 max-lg:hidden max-lg:[&.show]:flex max-lg:[&.collapsing]:flex max-lg:m-0 max-lg:w-full max-lg:!me-0"
+            id="navbar-search" autocomplete="off" novalidate>
+            <div class="w-full input-icon max-lg:p-3 max-lg:bg-[#fff] max-lg:dark:bg-zinc-800">
+              <span class="input-icon-addon">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                  <path d="M21 21l-6 -6" />
+                </svg>
+              </span>
+              <input type="search" class="form-control navbar-search-input peer max-lg:!rounded-md dark:!bg-zinc-900"
+                id="top_search_word" onkeydown="return event.key != 'Enter';"
+                placeholder="{{_('Search for documents...')}}" aria-label="Search in website') }}">
+              <kbd
+                class="inline-block absolute top-1/2 !end-[12px] -translate-y-1/2 bg-[var(--tblr-bg-surface)] transition-all pointer-events-none peer-focus:opacity-0 peer-focus:invisible peer-focus:scale-70 group-[.is-searching]:opacity-0 group-[.is-searching]:invisible max-lg:hidden opacity-0"><span
+                  id="search-shortcut-key"></span> + K</kbd>
+              <span class="absolute top-1/2 -translate-y-1/2 !end-[20px]">
+                <span class="spinner-border spinner-border-sm text-muted hidden group-[.is-searching]:block"
+                  role="status"></span>
+              </span>
+              <span
+                class="absolute !end-3 top-1/2 -translate-y-1/2 -translate-x-2 transition-all opacity-0 pointer-events-none peer-focus:!opacity-100 peer-focus:translate-x-0  group-[.is-searching]:hidden group-[.done-searching]:hidden rtl:-scale-x-100">
+                <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 96 960 960" width="25"
+                  fill="currentColor">
+                  <path d="m375 816-43-43 198-198-198-198 43-43 241 241-241 241Z" />
+                </svg>
+              </span>
+              <div
+                class="navbar-search-results absolute top-[calc(100%+17px)] !start-0 bg-[#fff] shadow-[0_10px_70px_rgba(0,0,0,0.1)] rounded-md w-[100%] max-h-[380px] overflow-y-auto hidden group-[.done-searching]:block dark:!bg-[--tblr-bg-surface] max-lg:top-auto max-lg:bottom-full max-lg:start-0 max-lg:end-0 max-lg:w-auto"
+                id="search_results" style="z-index: 999;">
+                <!-- Search results here -->
+                <h3
+                  class="m-0 py-[0.75rem] px-3 border-solid border-b border-t-0 border-r-0 border-l-0 border-[--tblr-border-color] text-[1rem] font-medium">
+                  {{_('Search results')}}</h3>
+                <div class="search-results-container"></div>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </header>
@@ -165,7 +263,8 @@
   </div>
 
   <!-- Tabler Core -->
-  <script src="{{ url_for('static', filename='assets/libs/tabler/tabler.min.js') }}?v={{configs.basic.version}}" defer></script>
+  <script src="{{ url_for('static', filename='assets/libs/tabler/tabler.min.js') }}?v={{configs.basic.version}}"
+    defer></script>
   <script src="{{ url_for('static', filename='assets/libs/opai.min.js') }}?v={{configs.basic.version}}" defer></script>
   <!-- Clipboard -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"
@@ -180,7 +279,8 @@
     integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="{{ url_for('static', filename='assets/js/backend/backend.js') }}"></script>
-
+  {% block javascript %}
+   {% endblock javascript %}
 </body>
 
 </html>
