@@ -8,6 +8,7 @@ from flask import (
     Blueprint,
     Flask,
     abort,
+    current_app,
     g,
     jsonify,
     redirect,
@@ -35,6 +36,7 @@ from app.core.defs import (
     get_general_configs,
     get_timestamp,
     get_user_rules,
+    has_decorator,
     load_apis,
     load_plugin_apis,
     log_request_data,
@@ -245,20 +247,27 @@ def create_app(test_config=None):
             if current_admin and current_admin.is_authenticated
             else None
         )
-        # Define admin route access permissions
-        admin_rules_url_path = (
-            get_admin_rules_url_path(g.admin.group_id, plugin_admin_rules)
-            if g.admin
-            else []
+        logger.error(
+            f"@app.before_request====>request.blueprint: {request.blueprint}, {request.url_rule}, --request.path: {request.path}--request.endpoint:{request.endpoint}"
         )
+
+        endpoint = request.endpoint
+        if endpoint:
+            view_func = current_app.view_functions[endpoint]
+            # 如果视图函数没有 `@admin_required` 装饰器，直接返回通过
+            if not has_decorator(view_func, "admin_required"):
+                return
+
+            # Define admin route access permissions
+            admin_rules_url_path = (
+                get_admin_rules_url_path(g.admin.group_id, plugin_admin_rules)
+                if g.admin
+                else []
+            )
         logger.error(f"admin_rules_url_path:{admin_rules_url_path}")
         # Check for permission to access route
         if (g.admin
-            and request.url_rule
-            and request.endpoint != "static"
-            and request.endpoint != "admin_auth.login"
-            and request.endpoint != "admin_auth.login"
-            and request.endpoint != "set_language"
+            and request.url_rule 
             and request.url_rule.rule not in admin_rules_url_path
         ):
             abort(403)
