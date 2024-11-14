@@ -264,13 +264,13 @@ def create_app(test_config=None):
                 if g.admin
                 else []
             )
-        logger.error(f"admin_rules_url_path:{admin_rules_url_path}")
-        # Check for permission to access route
-        if (g.admin
-            and request.url_rule 
-            and request.url_rule.rule not in admin_rules_url_path
-        ):
-            abort(403)
+            logger.error(f"admin_rules_url_path:{admin_rules_url_path}")
+            # Check for permission to access route
+            if (g.admin
+                and request.url_rule 
+                and request.url_rule.rule not in admin_rules_url_path
+            ):
+                abort(403)
 
         # Log POST request data for admin routes
         if request.method == "POST" and request.path.startswith("/admin"):
