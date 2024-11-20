@@ -14,7 +14,7 @@
                 selectedIds.push($(this).val());
             });
             if (selectedIds.length > 0) {
-                if (confirm(_('Are you sure you want to delete it?'))) {
+                if (confirm('{{_("Are you sure you want to delete it")}}')) {
                     $.ajax({
                         type: "DELETE",
                         url: "/admin/user/rule/delete",
@@ -28,22 +28,22 @@
                                     thisElement.remove();
                                 }
                             }
-                            toastr.success(_('Delete Successfully'))
+                            toastr.success('{{_("Delete Successfully")}}')
                         },
                         error: function (xhr, status, error) {
-                            toastr.error(_('Delete Faile'), xhr.responseText);
+                            toastr.error('{{_("Delete Faile")}}', xhr.responseText);
                         }
                     });
                 }
             } else {
-                toastr.warning(_('Please first select the items you want to delete'));
+                toastr.warning('{{_("Please first select the items you want to delete")}}');
             }
         });
         $('.btn-delete').click(function (event) {
             event.preventDefault();
             var $this = $(this);
             var UserRuleId = $this.data('id');
-            if (confirm(_('Are you sure you want to delete it?'))) {
+            if (confirm('{{_("Are you sure you want to delete it")}}')) {
                 const selectedIds = [UserRuleId];
                 $("#app-loading-indicator").removeClass("opacity-0");
                 $.ajax({
@@ -57,7 +57,7 @@
                         if (thisElement.length) {
                             thisElement.remove();
                         }
-                        toastr.success(_("Delete Successfully"));
+                        toastr.success('{{_("Delete Successfully")}}');
                     },
                     error: function (xhr, status, error) {
                         let msg = xhr.responseJSON.msg;

@@ -13,7 +13,7 @@
             $('.id-checkbox:checked').each(function () {
                 selectedIds.push($(this).val());
             });
-            if (confirm(_('Are you sure you want to delete it?'))) {
+            if (confirm('{{_("Are you sure you want to delete it")}}')) {
                 if (selectedIds.length > 0) {
                     $.ajax({
                         type: "DELETE",
@@ -28,14 +28,14 @@
                                     thisElement.remove();
                                 }
                             }
-                            toastr.success(_('Delete Successfully'))
+                            toastr.success('{{_("Delete Successfully")}}')
                         },
                         error: function (xhr, status, error) {
-                            toastr.error(_('Delete Faile'), xhr.responseText);
+                            toastr.error('{{_("Delete Faile")}}', xhr.responseText);
                         }
                     });
                 } else {
-                    toastr.warning(_('Please first select the items you want to delete'));
+                    toastr.warning('{{_("Please first select the items you want to delete")}}');
 
                 }
             }
@@ -44,7 +44,7 @@
             event.preventDefault();
             var $this = $(this);
             var UserId = $this.data('id');
-            if (confirm(_('Are you sure you want to delete it?'))) {
+            if (confirm('{{_("Are you sure you want to delete it")}}')) {
                 const selectedIds = [UserId];
                 $("#app-loading-indicator").removeClass("opacity-0");
                 $.ajax({

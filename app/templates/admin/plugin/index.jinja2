@@ -120,7 +120,7 @@
     }
 
     function AddonDelete(AddonId) {
-        if (confirm(_('Are you sure you want to delete it?'))) {
+        if (confirm('{{_("Are you sure you want to delete it")}}')) {
             var selectedIds = [AddonId];
             $.ajax({
                 type: "DELETE",
@@ -133,7 +133,7 @@
                     if (pluginElement) {
                         pluginElement.remove();
                     }
-                    toastr.success(_('Delete Successfully'));
+                    toastr.success('{{_("Delete Successfully")}}');
                 },
                 error: function (data) {
                     toastr.error(_('Delete Failed'));
